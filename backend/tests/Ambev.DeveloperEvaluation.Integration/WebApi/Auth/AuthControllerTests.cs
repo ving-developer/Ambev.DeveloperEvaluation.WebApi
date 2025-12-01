@@ -1,5 +1,5 @@
-﻿using Ambev.DeveloperEvaluation.Integration.Fixtures;
-using Ambev.DeveloperEvaluation.Integration.Shared.Constants;
+﻿using Ambev.DeveloperEvaluation.Integration.Shared.Constants;
+using Ambev.DeveloperEvaluation.Integration.Shared.Fixtures;
 using Ambev.DeveloperEvaluation.WebApi.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Auth;
 using Ambev.DeveloperEvaluation.WebApi.Features.Auth.AuthenticateUser;

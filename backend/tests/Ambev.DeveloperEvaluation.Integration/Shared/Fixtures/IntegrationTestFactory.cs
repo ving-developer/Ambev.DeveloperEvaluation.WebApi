@@ -1,6 +1,6 @@
 ﻿using Ambev.DeveloperEvaluation.Common.Security;
 using Ambev.DeveloperEvaluation.Integration.Shared.Constants;
-using Ambev.DeveloperEvaluation.Integration.TestData.Users;
+using Ambev.DeveloperEvaluation.Integration.Shared.TestData.Users;
 using Ambev.DeveloperEvaluation.ORM;
 using Ambev.DeveloperEvaluation.WebApi;
 using Microsoft.AspNetCore.Hosting;
@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Testcontainers.PostgreSql;
 using Xunit;
 
-namespace Ambev.DeveloperEvaluation.Integration.Fixtures;
+namespace Ambev.DeveloperEvaluation.Integration.Shared.Fixtures;
 
 /// <summary>
 /// Provides the infrastructure required to run integration tests for the Web API.
