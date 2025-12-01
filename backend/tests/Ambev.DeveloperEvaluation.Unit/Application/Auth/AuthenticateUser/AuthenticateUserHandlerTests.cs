@@ -6,6 +6,7 @@ using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Ambev.DeveloperEvaluation.Unit.Application.TestData.Auth;
 using Ambev.DeveloperEvaluation.Unit.Domain.Entities.TestData;
 using FluentAssertions;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Xunit;
 
@@ -30,7 +31,7 @@ public class AuthenticateUserHandlerTests
         _userRepository = Substitute.For<IUserRepository>();
         _passwordHasher = Substitute.For<IPasswordHasher>();
         _jwtTokenGenerator = Substitute.For<IJwtTokenGenerator>();
-        _handler = new AuthenticateUserHandler(_userRepository, _passwordHasher, _jwtTokenGenerator);
+        _handler = new AuthenticateUserHandler(_userRepository, _passwordHasher, _jwtTokenGenerator, Substitute.For<ILogger<AuthenticateUserHandler>>());
     }
 
     /// <summary>

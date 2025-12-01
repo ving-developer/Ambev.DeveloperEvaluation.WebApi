@@ -6,6 +6,7 @@ using Ambev.DeveloperEvaluation.Unit.Domain.Entities.TestData;
 using AutoMapper;
 using FluentAssertions;
 using FluentValidation;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Xunit;
 
@@ -24,7 +25,7 @@ namespace Ambev.DeveloperEvaluation.Unit.Application.Users.GetUser
         {
             _userRepository = Substitute.For<IUserRepository>();
             _mapper = Substitute.For<IMapper>();
-            _handler = new GetUserHandler(_userRepository, _mapper);
+            _handler = new GetUserHandler(_userRepository, _mapper, Substitute.For<ILogger<GetUserHandler>>());
         }
 
         [Fact(DisplayName = "Given valid user ID When getting user Then returns user result")]
