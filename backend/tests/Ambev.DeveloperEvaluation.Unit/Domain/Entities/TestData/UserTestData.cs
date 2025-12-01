@@ -22,12 +22,12 @@ public static class UserTestData
     /// - Role (Customer or Admin)
     /// </summary>
     private static readonly Faker<User> UserFaker = new Faker<User>()
-        .RuleFor(u => u.Username, f => f.Internet.UserName())
-        .RuleFor(u => u.Password, f => $"Test@{f.Random.Number(100, 999)}")
-        .RuleFor(u => u.Email, f => f.Internet.Email())
-        .RuleFor(u => u.Phone, f => $"+55{f.Random.Number(11, 99)}{f.Random.Number(100000000, 999999999)}")
-        .RuleFor(u => u.Status, f => f.PickRandom(UserStatus.Active, UserStatus.Suspended))
-        .RuleFor(u => u.Role, f => f.PickRandom(UserRole.Customer, UserRole.Admin));
+        .RuleFor(u => u.Username, GenerateValidUsername())
+        .RuleFor(u => u.Password, GenerateValidPassword())
+        .RuleFor(u => u.Email, GenerateValidEmail())
+        .RuleFor(u => u.Phone, GenerateValidPhone())
+        .RuleFor(u => u.Status, f => GenerateValidStatus())
+        .RuleFor(u => u.Role, f => GenerateValidRole());
 
     /// <summary>
     /// Generates a valid User entity with randomized data.
@@ -38,6 +38,17 @@ public static class UserTestData
     public static User GenerateValidUser()
     {
         return UserFaker.Generate();
+    }
+
+    /// <summary>
+    /// Generates a suspended User entity with randomized data.
+    /// </summary>
+    /// <returns>A suspended User entity with randomly generated data.</returns>
+    public static User GenerateSuspendedUser()
+    {
+        var user = UserFaker.Generate();
+        user.Status = UserStatus.Suspended;
+        return user;
     }
 
     /// <summary>
@@ -109,6 +120,28 @@ public static class UserTestData
     {
         var faker = new Faker();
         return faker.Lorem.Word();
+    }
+
+    /// <summary>
+    /// Generates a valid UserStatus.
+    /// The generated status will:
+    /// - Be one of the defined enum values: Active or Suspended
+    /// This is useful for testing positive scenarios.
+    /// </summary>
+    /// <returns>A valid UserStatus value.</returns>
+    public static UserStatus GenerateValidStatus() => UserStatus.Active;
+
+    /// <summary>
+    /// Generates a valid UserRole.
+    /// The generated role will:
+    /// - Be one of the defined enum values: Customer or Admin
+    /// This is useful for testing positive scenarios.
+    /// </summary>
+    /// <returns>A valid UserRole value.</returns>
+    public static UserRole GenerateValidRole()
+    {
+        var faker = new Faker();
+        return faker.PickRandom(UserRole.Customer, UserRole.Admin);
     }
 
     /// <summary>
