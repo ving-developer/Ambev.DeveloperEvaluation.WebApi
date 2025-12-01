@@ -1,6 +1,6 @@
 using System;
 
-namespace Ambev.DeveloperEvaluation.WebApi.Features.Auth.AuthenticateUserFeature;
+namespace Ambev.DeveloperEvaluation.WebApi.Features.Auth.AuthenticateUser;
 
 /// <summary>
 /// Represents the response returned after user authentication
