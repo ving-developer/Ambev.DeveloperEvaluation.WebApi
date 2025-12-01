@@ -17,5 +17,8 @@ public class CreateUserProfile : Profile
             .ForMember(dest => dest.Id, opt => opt.Ignore())
             .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
             .ForMember(dest => dest.UpdatedAt, opt => opt.Ignore());
+
+        CreateMap<User, CreateUserResult>()
+            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Username));
     }
 }
