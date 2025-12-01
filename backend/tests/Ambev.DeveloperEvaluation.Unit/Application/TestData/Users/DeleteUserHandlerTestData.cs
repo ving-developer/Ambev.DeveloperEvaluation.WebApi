@@ -1,3 +1,4 @@
+using Ambev.DeveloperEvaluation.Application.Products.DeleteProduct;
 using Ambev.DeveloperEvaluation.Application.Users.DeleteUser;
 
 namespace Ambev.DeveloperEvaluation.Unit.Application.TestData.Users;

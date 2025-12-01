@@ -1,4 +1,5 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Products.CreateProduct;
+using Ambev.DeveloperEvaluation.Application.Products.DeleteProduct;
 using Ambev.DeveloperEvaluation.Application.Products.GetProduct;
 using Ambev.DeveloperEvaluation.WebApi.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.Common;
@@ -64,6 +65,28 @@ public class ProductsController : BaseController
         var response = await _mediator.Send(command, cancellationToken);
 
         return Ok(_mapper.Map<ProductResponse>(response), "Product retrieved successfully");
+    }
+
+    /// <summary>
+    /// Deletes a product by its ID
+    /// </summary>
+    /// <param name="id">The unique identifier of the product to delete</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>Success response if the product was deleted</returns>
+    [HttpDelete("{id}")]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> DeleteProduct([FromRoute] Guid id, CancellationToken cancellationToken)
+    {
+        var command = _mapper.Map<DeleteProductCommand>(id);
+        await _mediator.Send(command, cancellationToken);
+
+        return Ok(new ApiResponse
+        {
+            Success = true,
+            Message = "Product deleted successfully"
+        });
     }
 
 }

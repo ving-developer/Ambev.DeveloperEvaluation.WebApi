@@ -1,4 +1,5 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Products.CreateProduct;
+using Ambev.DeveloperEvaluation.Application.Products.DeleteProduct;
 using Ambev.DeveloperEvaluation.Application.Products.GetProduct;
 using Ambev.DeveloperEvaluation.Application.Users.CreateUser;
 using Ambev.DeveloperEvaluation.Application.Users.DeleteUser;
