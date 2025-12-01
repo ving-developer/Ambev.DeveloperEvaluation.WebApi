@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
+﻿using Ambev.DeveloperEvaluation.WebApi.Common;
+using FluentValidation;
 using System.Net;
 using System.Text.Json;
-using Ambev.DeveloperEvaluation.WebApi.Common;
-using FluentValidation;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Middleware
 {
@@ -56,6 +54,9 @@ namespace Ambev.DeveloperEvaluation.WebApi.Middleware
                     };
                     break;
 
+                case ValidationException:
+                    throw exception;
+
                 case UnauthorizedAccessException:
                     status = HttpStatusCode.Unauthorized;
                     response = new ApiResponse
@@ -65,7 +66,7 @@ namespace Ambev.DeveloperEvaluation.WebApi.Middleware
                     };
                     break;
 
-                case ValidationException:
+                case BadHttpRequestException:
                     status = HttpStatusCode.BadRequest;
                     response = new ApiResponse
                     {

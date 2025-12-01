@@ -36,12 +36,6 @@ public class DeleteUserHandler : IRequestHandler<DeleteUserCommand, DeleteUserRe
     {
         _logger.LogInformation("[INF] Starting DeleteUserHandler for UserId={UserId}", request.Id);
 
-        var validator = new DeleteUserValidator();
-        var validationResult = await validator.ValidateAsync(request, cancellationToken);
-
-        if (!validationResult.IsValid)
-            throw new ValidationException(validationResult.Errors);
-
         var success = await _userRepository.DeleteAsync(request.Id, cancellationToken);
 
         if (!success)

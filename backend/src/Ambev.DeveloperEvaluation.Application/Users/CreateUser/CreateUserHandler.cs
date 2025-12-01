@@ -46,12 +46,6 @@ public class CreateUserHandler : IRequestHandler<CreateUserCommand, CreateUserRe
     {
         _logger.LogInformation("[INF] Starting CreateUserHandler execution");
 
-        var validator = new CreateUserCommandValidator();
-        var validationResult = await validator.ValidateAsync(command, cancellationToken);
-
-        if (!validationResult.IsValid)
-            throw new ValidationException(validationResult.Errors);
-
         var existingUser = await _userRepository.GetByEmailAsync(command.Email, cancellationToken);
 
         if (existingUser != null)

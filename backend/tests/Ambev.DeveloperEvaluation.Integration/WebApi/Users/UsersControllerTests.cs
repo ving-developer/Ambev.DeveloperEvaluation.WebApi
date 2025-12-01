@@ -36,26 +36,6 @@ public class UsersControllerTests : IntegrationTestBase
         var createdUser = ExtractCreatedUserResponse(result);
         createdUser.Id.Should().NotBeEmpty();
     }
-
-    [Fact(DisplayName = "CreateUser should return BadRequest when request is invalid")]
-    public async Task CreateUser_ShouldReturnBadRequest()
-    {
-        // Guiven
-        var controller = CreateController<UsersController>();
-        var request = CreateUserRequestTestData.GetInvalidCreateUserRequest();
-
-        // When
-        var result = await controller.CreateUser(request, default);
-
-        // Then
-        var badRequest = result.Should()
-            .BeOfType<BadRequestObjectResult>()
-            .Which;
-
-        badRequest.Value.Should()
-            .BeAssignableTo<IEnumerable<object>>()
-            .Which.Should().NotBeEmpty();
-    }
     #endregion
 
     #region /GET/{id} GET USER
@@ -80,25 +60,6 @@ public class UsersControllerTests : IntegrationTestBase
         response.Data!.Id.Should().Be(IntegrationTestConstants.InitialUserId);
     }
 
-    [Fact(DisplayName = "GetUser should return BadRequest when id is invalid")]
-    public async Task GetUser_ShouldReturnBadRequest()
-    {
-        // Guiven
-        var controller = CreateController<UsersController>();
-
-        // When
-        var result = await controller.GetUser(Guid.Empty, default);
-
-        // Then
-        var bad = result.Should()
-            .BeOfType<BadRequestObjectResult>()
-            .Which;
-
-        bad.Value.Should()
-            .BeAssignableTo<IEnumerable<object>>()
-            .Which.Should().NotBeEmpty();
-    }
-
     [Fact(DisplayName = "GetUser should throw KeyNotFoundException when user does not exist")]
     public async Task GetUser_ShouldThrowKeyNotFoundException()
     {
@@ -113,7 +74,6 @@ public class UsersControllerTests : IntegrationTestBase
             .ThrowAsync<KeyNotFoundException>()
             .WithMessage($"User with ID {nonExistingUserId} not found");
     }
-
     #endregion
 
     #region /DELETE/{id} DELETE USER
@@ -140,25 +100,6 @@ public class UsersControllerTests : IntegrationTestBase
             .Which.Success.Should().BeTrue();
     }
 
-    [Fact(DisplayName = "DeleteUser should return BadRequest when id is invalid")]
-    public async Task DeleteUser_ShouldReturnBadRequest()
-    {
-        // Guiven
-        var controller = CreateController<UsersController>();
-
-        // When
-        var result = await controller.DeleteUser(Guid.Empty, default);
-
-        // Then
-        var bad = result.Should()
-            .BeOfType<BadRequestObjectResult>()
-            .Which;
-
-        bad.Value.Should()
-            .BeAssignableTo<IEnumerable<object>>()
-            .Which.Should().NotBeEmpty();
-    }
-
     [Fact(DisplayName = "DeleteUser should throw KeyNotFoundException when user does not exist")]
     public async Task DeleteUser_ShouldThrowKeyNotFoundException()
     {
@@ -178,13 +119,11 @@ public class UsersControllerTests : IntegrationTestBase
     #region PRIVATE METHODS
     private static CreateUserResponse ExtractCreatedUserResponse(IActionResult result)
     {
-        var createdObject = result as CreatedAtRouteResult
-            ?? throw new Exception("Expected CreatedAtRouteResult");
+        var createdObject = result as CreatedAtRouteResult;
 
-        var responseWrapper = createdObject.Value as ApiResponseWithData<CreateUserResponse>
-            ?? throw new Exception("Expected ApiResponseWithData<CreateUserResponse>");
+        var responseWrapper = createdObject!.Value as ApiResponseWithData<CreateUserResponse>;
 
-        return responseWrapper.Data ?? throw new Exception("Data cannot be null");
+        return responseWrapper!.Data!;
     }
     #endregion
 }

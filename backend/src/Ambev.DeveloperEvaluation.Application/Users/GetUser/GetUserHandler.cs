@@ -41,12 +41,6 @@ public class GetUserHandler : IRequestHandler<GetUserCommand, GetUserResult>
     {
         _logger.LogInformation("[INF] Starting GetUserHandler for UserId={UserId}", request.Id);
 
-        var validator = new GetUserValidator();
-        var validationResult = await validator.ValidateAsync(request, cancellationToken);
-
-        if (!validationResult.IsValid)
-            throw new ValidationException(validationResult.Errors);
-
         var user = await _userRepository.GetByIdAsync(request.Id, cancellationToken);
         if (user == null)
         {

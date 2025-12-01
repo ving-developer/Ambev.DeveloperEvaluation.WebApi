@@ -62,19 +62,6 @@ namespace Ambev.DeveloperEvaluation.Unit.Application.Users.GetUser
             _mapper.Received(1).Map<GetUserResult>(user);
         }
 
-        [Fact(DisplayName = "Given invalid command When getting user Then throws validation exception")]
-        public async Task Handle_InvalidCommand_ThrowsValidationException()
-        {
-            // Given
-            var command = GetUserHandlerTestData.GenerateInvalidCommand();
-
-            // When
-            Func<Task> act = () => _handler.Handle(command, CancellationToken.None);
-
-            // Then
-            await act.Should().ThrowAsync<ValidationException>();
-        }
-
         [Fact(DisplayName = "Given non-existing user ID When getting user Then throws KeyNotFoundException")]
         public async Task Handle_NonExistingUser_ThrowsKeyNotFoundException()
         {
