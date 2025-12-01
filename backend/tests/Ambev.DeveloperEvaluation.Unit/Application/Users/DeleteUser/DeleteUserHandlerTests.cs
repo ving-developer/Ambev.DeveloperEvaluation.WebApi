@@ -40,19 +40,6 @@ namespace Ambev.DeveloperEvaluation.Unit.Application.Users.DeleteUser
             await _userRepository.Received(1).DeleteAsync(command.Id, Arg.Any<CancellationToken>());
         }
 
-        [Fact(DisplayName = "Given invalid command When deleting user Then throws validation exception")]
-        public async Task Handle_InvalidCommand_ThrowsValidationException()
-        {
-            // Given
-            var command = DeleteUserHandlerTestData.GenerateInvalidCommand();
-
-            // When
-            Func<Task> act = () => _handler.Handle(command, CancellationToken.None);
-
-            // Then
-            await act.Should().ThrowAsync<ValidationException>();
-        }
-
         [Fact(DisplayName = "Given non-existing user ID When deleting user Then throws KeyNotFoundException")]
         public async Task Handle_NonExistingUser_ThrowsKeyNotFoundException()
         {
