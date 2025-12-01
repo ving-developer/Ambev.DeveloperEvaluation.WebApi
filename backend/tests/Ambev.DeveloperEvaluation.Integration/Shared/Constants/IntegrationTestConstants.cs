@@ -7,6 +7,12 @@
 public class IntegrationTestConstants
 {
     /// <summary>
+    /// The default ID of the initial seeded user created specifically
+    /// for authentication-related integration tests.
+    /// </summary>
+    public static readonly Guid InitialUserId = Guid.NewGuid();
+
+    /// <summary>
     /// The default password of the initial seeded user created specifically
     /// for authentication-related integration tests.
     /// </summary>

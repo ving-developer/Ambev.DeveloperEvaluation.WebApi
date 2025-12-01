@@ -6,6 +6,7 @@ using Ambev.DeveloperEvaluation.Unit.Application.TestData.Users;
 using Ambev.DeveloperEvaluation.Unit.Domain.Entities.TestData;
 using AutoMapper;
 using FluentAssertions;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Xunit;
 
@@ -30,7 +31,7 @@ public class CreateUserHandlerTests
         _userRepository = Substitute.For<IUserRepository>();
         _mapper = Substitute.For<IMapper>();
         _passwordHasher = Substitute.For<IPasswordHasher>();
-        _handler = new CreateUserHandler(_userRepository, _mapper, _passwordHasher);
+        _handler = new CreateUserHandler(_userRepository, _mapper, _passwordHasher, Substitute.For<ILogger<CreateUserHandler>>());
     }
 
     /// <summary>

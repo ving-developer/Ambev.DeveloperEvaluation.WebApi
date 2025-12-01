@@ -106,6 +106,7 @@ public class IntegrationTestFactory : WebApplicationFactory<Program>, IAsyncLife
 
             user.Email = IntegrationTestConstants.InitialUserEmail;
             user.Password = hasher.HashPassword(IntegrationTestConstants.InitialUserPassword);
+            user.Id = IntegrationTestConstants.InitialUserId;
 
             db.Users.Add(user);
 
