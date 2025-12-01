@@ -1,4 +1,4 @@
-﻿namespace Ambev.DeveloperEvaluation.WebApi.Features.Auth.AuthenticateUserFeature;
+﻿namespace Ambev.DeveloperEvaluation.WebApi.Features.Auth.AuthenticateUser;
 
 /// <summary>
 /// Represents the authentication request model for user login.

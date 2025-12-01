@@ -1,7 +1,8 @@
-using AutoMapper;
+using Ambev.DeveloperEvaluation.Application.Auth.AuthenticateUser;
 using Ambev.DeveloperEvaluation.Domain.Entities;
+using AutoMapper;
 
-namespace Ambev.DeveloperEvaluation.WebApi.Features.Auth.AuthenticateUserFeature;
+namespace Ambev.DeveloperEvaluation.WebApi.Features.Auth.AuthenticateUser;
 
 /// <summary>
 /// AutoMapper profile for authentication-related mappings
@@ -16,5 +17,8 @@ public sealed class AuthenticateUserProfile : Profile
         CreateMap<User, AuthenticateUserResponse>()
             .ForMember(dest => dest.Token, opt => opt.Ignore())
             .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role.ToString()));
+
+        CreateMap<AuthenticateUserRequest, AuthenticateUserCommand>();
+        CreateMap<AuthenticateUserResult, AuthenticateUserResponse>();
     }
 }

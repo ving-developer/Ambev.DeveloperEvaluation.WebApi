@@ -2,13 +2,14 @@ using Ambev.DeveloperEvaluation.Application.Users.CreateUser;
 using Ambev.DeveloperEvaluation.Common.Security;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
-using Ambev.DeveloperEvaluation.Unit.Domain;
+using Ambev.DeveloperEvaluation.Unit.Application.TestData.Users;
+using Ambev.DeveloperEvaluation.Unit.Domain.Entities.TestData;
 using AutoMapper;
 using FluentAssertions;
 using NSubstitute;
 using Xunit;
 
-namespace Ambev.DeveloperEvaluation.Unit.Application;
+namespace Ambev.DeveloperEvaluation.Unit.Application.Users.CreateUser;
 
 /// <summary>
 /// Contains unit tests for the <see cref="CreateUserHandler"/> class.
@@ -51,11 +52,7 @@ public class CreateUserHandlerTests
             Role = command.Role
         };
 
-        var result = new CreateUserResult
-        {
-            Id = user.Id,
-        };
-
+        var result = CreateUserResultTestData.GenerateFromUser(user);
 
         _mapper.Map<User>(command).Returns(user);
         _mapper.Map<CreateUserResult>(user).Returns(result);
@@ -80,7 +77,7 @@ public class CreateUserHandlerTests
     public async Task Handle_InvalidRequest_ThrowsValidationException()
     {
         // Given
-        var command = new CreateUserCommand(); // Empty command will fail validation
+        var command = new CreateUserCommand();
 
         // When
         var act = () => _handler.Handle(command, CancellationToken.None);
@@ -159,5 +156,30 @@ public class CreateUserHandlerTests
             c.Phone == command.Phone &&
             c.Status == command.Status &&
             c.Role == command.Role));
+    }
+
+    /// <summary>
+    /// Tests when the request is valid, but the email field already exists.
+    /// </summary>
+    [Fact(DisplayName = "Given The user's email address is repeated Then throws InvalidOperationException")]
+    public async Task Returns_InvalidOperationException_When_EmailAlreadyExists()
+    {
+        // Guiven
+        var command = CreateUserHandlerTestData.GenerateValidCommand();
+
+        var existingUser = UserTestData.GenerateValidUser();
+        existingUser.Email = command.Email;
+
+        _userRepository.GetByEmailAsync(command.Email, Arg.Any<CancellationToken>())
+            .Returns(existingUser);
+
+        // When
+        Func<Task> act = () => _handler.Handle(command, CancellationToken.None);
+
+        // Then
+        await act.Should().ThrowAsync<InvalidOperationException>()
+            .WithMessage($"User with email {command.Email} already exists");
+
+        await _userRepository.DidNotReceive().CreateAsync(Arg.Any<User>(), Arg.Any<CancellationToken>());
     }
 }
