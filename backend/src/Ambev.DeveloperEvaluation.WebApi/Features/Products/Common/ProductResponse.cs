@@ -1,12 +1,11 @@
 using Ambev.DeveloperEvaluation.Domain.Enums;
-using Ambev.DeveloperEvaluation.WebApi.Features.Products.Common;
 
-namespace Ambev.DeveloperEvaluation.WebApi.Features.Products.CreateProduct;
+namespace Ambev.DeveloperEvaluation.WebApi.Features.Products.Common;
 
 /// <summary>
 /// API response model for CreateProduct operation
 /// </summary>
-public class CreateProductResponse
+public class ProductResponse
 {
     /// <summary>
     /// The unique identifier of the created product

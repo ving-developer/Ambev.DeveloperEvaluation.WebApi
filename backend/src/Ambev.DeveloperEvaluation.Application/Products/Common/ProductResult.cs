@@ -1,7 +1,6 @@
-﻿using Ambev.DeveloperEvaluation.Application.Products.Common;
-using Ambev.DeveloperEvaluation.Domain.Enums;
+﻿using Ambev.DeveloperEvaluation.Domain.Enums;
 
-namespace Ambev.DeveloperEvaluation.Application.Products.CreateProduct;
+namespace Ambev.DeveloperEvaluation.Application.Products.Common;
 
 /// <summary>
 /// Represents the response returned after successfully creating a new product.
@@ -11,7 +10,7 @@ namespace Ambev.DeveloperEvaluation.Application.Products.CreateProduct;
 /// along with its details and initial rating, which can be used for subsequent
 /// operations or reference.
 /// </remarks>
-public class CreateProductResult
+public class ProductResult
 {
     /// <summary>
     /// Gets or sets the unique identifier of the newly created product.

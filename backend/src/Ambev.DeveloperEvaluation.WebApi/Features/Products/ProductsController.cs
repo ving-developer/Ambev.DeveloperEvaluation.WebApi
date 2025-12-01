@@ -1,5 +1,7 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Products.CreateProduct;
+using Ambev.DeveloperEvaluation.Application.Products.GetProduct;
 using Ambev.DeveloperEvaluation.WebApi.Common;
+using Ambev.DeveloperEvaluation.WebApi.Features.Products.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.CreateProduct;
 using AutoMapper;
 using MediatR;
@@ -35,14 +37,33 @@ public class ProductsController : BaseController
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The created user details</returns>
     [HttpPost]
-    [ProducesResponseType(typeof(ApiResponseWithData<CreateProductResponse>), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ApiResponseWithData<ProductResponse>), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> CreateUser([FromBody] CreateProductRequest request, CancellationToken cancellationToken)
     {
         var command = _mapper.Map<CreateProductCommand>(request);
         var response = await _mediator.Send(command, cancellationToken);
-        var userResponse = _mapper.Map<CreateProductResponse>(response);
+        var userResponse = _mapper.Map<ProductResponse>(response);
 
         return Created("GetUserById", new { id = userResponse.Id }, userResponse);
     }
+
+    /// <summary>
+    /// Retrieves a product by its ID
+    /// </summary>
+    /// <param name="id">The unique identifier of the product</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>The product details if found</returns>
+    [HttpGet("{id}", Name = "GetProductById")]
+    [ProducesResponseType(typeof(ApiResponseWithData<ProductResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetProduct([FromRoute] Guid id, CancellationToken cancellationToken)
+    {
+        var command = _mapper.Map<GetProductCommand>(id);
+        var response = await _mediator.Send(command, cancellationToken);
+
+        return Ok(_mapper.Map<ProductResponse>(response), "Product retrieved successfully");
+    }
+
 }

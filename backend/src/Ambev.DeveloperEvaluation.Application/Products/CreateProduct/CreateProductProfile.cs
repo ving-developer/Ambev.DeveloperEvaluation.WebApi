@@ -20,7 +20,7 @@ public class CreateProductProfile : Profile
             .ForMember(dest => dest.UpdatedAt, opt => opt.Ignore())
             .ForMember(dest => dest.ProductRating, opt => opt.MapFrom(src => src.Rating));
 
-        CreateMap<Product, CreateProductResult>()
+        CreateMap<Product, ProductResult>()
             .ForMember(dest => dest.Rating, opt => opt.MapFrom(src => src.ProductRating));
 
         CreateMap<ProductRating, Rating>().ReverseMap();

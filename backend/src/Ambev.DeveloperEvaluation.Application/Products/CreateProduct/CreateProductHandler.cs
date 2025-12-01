@@ -1,4 +1,5 @@
-﻿using Ambev.DeveloperEvaluation.Domain.Entities;
+﻿using Ambev.DeveloperEvaluation.Application.Products.Common;
+using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using AutoMapper;
 using MediatR;
@@ -9,7 +10,7 @@ namespace Ambev.DeveloperEvaluation.Application.Products.CreateProduct;
 /// <summary>
 /// Handler for processing CreateProductCommand requests
 /// </summary>
-public class CreateProductHandler : IRequestHandler<CreateProductCommand, CreateProductResult>
+public class CreateProductHandler : IRequestHandler<CreateProductCommand, ProductResult>
 {
     private readonly IProductRepository _productRepository;
     private readonly IMapper _mapper;
@@ -37,7 +38,7 @@ public class CreateProductHandler : IRequestHandler<CreateProductCommand, Create
     /// <param name="command">The CreateProduct command</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The created product details</returns>
-    public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
+    public async Task<ProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
     {
         _logger.LogInformation("[INF] Starting CreateProductHandler execution");
 
@@ -46,6 +47,6 @@ public class CreateProductHandler : IRequestHandler<CreateProductCommand, Create
 
         _logger.LogInformation("[INF] Product (ProductId={ProductId}) created successfully", createdProduct.Id);
 
-        return _mapper.Map<CreateProductResult>(createdProduct);
+        return _mapper.Map<ProductResult>(createdProduct);
     }
 }

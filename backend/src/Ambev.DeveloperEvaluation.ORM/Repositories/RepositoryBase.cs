@@ -1,6 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Ambev.DeveloperEvaluation.Domain.Common;
+using Ambev.DeveloperEvaluation.Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using Ambev.DeveloperEvaluation.Domain.Common;
 
 namespace Ambev.DeveloperEvaluation.ORM.Repositories;
 
@@ -9,7 +10,7 @@ namespace Ambev.DeveloperEvaluation.ORM.Repositories;
 /// that inherits from BaseEntity.
 /// </summary>
 /// <typeparam name="TEntity">The type of the entity</typeparam>
-public abstract class RepositoryBase<TEntity> where TEntity : BaseEntity
+public abstract class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where TEntity : BaseEntity
 {
     protected readonly DbContext _context;
     protected readonly DbSet<TEntity> _dbSet;
@@ -46,10 +47,24 @@ public abstract class RepositoryBase<TEntity> where TEntity : BaseEntity
         return await _dbSet.FirstOrDefaultAsync(predicate, cancellationToken);
     }
 
-    public virtual async Task<TEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    public virtual async Task<TEntity?> GetByIdAsync(
+    Guid id,
+    CancellationToken cancellationToken = default,
+    params Expression<Func<TEntity, object>>[] includes)
     {
-        return await GetAsync(e => e.Id == id, cancellationToken);
+        IQueryable<TEntity> query = _dbSet;
+
+        if (includes != null && includes.Length > 0)
+        {
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+        }
+
+        return await query.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
     }
+
 
     public virtual async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
     {
