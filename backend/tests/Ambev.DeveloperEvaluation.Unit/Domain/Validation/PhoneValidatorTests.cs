@@ -1,4 +1,4 @@
-using Ambev.DeveloperEvaluation.Domain.Validation;
+using Ambev.DeveloperEvaluation.Application.Validation;
 using FluentAssertions;
 using Xunit;
 
@@ -14,19 +14,19 @@ namespace Ambev.DeveloperEvaluation.Unit.Domain.Validation
     public class PhoneValidatorTests
     {
         [Theory(DisplayName = "Given a phone number When validating Then should validate according to regex pattern")]
-        [InlineData("+123456789", true)]      // Valid - with plus prefix
-        [InlineData("123456789", true)]       // Valid - without plus prefix
-        [InlineData("+551199999999", true)]   // Valid - longer number
-        [InlineData("11999999999", true)]     // Valid - exactly 11 digits
-        [InlineData("999999999", true)]       // Valid - 9 digits
-        [InlineData("+0123456789", false)]    // Invalid - starts with 0 after plus
-        [InlineData("0123456789", false)]     // Invalid - starts with 0
-        [InlineData("+", false)]              // Invalid - only plus
-        [InlineData("+12345678901234567", false)] // Invalid - too long (>15 digits with plus)
-        [InlineData("12345678901234567", false)]  // Invalid - too long (>15 digits)
-        [InlineData("abc12345678", false)]    // Invalid - contains letters
-        [InlineData("12.34567890", false)]    // Invalid - contains special characters
-        [InlineData("", false)]               // Invalid - empty
+        [InlineData("+123456789", true)]
+        [InlineData("123456789", true)]
+        [InlineData("+551199999999", true)]
+        [InlineData("11999999999", true)]
+        [InlineData("999999999", true)]
+        [InlineData("+0123456789", false)]
+        [InlineData("0123456789", false)]
+        [InlineData("+", false)]
+        [InlineData("+12345678901234567", false)]
+        [InlineData("12345678901234567", false)]
+        [InlineData("abc12345678", false)]
+        [InlineData("12.34567890", false)]
+        [InlineData("", false)]
         public void Given_PhoneNumber_When_Validating_Then_ShouldValidateAccordingToPattern(string phone, bool expectedResult)
         {
             // Arrange

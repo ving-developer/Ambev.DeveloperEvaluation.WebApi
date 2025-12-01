@@ -63,7 +63,6 @@ public class CreateUserHandler : IRequestHandler<CreateUserCommand, CreateUserRe
 
         _logger.LogInformation("[INF] User (UserId={UserId}) created successfully", createdUser.Id);
 
-        var result = _mapper.Map<CreateUserResult>(createdUser);
-        return result;
+        return _mapper.Map<CreateUserResult>(createdUser);
     }
 }

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -26,6 +26,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Features\Products\DeleteProduct\" />
+    <Folder Include="Features\Products\GetProduct\" />
+    <Folder Include="Features\Products\ListProducts\" />
+    <Folder Include="Features\Products\UpdateProduct\" />
     <Folder Include="Features\Users\GetUser\" />
     <Folder Include="Features\Users\DeleteUser\" />
     <Folder Include="Features\Users\ListUsers\" />

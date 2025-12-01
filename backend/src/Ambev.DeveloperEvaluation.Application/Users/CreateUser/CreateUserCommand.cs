@@ -14,7 +14,7 @@ namespace Ambev.DeveloperEvaluation.Application.Users.CreateUser;
 /// that returns a <see cref="CreateUserResult"/>.
 /// 
 /// The data provided in this command is validated using the 
-/// <see cref="CreateUserCommandValidator"/> which extends 
+/// <see cref="CreateUserValidator"/> which extends 
 /// <see cref="AbstractValidator{T}"/> to ensure that the fields are correctly 
 /// populated and follow the required rules.
 /// </remarks>
