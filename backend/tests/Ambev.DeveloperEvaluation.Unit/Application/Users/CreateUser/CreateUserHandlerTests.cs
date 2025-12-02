@@ -1,4 +1,5 @@
 using Ambev.DeveloperEvaluation.Application.Products.CreateProduct;
+using Ambev.DeveloperEvaluation.Application.Users.Common;
 using Ambev.DeveloperEvaluation.Application.Users.CreateUser;
 using Ambev.DeveloperEvaluation.Application.Users.UpdateUser;
 using Ambev.DeveloperEvaluation.Common.Security;
@@ -55,10 +56,10 @@ public class CreateUserHandlerTests
             Role = command.Role
         };
 
-        var result = CreateUserResultTestData.GenerateFromUser(user);
+        var result = UserResultTestData.GenerateFromUser(user);
 
         _mapper.Map<User>(command).Returns(user);
-        _mapper.Map<CreateUserResult>(user).Returns(result);
+        _mapper.Map<UserResult>(user).Returns(result);
 
         _userRepository.CreateAsync(Arg.Any<User>(), Arg.Any<CancellationToken>())
             .Returns(user);

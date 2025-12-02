@@ -1,4 +1,4 @@
-using Ambev.DeveloperEvaluation.Application.Users.CreateUser;
+using Ambev.DeveloperEvaluation.Application.Users.Common;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 
 namespace Ambev.DeveloperEvaluation.Unit.Application.TestData.Users
@@ -8,7 +8,7 @@ namespace Ambev.DeveloperEvaluation.Unit.Application.TestData.Users
     /// This centralizes creation of result objects from a given <see cref="User"/> entity,
     /// ensuring consistency across tests.
     /// </summary>
-    public static class CreateUserResultTestData
+    public static class UserResultTestData
     {
         /// <summary>
         /// Generates a <see cref="CreateUserResult"/> from a given <see cref="User"/>.
@@ -16,11 +16,11 @@ namespace Ambev.DeveloperEvaluation.Unit.Application.TestData.Users
         /// </summary>
         /// <param name="user">The user entity to generate the result from.</param>
         /// <returns>A <see cref="CreateUserResult"/> populated with data from the user.</returns>
-        public static CreateUserResult GenerateFromUser(User user)
+        public static UserResult GenerateFromUser(User user)
         {
             if (user == null) throw new ArgumentNullException(nameof(user));
 
-            return new CreateUserResult
+            return new UserResult
             {
                 Id = user.Id,
                 Name = user.Username,

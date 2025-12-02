@@ -1,3 +1,4 @@
+using Ambev.DeveloperEvaluation.Application.Users.Common;
 using Ambev.DeveloperEvaluation.Application.Users.CreateUser;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Unit.Application.TestData.Users;
@@ -60,7 +61,7 @@ public class CreateUserProfileTests
         var user = UserTestData.GenerateValidUser();
 
         // When
-        var result = _mapper.Map<CreateUserResult>(user);
+        var result = _mapper.Map<UserResult>(user);
 
         // Then
         result.Should().NotBeNull();
