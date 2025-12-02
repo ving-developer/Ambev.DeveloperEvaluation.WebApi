@@ -1,5 +1,6 @@
-﻿using AutoMapper;
+﻿using Ambev.DeveloperEvaluation.Application.Users.Common;
 using Ambev.DeveloperEvaluation.Domain.Entities;
+using AutoMapper;
 
 namespace Ambev.DeveloperEvaluation.Application.Users.CreateUser;
 
@@ -18,7 +19,7 @@ public class CreateUserProfile : Profile
             .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
             .ForMember(dest => dest.UpdatedAt, opt => opt.Ignore());
 
-        CreateMap<User, CreateUserResult>()
+        CreateMap<User, UserResult>()
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Username));
     }
 }

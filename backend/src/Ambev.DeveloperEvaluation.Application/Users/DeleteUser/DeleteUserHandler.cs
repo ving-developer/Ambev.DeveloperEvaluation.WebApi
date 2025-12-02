@@ -1,5 +1,4 @@
 using Ambev.DeveloperEvaluation.Domain.Repositories;
-using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 

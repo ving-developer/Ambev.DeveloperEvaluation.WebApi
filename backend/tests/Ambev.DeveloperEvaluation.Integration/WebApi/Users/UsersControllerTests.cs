@@ -3,9 +3,10 @@ using Ambev.DeveloperEvaluation.Integration.Shared.Fixtures;
 using Ambev.DeveloperEvaluation.Integration.Shared.Helpers;
 using Ambev.DeveloperEvaluation.Integration.Shared.TestData.Users;
 using Ambev.DeveloperEvaluation.WebApi.Common;
+using Ambev.DeveloperEvaluation.WebApi.Features.Products;
 using Ambev.DeveloperEvaluation.WebApi.Features.Users;
+using Ambev.DeveloperEvaluation.WebApi.Features.Users.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Users.CreateUser;
-using Ambev.DeveloperEvaluation.WebApi.Features.Users.GetUser;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Xunit;
@@ -54,7 +55,7 @@ public class UsersControllerTests : IntegrationTestBase
             .Which;
 
         var response = ok.Value.Should()
-            .BeAssignableTo<ApiResponseWithData<GetUserResponse>>()
+            .BeAssignableTo<ApiResponseWithData<UserResponse>>()
             .Which;
 
         response.Data!.Id.Should().Be(IntegrationTestConstants.InitialUserId);
@@ -117,11 +118,11 @@ public class UsersControllerTests : IntegrationTestBase
     #endregion
 
     #region PRIVATE METHODS
-    private static CreateUserResponse ExtractCreatedUserResponse(IActionResult result)
+    private static UserResponse ExtractCreatedUserResponse(IActionResult result)
     {
         var createdObject = result as CreatedAtRouteResult;
 
-        var responseWrapper = createdObject!.Value as ApiResponseWithData<CreateUserResponse>;
+        var responseWrapper = createdObject!.Value as ApiResponseWithData<UserResponse>;
 
         return responseWrapper!.Data!;
     }

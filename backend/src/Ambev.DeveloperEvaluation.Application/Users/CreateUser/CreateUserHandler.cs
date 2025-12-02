@@ -1,8 +1,8 @@
-﻿using Ambev.DeveloperEvaluation.Common.Security;
+﻿using Ambev.DeveloperEvaluation.Application.Users.Common;
+using Ambev.DeveloperEvaluation.Common.Security;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using AutoMapper;
-using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -11,7 +11,7 @@ namespace Ambev.DeveloperEvaluation.Application.Users.CreateUser;
 /// <summary>
 /// Handler for processing CreateUserCommand requests
 /// </summary>
-public class CreateUserHandler : IRequestHandler<CreateUserCommand, CreateUserResult>
+public class CreateUserHandler : IRequestHandler<CreateUserCommand, UserResult>
 {
     private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
@@ -42,7 +42,7 @@ public class CreateUserHandler : IRequestHandler<CreateUserCommand, CreateUserRe
     /// <param name="command">The CreateUser command</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The created user details</returns>
-    public async Task<CreateUserResult> Handle(CreateUserCommand command, CancellationToken cancellationToken)
+    public async Task<UserResult> Handle(CreateUserCommand command, CancellationToken cancellationToken)
     {
         _logger.LogInformation("[INF] Starting CreateUserHandler execution");
 
@@ -63,7 +63,6 @@ public class CreateUserHandler : IRequestHandler<CreateUserCommand, CreateUserRe
 
         _logger.LogInformation("[INF] User (UserId={UserId}) created successfully", createdUser.Id);
 
-        var result = _mapper.Map<CreateUserResult>(createdUser);
-        return result;
+        return _mapper.Map<UserResult>(createdUser);
     }
 }

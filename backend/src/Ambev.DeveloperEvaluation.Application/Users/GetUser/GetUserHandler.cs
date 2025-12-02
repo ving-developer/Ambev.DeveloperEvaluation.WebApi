@@ -1,6 +1,6 @@
+using Ambev.DeveloperEvaluation.Application.Users.Common;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using AutoMapper;
-using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -9,7 +9,7 @@ namespace Ambev.DeveloperEvaluation.Application.Users.GetUser;
 /// <summary>
 /// Handler for processing GetUserCommand requests
 /// </summary>
-public class GetUserHandler : IRequestHandler<GetUserCommand, GetUserResult>
+public class GetUserHandler : IRequestHandler<GetUserCommand, UserResult>
 {
     private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
@@ -37,7 +37,7 @@ public class GetUserHandler : IRequestHandler<GetUserCommand, GetUserResult>
     /// <param name="request">The GetUser command</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The user details if found</returns>
-    public async Task<GetUserResult> Handle(GetUserCommand request, CancellationToken cancellationToken)
+    public async Task<UserResult> Handle(GetUserCommand request, CancellationToken cancellationToken)
     {
         _logger.LogInformation("[INF] Starting GetUserHandler for UserId={UserId}", request.Id);
 
@@ -50,6 +50,6 @@ public class GetUserHandler : IRequestHandler<GetUserCommand, GetUserResult>
 
         _logger.LogInformation("[INF] User retrieved successfully. UserId={UserId}", request.Id);
 
-        return _mapper.Map<GetUserResult>(user);
+        return _mapper.Map<UserResult>(user);
     }
 }

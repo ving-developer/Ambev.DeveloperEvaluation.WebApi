@@ -1,14 +1,14 @@
 using Ambev.DeveloperEvaluation.Domain.Enums;
 
-namespace Ambev.DeveloperEvaluation.WebApi.Features.Users.CreateUser;
+namespace Ambev.DeveloperEvaluation.Application.Users.Common;
 
 /// <summary>
-/// API response model for CreateUser operation
+/// Response model for GetUser operation
 /// </summary>
-public class CreateUserResponse
+public class UserResult
 {
     /// <summary>
-    /// The unique identifier of the created user
+    /// The unique identifier of the user
     /// </summary>
     public Guid Id { get; set; }
 
@@ -25,7 +25,7 @@ public class CreateUserResponse
     /// <summary>
     /// The user's phone number
     /// </summary>
-    public string Phone { get; set; } = string.Empty;
+    public string Phone { get; set; } = string.Empty;   
 
     /// <summary>
     /// The user's role in the system

@@ -1,6 +1,7 @@
+using Ambev.DeveloperEvaluation.Application.Users.Common;
 using Ambev.DeveloperEvaluation.Application.Users.CreateUser;
-using Ambev.DeveloperEvaluation.Application.Users.GetUser;
-using Ambev.DeveloperEvaluation.WebApi.Features.Users.GetUser;
+using Ambev.DeveloperEvaluation.Application.Users.UpdateUser;
+using Ambev.DeveloperEvaluation.WebApi.Features.Users.Common;
 using AutoMapper;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Users.CreateUser;
@@ -16,7 +17,6 @@ public class CreateUserProfile : Profile
     public CreateUserProfile()
     {
         CreateMap<CreateUserRequest, CreateUserCommand>();
-        CreateMap<CreateUserResult, CreateUserResponse>();
-        CreateMap<GetUserResult, GetUserResponse>();
+        CreateMap<UserResult, UserResponse>();
     }
 }
