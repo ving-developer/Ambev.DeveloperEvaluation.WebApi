@@ -1,3 +1,4 @@
+using Ambev.DeveloperEvaluation.Application.Users.Common;
 using Ambev.DeveloperEvaluation.Application.Users.GetUser;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Enums;
@@ -32,7 +33,7 @@ namespace Ambev.DeveloperEvaluation.Unit.Application.Users.GetUser
         }
 
         /// <summary>
-        /// Tests that mapping from <see cref="User"/> to <see cref="GetUserResult"/> works correctly.
+        /// Tests that mapping from <see cref="User"/> to <see cref="UserResult"/> works correctly.
         /// </summary>
         [Fact(DisplayName = "User to GetUserResult mapping should map properties correctly")]
         public void User_To_GetUserResult_Mapping_ShouldMapPropertiesCorrectly()
@@ -41,7 +42,7 @@ namespace Ambev.DeveloperEvaluation.Unit.Application.Users.GetUser
             var user = UserTestData.GenerateValidUser();
 
             // When
-            var result = _mapper.Map<GetUserResult>(user);
+            var result = _mapper.Map<UserResult>(user);
 
             // Then
             result.Should().NotBeNull();

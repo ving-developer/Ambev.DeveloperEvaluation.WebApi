@@ -1,4 +1,5 @@
-﻿using Ambev.DeveloperEvaluation.Domain.Common;
+﻿using Ambev.DeveloperEvaluation.Common.Pagination;
+using Ambev.DeveloperEvaluation.Domain.Common;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
@@ -82,5 +83,41 @@ public abstract class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where T
             query = query.Where(predicate);
 
         return await query.ToListAsync(cancellationToken);
+    }
+
+    public async Task<PaginatedResponse<TEntity>> GetPaginatedAsync(
+        Expression<Func<TEntity, bool>>? predicate,
+        int pageNumber,
+        int pageSize,
+        string? orderBy = null,
+        CancellationToken cancellationToken = default)
+    {
+        IQueryable<TEntity> query = _dbSet;
+
+        if (predicate != null)
+            query = query.Where(predicate);
+
+        if (!string.IsNullOrWhiteSpace(orderBy))
+        {
+            var param = Expression.Parameter(typeof(TEntity), "x");
+            var property = Expression.PropertyOrField(param, orderBy);
+            var lambda = Expression.Lambda(property, param);
+
+            var method = typeof(Queryable).GetMethods()
+                .First(m => m.Name == "OrderBy" && m.GetParameters().Length == 2)
+                .MakeGenericMethod(typeof(TEntity), property.Type);
+
+            query = (IQueryable<TEntity>)method.Invoke(null, [query, lambda])!;
+        }
+        else
+        {
+            query = query.OrderBy(x => EF.Property<object>(x, "Id"));
+        }
+
+        var count = await query.CountAsync(cancellationToken);
+        var totalPages = (int)Math.Ceiling(count / (double)pageSize);
+        var items = await query.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync(cancellationToken);
+
+        return new PaginatedResponse<TEntity>(items, pageNumber, totalPages, count);
     }
 }

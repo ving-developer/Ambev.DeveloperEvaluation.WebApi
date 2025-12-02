@@ -1,4 +1,5 @@
-﻿using Ambev.DeveloperEvaluation.Domain.Common;
+﻿using Ambev.DeveloperEvaluation.Common.Pagination;
+using Ambev.DeveloperEvaluation.Domain.Common;
 using System.Linq.Expressions;
 
 namespace Ambev.DeveloperEvaluation.Domain.Repositories;
@@ -66,4 +67,20 @@ public interface IRepositoryBase<TEntity> where TEntity : BaseEntity
     /// <param name="cancellationToken">Optional cancellation token.</param>
     /// <returns>A list of entities matching the filter.</returns>
     Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>>? predicate = null, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Retrieves a paginated list of entities optionally filtered by a predicate.
+    /// </summary>
+    /// <param name="pageNumber">Page number (1-based).</param>
+    /// <param name="pageSize">Number of items per page.</param>
+    /// <param name="predicate">Optional filter expression.</param>
+    /// <param name="orderBy">Optional ordering string property.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>A <see cref="PaginatedResponse{TEntity}"/> containing the paged items.</returns>
+    Task<PaginatedResponse<TEntity>> GetPaginatedAsync(
+        Expression<Func<TEntity, bool>>? predicate,
+        int pageNumber,
+        int pageSize,
+        string? orderBy = null,
+        CancellationToken cancellationToken = default);
 }

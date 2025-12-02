@@ -1,4 +1,5 @@
-﻿using Ambev.DeveloperEvaluation.Integration.Shared.Fixtures;
+﻿using Ambev.DeveloperEvaluation.Common.Pagination;
+using Ambev.DeveloperEvaluation.Integration.Shared.Fixtures;
 using Ambev.DeveloperEvaluation.Integration.Shared.Helpers;
 using Ambev.DeveloperEvaluation.WebApi.Common;
 using FluentAssertions;
@@ -161,7 +162,7 @@ public class BaseControllerTests : IntegrationTestBase
         // Given
         var controller = new TestController();
         var items = new List<string> { "A", "B", "C" };
-        var paginatedList = new PaginatedList<string>(items, count: 3, pageNumber: 1, pageSize: 10);
+        var paginatedList = new PaginatedResponse<string>(items, 1, 1, 3);
 
         // When
         var result = controller.OkPaginatedPublic(paginatedList);
@@ -191,7 +192,7 @@ public class BaseControllerTests : IntegrationTestBase
         public IActionResult CreatedPublic<T>(string routeName, object routeValues, T data) => base.Created(routeName, routeValues, data);
         public IActionResult BadRequestPublic(string message) => base.BadRequest(message);
         public IActionResult NotFoundPublic(string message = "Resource not found") => base.NotFound(message);
-        public IActionResult OkPaginatedPublic<T>(PaginatedList<T> pagedList) => base.OkPaginated(pagedList);
+        public IActionResult OkPaginatedPublic<T>(PaginatedResponse<T> pagedList) => base.OkPaginated(pagedList);
     }
     #endregion
 }

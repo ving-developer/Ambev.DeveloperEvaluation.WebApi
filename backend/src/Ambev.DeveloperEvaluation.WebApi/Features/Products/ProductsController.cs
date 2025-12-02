@@ -1,9 +1,12 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Products.CreateProduct;
 using Ambev.DeveloperEvaluation.Application.Products.DeleteProduct;
 using Ambev.DeveloperEvaluation.Application.Products.GetProduct;
+using Ambev.DeveloperEvaluation.Application.Products.ListProducts;
+using Ambev.DeveloperEvaluation.Common.Pagination;
 using Ambev.DeveloperEvaluation.WebApi.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.CreateProduct;
+using Ambev.DeveloperEvaluation.WebApi.Features.Products.ListProducts;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -87,6 +90,25 @@ public class ProductsController : BaseController
             Success = true,
             Message = "Product deleted successfully"
         });
+    }
+
+    /// <summary>
+    /// Retrieves a paginated list of products
+    /// </summary>
+    /// <param name="request">Request params containing the search query params</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>Paged list of products</returns>
+    [HttpGet]
+    [ProducesResponseType(typeof(PaginatedResponse<ProductResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> ListProducts(
+        [FromQuery] ListProductsRequest request,
+        CancellationToken cancellationToken)
+    {
+        var command = _mapper.Map<ListProductsCommand>(request);
+        var response = await _mediator.Send(command, cancellationToken);
+
+        return OkPaginated(response);
     }
 
 }

@@ -1,3 +1,4 @@
+using Ambev.DeveloperEvaluation.Application.Users.Common;
 using Ambev.DeveloperEvaluation.Application.Users.GetUser;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
@@ -36,7 +37,7 @@ namespace Ambev.DeveloperEvaluation.Unit.Application.Users.GetUser
             var user = UserTestData.GenerateValidUser();
             user.Id = command.Id;
 
-            var expectedResult = new GetUserResult
+            var expectedResult = new UserResult
             {
                 Id = user.Id,
                 Name = user.Username,
@@ -48,7 +49,7 @@ namespace Ambev.DeveloperEvaluation.Unit.Application.Users.GetUser
 
             _userRepository.GetByIdAsync(user.Id, Arg.Any<CancellationToken>())
                 .Returns(user);
-            _mapper.Map<GetUserResult>(user).Returns(expectedResult);
+            _mapper.Map<UserResult>(user).Returns(expectedResult);
 
             // When
             var result = await _handler.Handle(command, CancellationToken.None);
@@ -59,7 +60,7 @@ namespace Ambev.DeveloperEvaluation.Unit.Application.Users.GetUser
             result.Name.Should().Be(user.Username);
             result.Email.Should().Be(user.Email);
             await _userRepository.Received(1).GetByIdAsync(user.Id, Arg.Any<CancellationToken>());
-            _mapper.Received(1).Map<GetUserResult>(user);
+            _mapper.Received(1).Map<UserResult>(user);
         }
 
         [Fact(DisplayName = "Given non-existing user ID When getting user Then throws KeyNotFoundException")]
