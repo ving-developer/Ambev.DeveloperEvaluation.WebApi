@@ -16,9 +16,5 @@ public record ListUsersCommand : PaginationParams, IRequest<PaginatedResponse<Us
     /// <param name="pageSize">Number of items per page</param>
     /// <param name="orderBy">Optional ordering</param>
     public ListUsersCommand(int page = 1, int pageSize = 10, string? orderBy = null)
-    {
-        Page = page;
-        PageSize = pageSize;
-        OrderBy = orderBy;
-    }
+        : base(page, pageSize, orderBy) { }
 }

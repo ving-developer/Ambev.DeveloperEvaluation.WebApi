@@ -35,7 +35,9 @@ public class DeleteProductHandler : IRequestHandler<DeleteProductCommand, Delete
     {
         _logger.LogInformation("[INF] Starting DeleteProductHandler for ProductId={ProductId}", request.Id);
 
-        var success = await _productRepository.DeleteAsync(request.Id, cancellationToken);
+        await _productRepository.DeleteAsync(request.Id, cancellationToken);
+
+        var success = await _productRepository.SaveChangesAsync(cancellationToken);
 
         if (!success)
         {

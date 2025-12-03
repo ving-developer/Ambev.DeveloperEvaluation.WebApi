@@ -11,10 +11,7 @@ public class BranchConfiguration : IEntityTypeConfiguration<Branch>
         builder.ToTable("Branches");
 
         builder.HasKey(b => b.Id);
-        builder.Property(b => b.Id)
-            .HasColumnType("uuid")
-            .HasDefaultValueSql("gen_random_uuid()")
-            .ValueGeneratedNever();
+        builder.Property(u => u.Id).HasColumnType("uuid").HasDefaultValueSql("gen_random_uuid()");
 
         builder.Property(b => b.Name)
             .IsRequired()

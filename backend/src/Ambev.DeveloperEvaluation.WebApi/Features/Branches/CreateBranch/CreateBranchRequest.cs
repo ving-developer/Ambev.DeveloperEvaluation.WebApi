@@ -1,39 +1,31 @@
-﻿using Ambev.DeveloperEvaluation.Domain.Enums;
-
-namespace Ambev.DeveloperEvaluation.WebApi.Features.Branches.CreateBranch;
+﻿namespace Ambev.DeveloperEvaluation.WebApi.Features.Branches.CreateBranch;
 
 /// <summary>
-/// Represents a request to create a new user in the system.
+/// Represents a request to create a new branch in the system.
 /// </summary>
 public record CreateBranchRequest
 {
     /// <summary>
-    /// Gets or sets the username. Must be unique and contain only valid characters.
+    /// Gets or sets the name of the branch. Must be between 2 and 100 characters.
     /// </summary>
-    public string Username { get; set; } = string.Empty;
+    /// <example>São Paulo Centro</example>
+    public string Name { get; set; } = string.Empty;
 
     /// <summary>
-    /// Gets or sets the password. Must meet security requirements.
+    /// Gets or sets the unique code of the branch. Must follow format XX-001.
     /// </summary>
-    public string Password { get; set; } = string.Empty;
+    /// <example>SP-001</example>
+    public string Code { get; set; } = string.Empty;
 
     /// <summary>
-    /// Gets or sets the phone number in format (XX) XXXXX-XXXX.
+    /// Gets or sets the city where the branch is located.
     /// </summary>
-    public string Phone { get; set; } = string.Empty;
+    /// <example>São Paulo</example>
+    public string City { get; set; } = string.Empty;
 
     /// <summary>
-    /// Gets or sets the email address. Must be a valid email format.
+    /// Gets or sets the state where the branch is located. Must be a 2-letter Brazilian state abbreviation.
     /// </summary>
-    public string Email { get; set; } = string.Empty;
-
-    /// <summary>
-    /// Gets or sets the initial status of the user account.
-    /// </summary>
-    public UserStatus Status { get; set; }
-
-    /// <summary>
-    /// Gets or sets the role assigned to the user.
-    /// </summary>
-    public UserRole Role { get; set; }
+    /// <example>SP</example>
+    public string State { get; set; } = string.Empty;
 }

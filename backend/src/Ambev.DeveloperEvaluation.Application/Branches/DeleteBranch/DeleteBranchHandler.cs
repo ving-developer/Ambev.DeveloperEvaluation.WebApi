@@ -35,7 +35,9 @@ public class DeleteBranchHandler : IRequestHandler<DeleteBranchCommand, bool>
     {
         _logger.LogInformation("[INF] Starting DeleteBranchHandler for BranchId={BranchId}", request.Id);
 
-        var success = await _branchRepository.DeleteAsync(request.Id, cancellationToken);
+        await _branchRepository.DeleteAsync(request.Id, cancellationToken);
+
+        var success = await _branchRepository.SaveChangesAsync(cancellationToken);
 
         if (!success)
         {

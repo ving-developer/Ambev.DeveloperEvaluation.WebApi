@@ -1,21 +1,21 @@
-using Ambev.DeveloperEvaluation.Application.Users.Common;
-using Ambev.DeveloperEvaluation.Application.Users.CreateUser;
-using Ambev.DeveloperEvaluation.WebApi.Features.Users.Common;
+using Ambev.DeveloperEvaluation.Application.Branches.Common;
+using Ambev.DeveloperEvaluation.Application.Branches.CreateBranch;
+using Ambev.DeveloperEvaluation.WebApi.Features.Branches.Common;
 using AutoMapper;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Branches.CreateBranch;
 
 /// <summary>
-/// Profile for mapping between Application and API CreateUser responses
+/// Profile for mapping between Application and API CreateBranch responses
 /// </summary>
 public class CreateBranchProfile : Profile
 {
     /// <summary>
-    /// Initializes the mappings for CreateUser feature
+    /// Initializes the mappings for CreateBranch feature
     /// </summary>
     public CreateBranchProfile()
     {
-        CreateMap<CreateBranchRequest, CreateUserCommand>();
-        CreateMap<UserResult, UserResponse>();
+        CreateMap<CreateBranchRequest, CreateBranchCommand>();
+        CreateMap<BranchResult, BranchResponse>();
     }
 }

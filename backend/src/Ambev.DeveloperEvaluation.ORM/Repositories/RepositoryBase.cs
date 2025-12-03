@@ -29,7 +29,7 @@ public abstract class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where T
         return Task.FromResult(entity);
     }
 
-    public virtual Task<bool> DeleteAsync(TEntity entity, CancellationToken cancellationToken = default)
+    public virtual Task DeleteAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
         _dbSet.Remove(entity);
         return Task.FromResult(true);
@@ -53,18 +53,18 @@ public abstract class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where T
         return await query.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
     }
 
-    public virtual async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
+    public virtual async Task DeleteAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var entity = await GetByIdAsync(id, cancellationToken);
-        if (entity == null) return false;
+        if (entity == null)
+            throw new InvalidOperationException("Key to delete has not found.");
 
         _dbSet.Remove(entity);
-        return true;
     }
 
-    public virtual async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    public virtual async Task<bool> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        return await _context.SaveChangesAsync(cancellationToken);
+        return await _context.SaveChangesAsync(cancellationToken) > 0;
     }
 
     public virtual async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)

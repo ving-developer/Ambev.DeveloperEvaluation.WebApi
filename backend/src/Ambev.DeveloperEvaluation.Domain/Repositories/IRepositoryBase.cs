@@ -33,7 +33,7 @@ public interface IRepositoryBase<TEntity> where TEntity : BaseEntity
     /// <param name="entity">The entity to delete.</param>
     /// <param name="cancellationToken">Optional cancellation token.</param>
     /// <returns>True if deletion was successful, otherwise false.</returns>
-    Task<bool> DeleteAsync(TEntity entity, CancellationToken cancellationToken = default);
+    Task DeleteAsync(TEntity entity, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes an entity by its unique identifier.
@@ -41,12 +41,12 @@ public interface IRepositoryBase<TEntity> where TEntity : BaseEntity
     /// <param name="id">The unique identifier of the entity to delete.</param>
     /// <param name="cancellationToken">Optional cancellation token.</param>
     /// <returns>True if deletion was successful, otherwise false.</returns>
-    Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken = default);
+    Task DeleteAsync(Guid id, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Saves all changes made in the repository.
     /// </summary>
-    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+    Task<bool> SaveChangesAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Retrieves a single entity matching the specified predicate.

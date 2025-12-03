@@ -35,7 +35,9 @@ public class DeleteCartHandler : IRequestHandler<DeleteCartCommand, DeleteCartRe
     {
         _logger.LogInformation("[INF] Starting DeleteUserHandler for UserId={UserId}", request.Id);
 
-        var success = await _userRepository.DeleteAsync(request.Id, cancellationToken);
+        await _userRepository.DeleteAsync(request.Id, cancellationToken);
+
+        var success = await _userRepository.SaveChangesAsync(cancellationToken);
 
         if (!success)
         {
