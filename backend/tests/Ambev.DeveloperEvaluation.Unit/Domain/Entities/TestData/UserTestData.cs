@@ -47,7 +47,7 @@ public static class UserTestData
     public static User GenerateSuspendedUser()
     {
         var user = UserFaker.Generate();
-        user.Status = UserStatus.Suspended;
+        user.SetStatus(UserStatus.Suspended);
         return user;
     }
 

@@ -23,14 +23,15 @@ public static class ActiveUserSpecificationTestData
     /// Status is not set here as it's the main test parameter
     /// </summary>
     private static readonly Faker<User> userFaker = new Faker<User>()
-        .CustomInstantiator(f => new User {
-            Email = f.Internet.Email(),
-            Password = $"Test@{f.Random.Number(100, 999)}",
-            Username = f.Name.FirstName(),
-            Status = f.PickRandom<UserStatus>(),
-            Phone = $"+55{f.Random.Number(11, 99)}{f.Random.Number(100000000, 999999999)}",
-            Role = f.PickRandom<UserRole> ()
-        });
+    .CustomInstantiator(f => new User(
+        Guid.NewGuid(),
+        f.Name.FirstName().ToLowerInvariant(),
+        f.Internet.Email().ToLowerInvariant(),
+        $"+55{f.Random.Number(11, 99)}{f.Random.Number(100000000, 999999999)}",
+        $"Test@{f.Random.Number(100, 999)}",
+        f.PickRandom<UserRole>(),
+        f.PickRandom<UserStatus>()
+    ));
 
     /// <summary>
     /// Generates a valid User entity with the specified status.
@@ -40,7 +41,7 @@ public static class ActiveUserSpecificationTestData
     public static User GenerateUser(UserStatus status)
     {
         var user = userFaker.Generate();
-        user.Status = status;
+        user.SetStatus(status);
         return user;
     }
 }

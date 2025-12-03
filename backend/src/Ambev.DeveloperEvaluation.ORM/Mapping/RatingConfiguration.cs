@@ -15,15 +15,15 @@ public class RatingConfiguration : IEntityTypeConfiguration<Rating>
                .HasColumnType("uuid")
                .HasDefaultValueSql("gen_random_uuid()");
 
+        builder.Property(r => r.ProductId)
+               .IsRequired()
+               .HasColumnType("uuid");
+
         builder.Property(r => r.Rate)
                .HasColumnType("decimal(5,2)")
                .IsRequired();
 
         builder.Property(r => r.Count)
                .IsRequired();
-
-        builder.Property(r => r.ProductId)
-               .IsRequired()
-               .HasColumnType("uuid");
     }
 }

@@ -45,16 +45,14 @@ public class CreateUserHandlerTests
     {
         // Given
         var command = CreateUserHandlerTestData.GenerateValidCommand();
-        var user = new User
-        {
-            Id = Guid.NewGuid(),
-            Username = command.Username,
-            Password = command.Password,
-            Email = command.Email,
-            Phone = command.Phone,
-            Status = command.Status,
-            Role = command.Role
-        };
+        var user = new User(
+            Guid.NewGuid(),
+            command.Username,
+            command.Email,
+            command.Phone,
+            command.Password,
+            command.Role,
+            command.Status);
 
         var result = UserResultTestData.GenerateFromUser(user);
 
@@ -84,16 +82,14 @@ public class CreateUserHandlerTests
         var command = CreateUserHandlerTestData.GenerateValidCommand();
         var originalPassword = command.Password;
         const string hashedPassword = "h@shedPassw0rd";
-        var user = new User
-        {
-            Id = Guid.NewGuid(),
-            Username = command.Username,
-            Password = command.Password,
-            Email = command.Email,
-            Phone = command.Phone,
-            Status = command.Status,
-            Role = command.Role
-        };
+        var user = new User(
+            Guid.NewGuid(),
+            command.Username,
+            command.Email,
+            command.Phone,
+            command.Password,
+            command.Role,
+            command.Status);
 
         _mapper.Map<User>(command).Returns(user);
         _userRepository.CreateAsync(Arg.Any<User>(), Arg.Any<CancellationToken>())
@@ -118,16 +114,14 @@ public class CreateUserHandlerTests
     {
         // Given
         var command = CreateUserHandlerTestData.GenerateValidCommand();
-        var user = new User
-        {
-            Id = Guid.NewGuid(),
-            Username = command.Username,
-            Password = command.Password,
-            Email = command.Email,
-            Phone = command.Phone,
-            Status = command.Status,
-            Role = command.Role
-        };
+        var user = new User(
+            Guid.NewGuid(),
+            command.Username,
+            command.Email,
+            command.Phone,
+            command.Password,
+            command.Role,
+            command.Status);
 
         _mapper.Map<User>(command).Returns(user);
         _userRepository.CreateAsync(Arg.Any<User>(), Arg.Any<CancellationToken>())
@@ -156,7 +150,7 @@ public class CreateUserHandlerTests
         var command = CreateUserHandlerTestData.GenerateValidCommand();
 
         var existingUser = UserTestData.GenerateValidUser();
-        existingUser.Email = command.Email;
+        existingUser.SetEmail(command.Email);
 
         _userRepository.GetByEmailAsync(command.Email, Arg.Any<CancellationToken>())
             .Returns(existingUser);

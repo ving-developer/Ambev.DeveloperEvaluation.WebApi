@@ -35,8 +35,7 @@ namespace Ambev.DeveloperEvaluation.Unit.Application.Users.DeleteUser
             var response = await _handler.Handle(command, CancellationToken.None);
 
             // Then
-            response.Should().NotBeNull();
-            response.Success.Should().BeTrue();
+            response.Should().Be(true);
             await _userRepository.Received(1).DeleteAsync(command.Id, Arg.Any<CancellationToken>());
         }
 

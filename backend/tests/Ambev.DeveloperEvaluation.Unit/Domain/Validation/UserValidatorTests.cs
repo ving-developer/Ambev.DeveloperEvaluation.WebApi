@@ -60,7 +60,7 @@ public class UserValidatorTests
     {
         // Arrange
         var user = UserTestData.GenerateValidUser();
-        user.Username = username;
+        user.SetUsername(username);
 
         // Act
         var result = _validator.TestValidate(user);
@@ -80,7 +80,7 @@ public class UserValidatorTests
     {
         // Arrange
         var user = UserTestData.GenerateValidUser();
-        user.Username = UserTestData.GenerateLongUsername();
+        user.SetUsername(UserTestData.GenerateLongUsername());
 
         // Act
         var result = _validator.TestValidate(user);
@@ -103,7 +103,7 @@ public class UserValidatorTests
     {
         // Arrange
         var user = UserTestData.GenerateValidUser();
-        user.Email = UserTestData.GenerateInvalidEmail();
+        user.SetUsername(UserTestData.GenerateInvalidEmail());
 
         // Act
         var result = _validator.TestValidate(user);
@@ -128,7 +128,7 @@ public class UserValidatorTests
     {
         // Arrange
         var user = UserTestData.GenerateValidUser();
-        user.Password = UserTestData.GenerateInvalidPassword();
+        user.SetPassword(UserTestData.GenerateInvalidPassword());
 
         // Act
         var result = _validator.TestValidate(user);
@@ -151,7 +151,7 @@ public class UserValidatorTests
     {
         // Arrange
         var user = UserTestData.GenerateValidUser();
-        user.Phone = UserTestData.GenerateInvalidPhone();
+        user.SetPhone(UserTestData.GenerateInvalidPhone());
 
         // Act
         var result = _validator.TestValidate(user);
@@ -173,7 +173,7 @@ public class UserValidatorTests
     {
         // Arrange
         var user = UserTestData.GenerateValidUser();
-        user.Status = UserStatus.Unknown;
+        user.SetStatus(UserStatus.Unknown);
 
         // Act
         var result = _validator.TestValidate(user);
@@ -195,7 +195,7 @@ public class UserValidatorTests
     {
         // Arrange
         var user = UserTestData.GenerateValidUser();
-        user.Role = UserRole.None;
+        user.SetRole(UserRole.None);
 
         // Act
         var result = _validator.TestValidate(user);

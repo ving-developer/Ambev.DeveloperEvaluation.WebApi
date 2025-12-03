@@ -104,8 +104,8 @@ public class IntegrationTestFactory : WebApplicationFactory<Program>, IAsyncLife
             var hasher = new BCryptPasswordHasher();
             var user = UserTestData.GetValidUser();
 
-            user.Email = IntegrationTestConstants.InitialUserEmail;
-            user.Password = hasher.HashPassword(IntegrationTestConstants.InitialUserPassword);
+            user.SetEmail(IntegrationTestConstants.InitialUserEmail);
+            user.SetPassword(hasher.HashPassword(IntegrationTestConstants.InitialUserPassword));
             user.Id = IntegrationTestConstants.InitialUserId;
 
             db.Users.Add(user);

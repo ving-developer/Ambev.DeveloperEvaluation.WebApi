@@ -48,7 +48,6 @@ public class AuthenticateUserHandlerTests
         var command = AuthenticateUserHandlerTestData.GenerateValidCommand();
         command.Email = user.Email;
         command.Password = user.Password;
-        user.Password = command.Password;
 
         _userRepository.GetByEmailAsync(command.Email, Arg.Any<CancellationToken>()).Returns(user);
         _passwordHasher.VerifyPassword(command.Password, user.Password).Returns(true);
@@ -129,7 +128,6 @@ public class AuthenticateUserHandlerTests
         var command = AuthenticateUserHandlerTestData.GenerateValidCommand();
         command.Email = user.Email;
         command.Password = user.Password;
-        user.Password = command.Password;
 
         _userRepository.GetByEmailAsync(command.Email, Arg.Any<CancellationToken>()).Returns(user);
         _passwordHasher.VerifyPassword(command.Password, user.Password).Returns(true);
