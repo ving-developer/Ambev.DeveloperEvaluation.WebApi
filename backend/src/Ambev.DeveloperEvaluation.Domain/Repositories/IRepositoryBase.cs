@@ -44,6 +44,11 @@ public interface IRepositoryBase<TEntity> where TEntity : BaseEntity
     Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Saves all changes made in the repository.
+    /// </summary>
+    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// Retrieves a single entity matching the specified predicate.
     /// </summary>
     /// <param name="predicate">The filter expression to locate the entity.</param>

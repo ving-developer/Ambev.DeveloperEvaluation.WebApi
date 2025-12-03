@@ -6,11 +6,6 @@ using System.Linq.Expressions;
 
 namespace Ambev.DeveloperEvaluation.ORM.Repositories;
 
-/// <summary>
-/// Base repository that implements common CRUD operations for any entity
-/// that inherits from BaseEntity.
-/// </summary>
-/// <typeparam name="TEntity">The type of the entity</typeparam>
 public abstract class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where TEntity : BaseEntity
 {
     protected readonly DbContext _context;
@@ -25,33 +20,25 @@ public abstract class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where T
     public virtual async Task<TEntity> CreateAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
         await _dbSet.AddAsync(entity, cancellationToken);
-        await _context.SaveChangesAsync(cancellationToken);
         return entity;
     }
 
-    public virtual async Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default)
+    public virtual Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
         _dbSet.Update(entity);
-        await _context.SaveChangesAsync(cancellationToken);
-        return entity;
+        return Task.FromResult(entity);
     }
 
-    public virtual async Task<bool> DeleteAsync(TEntity entity, CancellationToken cancellationToken = default)
+    public virtual Task<bool> DeleteAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
         _dbSet.Remove(entity);
-        await _context.SaveChangesAsync(cancellationToken);
-        return true;
-    }
-
-    public virtual async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
-    {
-        return await _dbSet.FirstOrDefaultAsync(predicate, cancellationToken);
+        return Task.FromResult(true);
     }
 
     public virtual async Task<TEntity?> GetByIdAsync(
-    Guid id,
-    CancellationToken cancellationToken = default,
-    params Expression<Func<TEntity, object>>[] includes)
+        Guid id,
+        CancellationToken cancellationToken = default,
+        params Expression<Func<TEntity, object>>[] includes)
     {
         IQueryable<TEntity> query = _dbSet;
 
@@ -66,12 +53,23 @@ public abstract class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where T
         return await query.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
     }
 
-
     public virtual async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var entity = await GetByIdAsync(id, cancellationToken);
         if (entity == null) return false;
-        return await DeleteAsync(entity, cancellationToken);
+
+        _dbSet.Remove(entity);
+        return true;
+    }
+
+    public virtual async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        return await _context.SaveChangesAsync(cancellationToken);
+    }
+
+    public virtual async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
+    {
+        return await _dbSet.FirstOrDefaultAsync(predicate, cancellationToken);
     }
 
     public virtual async Task<List<TEntity>> GetAllAsync(
