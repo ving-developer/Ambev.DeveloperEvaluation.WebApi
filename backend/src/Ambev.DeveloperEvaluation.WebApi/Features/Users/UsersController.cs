@@ -1,7 +1,7 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Users.CreateUser;
 using Ambev.DeveloperEvaluation.Application.Users.DeleteUser;
 using Ambev.DeveloperEvaluation.Application.Users.GetUser;
-using Ambev.DeveloperEvaluation.Application.Users.ListUser;
+using Ambev.DeveloperEvaluation.Application.Users.ListUsers;
 using Ambev.DeveloperEvaluation.Application.Users.UpdateUser;
 using Ambev.DeveloperEvaluation.Common.Pagination;
 using Ambev.DeveloperEvaluation.WebApi.Common;
@@ -83,7 +83,7 @@ public class UsersController : BaseController
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> ListUsers(ListUsersRequest request, CancellationToken cancellationToken)
     {
-        var command = _mapper.Map<ListUserCommand>(request);
+        var command = _mapper.Map<ListUsersCommand>(request);
         var response = await _mediator.Send(command, cancellationToken);
 
         return OkPaginated(response);

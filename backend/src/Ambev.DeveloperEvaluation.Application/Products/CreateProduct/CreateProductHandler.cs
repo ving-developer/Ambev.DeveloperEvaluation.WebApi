@@ -44,7 +44,8 @@ public class CreateProductHandler : IRequestHandler<CreateProductCommand, Produc
 
         var product = _mapper.Map<Product>(command);
         var createdProduct = await _productRepository.CreateAsync(product, cancellationToken);
-
+        
+        await _productRepository.SaveChangesAsync(cancellationToken);
         _logger.LogInformation("[INF] Product (ProductId={ProductId}) created successfully", createdProduct.Id);
 
         return _mapper.Map<ProductResult>(createdProduct);

@@ -44,7 +44,7 @@ public class GetProductHandler : IRequestHandler<GetProductCommand, ProductResul
         var product = await _productRepository.GetByIdAsync(
             request.Id,
             cancellationToken,
-            p => p.ProductRating
+            p => p.Rating
         );
 
         if (product == null)

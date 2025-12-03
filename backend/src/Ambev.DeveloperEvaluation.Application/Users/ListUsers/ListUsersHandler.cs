@@ -6,28 +6,28 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Linq.Expressions;
 
-namespace Ambev.DeveloperEvaluation.Application.Users.ListUser;
+namespace Ambev.DeveloperEvaluation.Application.Users.ListUsers;
 
 /// <summary>
 /// Handler for processing ListUserCommand requests
 /// </summary>
-public class ListUserHandler : IRequestHandler<ListUserCommand, PaginatedResponse<UserResult>>
+public class ListUsersHandler : IRequestHandler<ListUsersCommand, PaginatedResponse<UserResult>>
 {
     private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
-    private readonly ILogger<ListUserHandler> _logger;
+    private readonly ILogger<ListUsersHandler> _logger;
 
-    public ListUserHandler(
+    public ListUsersHandler(
         IUserRepository userRepository,
         IMapper mapper,
-        ILogger<ListUserHandler> logger)
+        ILogger<ListUsersHandler> logger)
     {
         _userRepository = userRepository;
         _mapper = mapper;
         _logger = logger;
     }
 
-    public async Task<PaginatedResponse<UserResult>> Handle(ListUserCommand request, CancellationToken cancellationToken)
+    public async Task<PaginatedResponse<UserResult>> Handle(ListUsersCommand request, CancellationToken cancellationToken)
     {
         _logger.LogInformation("[INF] Starting ListUserHandler. Page={Page}, PageSize={PageSize}", request.Page, request.PageSize);
 

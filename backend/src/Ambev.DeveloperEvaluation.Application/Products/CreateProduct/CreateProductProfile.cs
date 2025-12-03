@@ -18,10 +18,10 @@ public class CreateProductProfile : Profile
             .ForMember(dest => dest.Id, opt => opt.Ignore())
             .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
             .ForMember(dest => dest.UpdatedAt, opt => opt.Ignore())
-            .ForMember(dest => dest.ProductRating, opt => opt.MapFrom(src => src.Rating));
+            .ForMember(dest => dest.Rating, opt => opt.MapFrom(src => src.Rating));
 
         CreateMap<Product, ProductResult>()
-            .ForMember(dest => dest.Rating, opt => opt.MapFrom(src => src.ProductRating));
+            .ForMember(dest => dest.Rating, opt => opt.MapFrom(src => src.Rating));
 
         CreateMap<ProductRating, Rating>().ReverseMap();
     }

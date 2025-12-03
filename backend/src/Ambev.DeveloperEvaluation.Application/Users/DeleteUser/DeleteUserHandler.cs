@@ -7,7 +7,7 @@ namespace Ambev.DeveloperEvaluation.Application.Users.DeleteUser;
 /// <summary>
 /// Handler for processing DeleteUserCommand requests
 /// </summary>
-public class DeleteUserHandler : IRequestHandler<DeleteUserCommand, DeleteUserResponse>
+public class DeleteUserHandler : IRequestHandler<DeleteUserCommand, bool>
 {
     private readonly IUserRepository _userRepository;
     private readonly ILogger<DeleteUserHandler> _logger;
@@ -31,7 +31,7 @@ public class DeleteUserHandler : IRequestHandler<DeleteUserCommand, DeleteUserRe
     /// <param name="request">The DeleteUser command</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The result of the delete operation</returns>
-    public async Task<DeleteUserResponse> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
+    public async Task<bool> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
     {
         _logger.LogInformation("[INF] Starting DeleteUserHandler for UserId={UserId}", request.Id);
 
@@ -45,6 +45,6 @@ public class DeleteUserHandler : IRequestHandler<DeleteUserCommand, DeleteUserRe
 
         _logger.LogInformation("[INF] User deleted successfully. UserId={UserId}", request.Id);
 
-        return new DeleteUserResponse { Success = true };
+        return true;
     }
 }
