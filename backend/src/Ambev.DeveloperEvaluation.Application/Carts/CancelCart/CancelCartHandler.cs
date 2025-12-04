@@ -8,14 +8,14 @@ namespace Ambev.DeveloperEvaluation.Application.Carts.CancelCart;
 /// <summary>
 /// Handler for processing CancelCartCommand requests
 /// </summary>
-public class CancelCartCommandHandler : IRequestHandler<CancelCartCommand, Unit>
+public class CancelCartHandler : IRequestHandler<CancelCartCommand, Unit>
 {
     private readonly ICartRepository _cartRepository;
-    private readonly ILogger<CancelCartCommandHandler> _logger;
+    private readonly ILogger<CancelCartHandler> _logger;
 
-    public CancelCartCommandHandler(
+    public CancelCartHandler(
         ICartRepository cartRepository,
-        ILogger<CancelCartCommandHandler> logger)
+        ILogger<CancelCartHandler> logger)
     {
         _cartRepository = cartRepository;
         _logger = logger;
@@ -25,14 +25,11 @@ public class CancelCartCommandHandler : IRequestHandler<CancelCartCommand, Unit>
     {
         _logger.LogInformation("Cancelling cart {CartId}", command.CartId);
 
-        var cart = await _cartRepository.GetByIdAsync(command.CartId, cancellationToken);
-        if (cart == null)
-            throw new KeyNotFoundException($"Cart {command.CartId} not found");
-
         if (string.IsNullOrWhiteSpace(command.Reason))
             throw new InvalidOperationException("Cancellation reason is required");
 
-        // Aplicar regra de cancelamento (a entidade valida se já está cancelada)
+        var cart = await _cartRepository.GetByIdAsync(command.CartId, cancellationToken) ?? throw new KeyNotFoundException($"Cart {command.CartId} not found");
+
         cart.Cancel(command.Reason);
 
         await _cartRepository.UpdateAsync(cart, cancellationToken);

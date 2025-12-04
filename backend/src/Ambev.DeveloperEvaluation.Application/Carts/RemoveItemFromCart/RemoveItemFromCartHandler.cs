@@ -1,5 +1,4 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Carts.Common;
-using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using AutoMapper;
 using MediatR;
@@ -10,16 +9,16 @@ namespace Ambev.DeveloperEvaluation.Application.Carts.RemoveItemFromCart;
 /// <summary>
 /// Handler for processing RemoveItemFromCartCommand requests
 /// </summary>
-public class RemoveItemFromCartCommandHandler : IRequestHandler<RemoveItemFromCartCommand, CartResult>
+public class RemoveItemFromCartHandler : IRequestHandler<RemoveItemFromCartCommand, CartResult>
 {
     private readonly ICartRepository _cartRepository;
     private readonly IMapper _mapper;
-    private readonly ILogger<RemoveItemFromCartCommandHandler> _logger;
+    private readonly ILogger<RemoveItemFromCartHandler> _logger;
 
-    public RemoveItemFromCartCommandHandler(
+    public RemoveItemFromCartHandler(
         ICartRepository cartRepository,
         IMapper mapper,
-        ILogger<RemoveItemFromCartCommandHandler> logger)
+        ILogger<RemoveItemFromCartHandler> logger)
     {
         _cartRepository = cartRepository;
         _mapper = mapper;
@@ -31,11 +30,8 @@ public class RemoveItemFromCartCommandHandler : IRequestHandler<RemoveItemFromCa
         _logger.LogInformation("Removing item {ItemId} from cart {CartId}",
             command.ItemId, command.CartId);
 
-        var cart = await _cartRepository.GetByIdAsync(command.CartId, cancellationToken);
-        if (cart == null)
-            throw new KeyNotFoundException($"Cart {command.CartId} not found");
-
-        // Remover item (a entidade valida se pode remover)
+        var cart = await _cartRepository.GetByIdAsync(command.CartId, cancellationToken) ?? throw new KeyNotFoundException($"Cart {command.CartId} not found");
+        
         cart.RemoveItem(command.ItemId);
 
         await _cartRepository.UpdateAsync(cart, cancellationToken);

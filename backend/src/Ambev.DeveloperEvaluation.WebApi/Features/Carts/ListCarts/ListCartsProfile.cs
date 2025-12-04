@@ -15,6 +15,6 @@ public class ListCartsProfile : Profile
             .ForCtorParam("orderBy", opt => opt.MapFrom(src => src.Order));
 
         CreateMap<CartResult, CartResponse>();
-        CreateMap<CartProductResult, CartProduct>();
+        CreateMap<CartProductResult, CartItem>();
     }
 }

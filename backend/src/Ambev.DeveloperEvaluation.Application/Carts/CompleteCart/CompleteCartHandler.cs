@@ -10,16 +10,16 @@ namespace Ambev.DeveloperEvaluation.Application.Carts.CompleteCart;
 /// <summary>
 /// Handler for processing CompleteCartCommand requests
 /// </summary>
-public class CompleteCartCommandHandler : IRequestHandler<CompleteCartCommand, CartResult>
+public class CompleteCartHandler : IRequestHandler<CompleteCartCommand, CartResult>
 {
     private readonly ICartRepository _cartRepository;
     private readonly IMapper _mapper;
-    private readonly ILogger<CompleteCartCommandHandler> _logger;
+    private readonly ILogger<CompleteCartHandler> _logger;
 
-    public CompleteCartCommandHandler(
+    public CompleteCartHandler(
         ICartRepository cartRepository,
         IMapper mapper,
-        ILogger<CompleteCartCommandHandler> logger)
+        ILogger<CompleteCartHandler> logger)
     {
         _cartRepository = cartRepository;
         _mapper = mapper;
@@ -33,7 +33,6 @@ public class CompleteCartCommandHandler : IRequestHandler<CompleteCartCommand, C
         var cart = await _cartRepository.GetByIdAsync(command.CartId, cancellationToken)
             ?? throw new KeyNotFoundException($"Cart {command.CartId} not found");
 
-        // Completar venda (a entidade aplica validações)
         cart.Complete();
 
         await _cartRepository.UpdateAsync(cart, cancellationToken);

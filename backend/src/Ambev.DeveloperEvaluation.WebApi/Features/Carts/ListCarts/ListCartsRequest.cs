@@ -1,4 +1,6 @@
-﻿namespace Ambev.DeveloperEvaluation.WebApi.Features.Carts.ListCarts;
+﻿using Ambev.DeveloperEvaluation.Domain.Enums;
+
+namespace Ambev.DeveloperEvaluation.WebApi.Features.Carts.ListCarts;
 
 public record ListCartsRequest
 {
@@ -7,7 +9,5 @@ public record ListCartsRequest
     public string? Order { get; set; }
     public Guid? CustomerId { get; set; }
     public Guid? BranchId { get; set; }
-    public string? Status { get; set; }
-    public DateTime? StartDate { get; set; }
-    public DateTime? EndDate { get; set; }
+    public CartStatus? Status { get; set; }
 }

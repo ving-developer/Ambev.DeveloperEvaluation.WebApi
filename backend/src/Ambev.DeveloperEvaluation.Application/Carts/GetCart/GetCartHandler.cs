@@ -9,16 +9,16 @@ namespace Ambev.DeveloperEvaluation.Application.Carts.GetCart;
 /// <summary>
 /// Handler for processing GetCartCommand requests
 /// </summary>
-public class GetCartCommandHandler : IRequestHandler<GetCartCommand, CartResult>
+public class GetCartHandler : IRequestHandler<GetCartCommand, CartResult>
 {
     private readonly ICartRepository _cartRepository;
     private readonly IMapper _mapper;
-    private readonly ILogger<GetCartCommandHandler> _logger;
+    private readonly ILogger<GetCartHandler> _logger;
 
-    public GetCartCommandHandler(
+    public GetCartHandler(
         ICartRepository cartRepository,
         IMapper mapper,
-        ILogger<GetCartCommandHandler> logger)
+        ILogger<GetCartHandler> logger)
     {
         _cartRepository = cartRepository;
         _mapper = mapper;

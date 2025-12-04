@@ -11,16 +11,16 @@ namespace Ambev.DeveloperEvaluation.Application.Carts.ListCarts;
 /// <summary>
 /// Handler for processing ListCartsCommand requests
 /// </summary>
-public class ListCartsCommandHandler : IRequestHandler<ListCartsCommand, PaginatedResponse<CartResult>>
+public class ListCartsHandler : IRequestHandler<ListCartsCommand, PaginatedResponse<CartResult>>
 {
     private readonly ICartRepository _cartRepository;
     private readonly IMapper _mapper;
-    private readonly ILogger<ListCartsCommandHandler> _logger;
+    private readonly ILogger<ListCartsHandler> _logger;
 
-    public ListCartsCommandHandler(
+    public ListCartsHandler(
         ICartRepository cartRepository,
         IMapper mapper,
-        ILogger<ListCartsCommandHandler> logger)
+        ILogger<ListCartsHandler> logger)
     {
         _cartRepository = cartRepository;
         _mapper = mapper;

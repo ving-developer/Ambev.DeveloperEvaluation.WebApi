@@ -29,13 +29,12 @@ namespace Ambev.DeveloperEvaluation.Unit.Application.Users.DeleteUser
             // Given
             var command = DeleteUserHandlerTestData.GenerateValidCommand();
 
-            _userRepository.DeleteAsync(command.Id, Arg.Any<CancellationToken>()).Returns(true);
+            _userRepository.DeleteAsync(command.Id, Arg.Any<CancellationToken>()).Returns(Task.CompletedTask);
 
             // When
-            var response = await _handler.Handle(command, CancellationToken.None);
+            await _handler.Handle(command, CancellationToken.None);
 
             // Then
-            response.Should().Be(true);
             await _userRepository.Received(1).DeleteAsync(command.Id, Arg.Any<CancellationToken>());
         }
 
@@ -45,7 +44,7 @@ namespace Ambev.DeveloperEvaluation.Unit.Application.Users.DeleteUser
             // Given
             var command = DeleteUserHandlerTestData.GenerateValidCommand();
 
-            _userRepository.DeleteAsync(command.Id, Arg.Any<CancellationToken>()).Returns(false);
+            _userRepository.DeleteAsync(command.Id, Arg.Any<CancellationToken>()).Returns(Task.CompletedTask);
 
             // When
             Func<Task> act = () => _handler.Handle(command, CancellationToken.None);
