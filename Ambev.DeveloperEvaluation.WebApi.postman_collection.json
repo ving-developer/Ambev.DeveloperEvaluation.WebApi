@@ -1,0 +1,3451 @@
+{
+	"info": {
+		"_postman_id": "9274b709-feef-4043-b71f-de8274fbe175",
+		"name": "Ambev.DeveloperEvaluation.WebApi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13439752"
+	},
+	"item": [
+		{
+			"name": "api",
+			"item": [
+				{
+					"name": "Auth",
+					"item": [
+						{
+							"name": "/api/Auth",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Extrai o token do objeto \"data\" e salva na variável da collection\r",
+											"const jsonData = pm.response.json();\r",
+											"pm.collectionVariables.set(\"bearerToken\", jsonData.data.token);"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"teste@gmail.com\",\n  \"password\": \"Teste.123\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/Auth",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Auth"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"email\": \"string\",\n  \"password\": \"string\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Auth",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Auth"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"success\": false,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ],\n  \"data\": {\n    \"token\": \"string\",\n    \"email\": \"string\",\n    \"name\": \"string\",\n    \"role\": \"string\"\n  }\n}"
+								},
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"email\": \"string\",\n  \"password\": \"string\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Auth",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Auth"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}"
+								},
+								{
+									"name": "Unauthorized",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"email\": \"string\",\n  \"password\": \"string\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Auth",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Auth"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Users",
+					"item": [
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "/api/Users/:id",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/Users/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Users",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "909d46ea-8888-47c5-b898-bdae86a10ce4"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/Users/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Users",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "93eff7ce-3dbd-c990-745f-0822b581513f"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ],\n  \"data\": {\n    \"id\": \"9beef396-4729-4a4f-abfc-6df483ebf2d4\",\n    \"name\": \"string\",\n    \"email\": \"string\",\n    \"phone\": \"string\",\n    \"role\": 3,\n    \"status\": 1\n  }\n}"
+										},
+										{
+											"name": "Bad Request",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/Users/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Users",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "93eff7ce-3dbd-c990-745f-0822b581513f"
+														}
+													]
+												}
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}"
+										},
+										{
+											"name": "Not Found",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/Users/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Users",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "93eff7ce-3dbd-c990-745f-0822b581513f"
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}"
+										}
+									]
+								},
+								{
+									"name": "/api/Users/:id",
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/Users/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Users",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "71fee317-17aa-4dc8-b397-4edb9435bc41"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/Users/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Users",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "93eff7ce-3dbd-c990-745f-0822b581513f"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}"
+										},
+										{
+											"name": "Bad Request",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/Users/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Users",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "93eff7ce-3dbd-c990-745f-0822b581513f"
+														}
+													]
+												}
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}"
+										},
+										{
+											"name": "Not Found",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/Users/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Users",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "93eff7ce-3dbd-c990-745f-0822b581513f"
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}"
+										}
+									]
+								},
+								{
+									"name": "/api/Users/:id",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"// Gera o número aleatório\r",
+													"let phone = pm.variables.replaceIn(\"{{$randomPhoneNumber}}\");\r",
+													"\r",
+													"// Remove tudo que não for número\r",
+													"phone = phone.replace(/\\D/g, '');\r",
+													"\r",
+													"// Salva em uma variável de ambiente ou coleção\r",
+													"pm.environment.set(\"phoneNumberClean\", phone);\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {},
+												"requests": {}
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"username\": \"User_UPDATED_{{$randomInt}}\",\n  \"phone\": \"{{phoneNumberClean}}\",\n  \"email\": \"{{$randomEmail}}\",\n  \"status\": 1,\n  \"role\": 1\n}\n",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Users/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Users",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "50614c9c-920f-46fe-a39b-a4faa7c0ed35"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Created",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"username\": \"string\",\n  \"password\": \"string\",\n  \"phone\": \"string\",\n  \"email\": \"string\",\n  \"status\": 3,\n  \"role\": 0\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/Users",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Users"
+													]
+												}
+											},
+											"status": "Created",
+											"code": 201,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ],\n  \"data\": {\n    \"id\": \"9beef396-4729-4a4f-abfc-6df483ebf2d4\",\n    \"name\": \"string\",\n    \"email\": \"string\",\n    \"phone\": \"string\",\n    \"role\": 3,\n    \"status\": 1\n  }\n}"
+										},
+										{
+											"name": "Bad Request",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"username\": \"string\",\n  \"password\": \"string\",\n  \"phone\": \"string\",\n  \"email\": \"string\",\n  \"status\": 3,\n  \"role\": 0\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/Users",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Users"
+													]
+												}
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "/api/Users",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Gera o número aleatório\r",
+											"let phone = pm.variables.replaceIn(\"{{$randomPhoneNumber}}\");\r",
+											"\r",
+											"// Remove tudo que não for número\r",
+											"phone = phone.replace(/\\D/g, '');\r",
+											"\r",
+											"// Salva em uma variável de ambiente ou coleção\r",
+											"pm.environment.set(\"phoneNumberClean\", phone);\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"username\": \"User_{{$randomInt}}\",\n  \"password\": \"Teste.123\",\n  \"phone\": \"{{phoneNumberClean}}\",\n  \"email\": \"{{$randomEmail}}\",\n  \"status\": 1,\n  \"role\": 1\n}\n",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/Users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Users"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Created",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"username\": \"string\",\n  \"password\": \"string\",\n  \"phone\": \"string\",\n  \"email\": \"string\",\n  \"status\": 3,\n  \"role\": 0\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Users",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Users"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ],\n  \"data\": {\n    \"id\": \"9beef396-4729-4a4f-abfc-6df483ebf2d4\",\n    \"name\": \"string\",\n    \"email\": \"string\",\n    \"phone\": \"string\",\n    \"role\": 3,\n    \"status\": 1\n  }\n}"
+								},
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"username\": \"string\",\n  \"password\": \"string\",\n  \"phone\": \"string\",\n  \"email\": \"string\",\n  \"status\": 3,\n  \"role\": 0\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Users",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Users"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/Users",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Gera o número aleatório\r",
+											"let phone = pm.variables.replaceIn(\"{{$randomPhoneNumber}}\");\r",
+											"\r",
+											"// Remove tudo que não for número\r",
+											"phone = phone.replace(/\\D/g, '');\r",
+											"\r",
+											"// Salva em uma variável de ambiente ou coleção\r",
+											"pm.environment.set(\"phoneNumberClean\", phone);\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/Users?_page=1&_size=5&_order=Id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Users"
+									],
+									"query": [
+										{
+											"key": "_page",
+											"value": "1"
+										},
+										{
+											"key": "_size",
+											"value": "5"
+										},
+										{
+											"key": "_order",
+											"value": "Id"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Created",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"username\": \"string\",\n  \"password\": \"string\",\n  \"phone\": \"string\",\n  \"email\": \"string\",\n  \"status\": 3,\n  \"role\": 0\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Users",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Users"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ],\n  \"data\": {\n    \"id\": \"9beef396-4729-4a4f-abfc-6df483ebf2d4\",\n    \"name\": \"string\",\n    \"email\": \"string\",\n    \"phone\": \"string\",\n    \"role\": 3,\n    \"status\": 1\n  }\n}"
+								},
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"username\": \"string\",\n  \"password\": \"string\",\n  \"phone\": \"string\",\n  \"email\": \"string\",\n  \"status\": 3,\n  \"role\": 0\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Users",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Users"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Products",
+					"item": [
+						{
+							"name": "{id} Copy",
+							"item": [
+								{
+									"name": "/api/Products/:id",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/Products/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Products",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "da912340-7fdb-4221-bd0e-d8eba7821e5c"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/Users/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Users",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "93eff7ce-3dbd-c990-745f-0822b581513f"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ],\n  \"data\": {\n    \"id\": \"9beef396-4729-4a4f-abfc-6df483ebf2d4\",\n    \"name\": \"string\",\n    \"email\": \"string\",\n    \"phone\": \"string\",\n    \"role\": 3,\n    \"status\": 1\n  }\n}"
+										},
+										{
+											"name": "Bad Request",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/Users/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Users",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "93eff7ce-3dbd-c990-745f-0822b581513f"
+														}
+													]
+												}
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}"
+										},
+										{
+											"name": "Not Found",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/Users/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Users",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "93eff7ce-3dbd-c990-745f-0822b581513f"
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}"
+										}
+									]
+								},
+								{
+									"name": "/api/Products/:id",
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/Products/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Products",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "909d46ea-8888-47c5-b898-bdae86a10ce4"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/Users/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Users",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "93eff7ce-3dbd-c990-745f-0822b581513f"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}"
+										},
+										{
+											"name": "Bad Request",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/Users/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Users",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "93eff7ce-3dbd-c990-745f-0822b581513f"
+														}
+													]
+												}
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}"
+										},
+										{
+											"name": "Not Found",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/Users/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Users",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "93eff7ce-3dbd-c990-745f-0822b581513f"
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "/api/Products",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"title\": \"Product_{{$randomInt}}\",\r\n  \"price\": {{$randomFloat}},\r\n  \"description\": \"This is a sample description {{$randomInt}}\",\r\n  \"category\": 1,\r\n  \"image\": \"https://picsum.photos/seed/{{$randomInt}}/200/300\",\r\n  \"rating\": {\r\n    \"rate\": 4,\r\n    \"count\": {{$randomInt}}\r\n  }\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/Products",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/Products",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Gera o número aleatório\r",
+											"let phone = pm.variables.replaceIn(\"{{$randomPhoneNumber}}\");\r",
+											"\r",
+											"// Remove tudo que não for número\r",
+											"phone = phone.replace(/\\D/g, '');\r",
+											"\r",
+											"// Salva em uma variável de ambiente ou coleção\r",
+											"pm.environment.set(\"phoneNumberClean\", phone);\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/Products?_page=1&_size=5&_order=Id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Products"
+									],
+									"query": [
+										{
+											"key": "_page",
+											"value": "1"
+										},
+										{
+											"key": "_size",
+											"value": "5"
+										},
+										{
+											"key": "_order",
+											"value": "Id"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Created",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"username\": \"string\",\n  \"password\": \"string\",\n  \"phone\": \"string\",\n  \"email\": \"string\",\n  \"status\": 3,\n  \"role\": 0\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Users",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Users"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ],\n  \"data\": {\n    \"id\": \"9beef396-4729-4a4f-abfc-6df483ebf2d4\",\n    \"name\": \"string\",\n    \"email\": \"string\",\n    \"phone\": \"string\",\n    \"role\": 3,\n    \"status\": 1\n  }\n}"
+								},
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"username\": \"string\",\n  \"password\": \"string\",\n  \"phone\": \"string\",\n  \"email\": \"string\",\n  \"status\": 3,\n  \"role\": 0\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Users",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Users"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Branches",
+					"item": [
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "/api/Branches/:id",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/Branches/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Branches",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "044f5127-3cce-4225-b4a9-a47f82e3d759"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/Users/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Users",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "93eff7ce-3dbd-c990-745f-0822b581513f"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ],\n  \"data\": {\n    \"id\": \"9beef396-4729-4a4f-abfc-6df483ebf2d4\",\n    \"name\": \"string\",\n    \"email\": \"string\",\n    \"phone\": \"string\",\n    \"role\": 3,\n    \"status\": 1\n  }\n}"
+										},
+										{
+											"name": "Bad Request",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/Users/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Users",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "93eff7ce-3dbd-c990-745f-0822b581513f"
+														}
+													]
+												}
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}"
+										},
+										{
+											"name": "Not Found",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/Users/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Users",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "93eff7ce-3dbd-c990-745f-0822b581513f"
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}"
+										}
+									]
+								},
+								{
+									"name": "/api/Branches/:id",
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/Branches/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Branches",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "044f5127-3cce-4225-b4a9-a47f82e3d759"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/Users/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Users",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "93eff7ce-3dbd-c990-745f-0822b581513f"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}"
+										},
+										{
+											"name": "Bad Request",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/Users/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Users",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "93eff7ce-3dbd-c990-745f-0822b581513f"
+														}
+													]
+												}
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}"
+										},
+										{
+											"name": "Not Found",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/Users/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Users",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "93eff7ce-3dbd-c990-745f-0822b581513f"
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "/api/Branches",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Gera o número aleatório\r",
+											"let phone = pm.variables.replaceIn(\"{{$randomPhoneNumber}}\");\r",
+											"\r",
+											"// Remove tudo que não for número\r",
+											"phone = phone.replace(/\\D/g, '');\r",
+											"\r",
+											"// Salva em uma variável de ambiente ou coleção\r",
+											"pm.environment.set(\"phoneNumberClean\", phone);\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"São Paulo Centro\",\n  \"code\": \"SP-{{$randomInt}}\",\n  \"city\": \"São Paulo\",\n  \"state\": \"SP\"\n}\n",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/Branches",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Branches"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Created",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"username\": \"string\",\n  \"password\": \"string\",\n  \"phone\": \"string\",\n  \"email\": \"string\",\n  \"status\": 3,\n  \"role\": 0\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Users",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Users"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ],\n  \"data\": {\n    \"id\": \"9beef396-4729-4a4f-abfc-6df483ebf2d4\",\n    \"name\": \"string\",\n    \"email\": \"string\",\n    \"phone\": \"string\",\n    \"role\": 3,\n    \"status\": 1\n  }\n}"
+								},
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"username\": \"string\",\n  \"password\": \"string\",\n  \"phone\": \"string\",\n  \"email\": \"string\",\n  \"status\": 3,\n  \"role\": 0\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Users",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Users"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/Branches",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Gera o número aleatório\r",
+											"let phone = pm.variables.replaceIn(\"{{$randomPhoneNumber}}\");\r",
+											"\r",
+											"// Remove tudo que não for número\r",
+											"phone = phone.replace(/\\D/g, '');\r",
+											"\r",
+											"// Salva em uma variável de ambiente ou coleção\r",
+											"pm.environment.set(\"phoneNumberClean\", phone);\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/Branches?_page=1&_size=5&_order=Id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Branches"
+									],
+									"query": [
+										{
+											"key": "_page",
+											"value": "1"
+										},
+										{
+											"key": "_size",
+											"value": "5"
+										},
+										{
+											"key": "_order",
+											"value": "Id"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Created",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"username\": \"string\",\n  \"password\": \"string\",\n  \"phone\": \"string\",\n  \"email\": \"string\",\n  \"status\": 3,\n  \"role\": 0\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Users",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Users"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ],\n  \"data\": {\n    \"id\": \"9beef396-4729-4a4f-abfc-6df483ebf2d4\",\n    \"name\": \"string\",\n    \"email\": \"string\",\n    \"phone\": \"string\",\n    \"role\": 3,\n    \"status\": 1\n  }\n}"
+								},
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"username\": \"string\",\n  \"password\": \"string\",\n  \"phone\": \"string\",\n  \"email\": \"string\",\n  \"status\": 3,\n  \"role\": 0\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Users",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Users"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Carts",
+					"item": [
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "/api/Carts/:id",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/Carts/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Carts",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "1f07d116-6c5c-4938-a1ca-99f23ca65339"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/Users/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Users",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "93eff7ce-3dbd-c990-745f-0822b581513f"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ],\n  \"data\": {\n    \"id\": \"9beef396-4729-4a4f-abfc-6df483ebf2d4\",\n    \"name\": \"string\",\n    \"email\": \"string\",\n    \"phone\": \"string\",\n    \"role\": 3,\n    \"status\": 1\n  }\n}"
+										},
+										{
+											"name": "Bad Request",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/Users/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Users",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "93eff7ce-3dbd-c990-745f-0822b581513f"
+														}
+													]
+												}
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}"
+										},
+										{
+											"name": "Not Found",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/Users/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Users",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "93eff7ce-3dbd-c990-745f-0822b581513f"
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}"
+										}
+									]
+								},
+								{
+									"name": "/api/Carts/:id/cancel",
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"reason\":\"Teste\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Carts/:id/cancel",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Carts",
+												":id",
+												"cancel"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "0d68889a-b04d-4d09-b583-b51a99605595"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/Users/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Users",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "93eff7ce-3dbd-c990-745f-0822b581513f"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}"
+										},
+										{
+											"name": "Bad Request",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/Users/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Users",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "93eff7ce-3dbd-c990-745f-0822b581513f"
+														}
+													]
+												}
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}"
+										},
+										{
+											"name": "Not Found",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/Users/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Users",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "93eff7ce-3dbd-c990-745f-0822b581513f"
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}"
+										}
+									]
+								},
+								{
+									"name": "/api/Carts/:id/:itemId",
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/Carts/:id/items/:itemId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Carts",
+												":id",
+												"items",
+												":itemId"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "1f07d116-6c5c-4938-a1ca-99f23ca65339"
+												},
+												{
+													"key": "itemId",
+													"value": "b24f62e7-cf7e-422d-a387-334fb1b0591c"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/Users/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Users",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "93eff7ce-3dbd-c990-745f-0822b581513f"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}"
+										},
+										{
+											"name": "Bad Request",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/Users/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Users",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "93eff7ce-3dbd-c990-745f-0822b581513f"
+														}
+													]
+												}
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}"
+										},
+										{
+											"name": "Not Found",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/Users/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Users",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "93eff7ce-3dbd-c990-745f-0822b581513f"
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}"
+										}
+									]
+								},
+								{
+									"name": "/api/Carts/:id/items",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"productId\":\"83490586-800c-4031-86ee-cbfd5d9b75a8\",\r\n    \"quantity\":12\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Carts/:id/items",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Carts",
+												":id",
+												"items"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "0d68889a-b04d-4d09-b583-b51a99605595"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/Users/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Users",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "93eff7ce-3dbd-c990-745f-0822b581513f"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}"
+										},
+										{
+											"name": "Bad Request",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/Users/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Users",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "93eff7ce-3dbd-c990-745f-0822b581513f"
+														}
+													]
+												}
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}"
+										},
+										{
+											"name": "Not Found",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/Users/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Users",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "93eff7ce-3dbd-c990-745f-0822b581513f"
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}"
+										}
+									]
+								},
+								{
+									"name": "/api/Carts/:id/items/:itemId/quantity",
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"quantity\":22\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Carts/:id/items/:itemId/quantity",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Carts",
+												":id",
+												"items",
+												":itemId",
+												"quantity"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "1f07d116-6c5c-4938-a1ca-99f23ca65339"
+												},
+												{
+													"key": "itemId",
+													"value": "d20fcf9b-c346-406c-873d-5f512d55b4ef"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/Users/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Users",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "93eff7ce-3dbd-c990-745f-0822b581513f"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}"
+										},
+										{
+											"name": "Bad Request",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/Users/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Users",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "93eff7ce-3dbd-c990-745f-0822b581513f"
+														}
+													]
+												}
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}"
+										},
+										{
+											"name": "Not Found",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/Users/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Users",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "93eff7ce-3dbd-c990-745f-0822b581513f"
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}"
+										}
+									]
+								},
+								{
+									"name": "/api/Carts/:id/complete",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/Carts/:id/complete",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Carts",
+												":id",
+												"complete"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "0ea43cd6-e4dc-47ba-9567-7d6fed030089"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/Users/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Users",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "93eff7ce-3dbd-c990-745f-0822b581513f"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}"
+										},
+										{
+											"name": "Bad Request",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/Users/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Users",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "93eff7ce-3dbd-c990-745f-0822b581513f"
+														}
+													]
+												}
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}"
+										},
+										{
+											"name": "Not Found",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/Users/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Users",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "93eff7ce-3dbd-c990-745f-0822b581513f"
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "/api/Carts",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Gera o número aleatório\r",
+											"let phone = pm.variables.replaceIn(\"{{$randomPhoneNumber}}\");\r",
+											"\r",
+											"// Remove tudo que não for número\r",
+											"phone = phone.replace(/\\D/g, '');\r",
+											"\r",
+											"// Salva em uma variável de ambiente ou coleção\r",
+											"pm.environment.set(\"phoneNumberClean\", phone);\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"customerId\": \"0faee24f-4e88-4517-b586-2200fc5530de\",\n    \"branchId\": \"15090c47-6fc3-452e-8a6b-b43f55ff8b96\",\n    \"items\": [\n        {\n            \"productId\": \"21a135da-1ebb-4d9e-afd9-983e4ac108dc\",\n            \"quantity\": 5\n        },\n        {\n            \"productId\": \"380dbd97-8928-4bf9-a10e-738e32f8fc0a\",\n            \"quantity\": 10\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/Carts",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Carts"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Created",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"username\": \"string\",\n  \"password\": \"string\",\n  \"phone\": \"string\",\n  \"email\": \"string\",\n  \"status\": 3,\n  \"role\": 0\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Users",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Users"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ],\n  \"data\": {\n    \"id\": \"9beef396-4729-4a4f-abfc-6df483ebf2d4\",\n    \"name\": \"string\",\n    \"email\": \"string\",\n    \"phone\": \"string\",\n    \"role\": 3,\n    \"status\": 1\n  }\n}"
+								},
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"username\": \"string\",\n  \"password\": \"string\",\n  \"phone\": \"string\",\n  \"email\": \"string\",\n  \"status\": 3,\n  \"role\": 0\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Users",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Users"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/Carts",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Gera o número aleatório\r",
+											"let phone = pm.variables.replaceIn(\"{{$randomPhoneNumber}}\");\r",
+											"\r",
+											"// Remove tudo que não for número\r",
+											"phone = phone.replace(/\\D/g, '');\r",
+											"\r",
+											"// Salva em uma variável de ambiente ou coleção\r",
+											"pm.environment.set(\"phoneNumberClean\", phone);\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/Carts?_page=1&_size=5&_order=SaleNumber&customerId=0faee24f-4e88-4517-b586-2200fc5530de&Status=Pending",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Carts"
+									],
+									"query": [
+										{
+											"key": "_page",
+											"value": "1"
+										},
+										{
+											"key": "_size",
+											"value": "5"
+										},
+										{
+											"key": "_order",
+											"value": "SaleNumber"
+										},
+										{
+											"key": "customerId",
+											"value": "0faee24f-4e88-4517-b586-2200fc5530de"
+										},
+										{
+											"key": "BranchId",
+											"value": "5d235602-38c1-41e5-b069-818649e488a2",
+											"disabled": true
+										},
+										{
+											"key": "Status",
+											"value": "Pending"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Created",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"username\": \"string\",\n  \"password\": \"string\",\n  \"phone\": \"string\",\n  \"email\": \"string\",\n  \"status\": 3,\n  \"role\": 0\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Users",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Users"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ],\n  \"data\": {\n    \"id\": \"9beef396-4729-4a4f-abfc-6df483ebf2d4\",\n    \"name\": \"string\",\n    \"email\": \"string\",\n    \"phone\": \"string\",\n    \"role\": 3,\n    \"status\": 1\n  }\n}"
+								},
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"username\": \"string\",\n  \"password\": \"string\",\n  \"phone\": \"string\",\n  \"email\": \"string\",\n  \"status\": 3,\n  \"role\": 0\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Users",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Users"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"error\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}"
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{bearerToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "/"
+		},
+		{
+			"key": "bearerToken",
+			"value": ""
+		}
+	]
+}

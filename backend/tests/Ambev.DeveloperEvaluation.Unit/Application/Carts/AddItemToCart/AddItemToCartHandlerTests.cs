@@ -144,7 +144,7 @@ public class AddItemToCartHandlerTests
 
         var cart = CartTestData.GenerateValidCart();
         cart.Id = Guid.NewGuid();
-        cart.AddItem(product.Id, 1, product.Price); // already has this product
+        cart.AddItem(product.Id, 1, product.Price);
 
         var command = new AddItemToCartCommand
         {
