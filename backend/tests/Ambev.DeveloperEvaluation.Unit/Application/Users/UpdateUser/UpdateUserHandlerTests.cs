@@ -87,8 +87,8 @@ public class UpdateUserHandlerTests
             .ThrowAsync<EntityNotFoundException>();
     }
 
-    [Fact(DisplayName = "Email already in use → throws InvalidOperationException")]
-    public async Task Handle_EmailAlreadyInUse_ThrowsInvalidOperationException()
+    [Fact(DisplayName = "Email already in use → throws DomainException")]
+    public async Task Handle_EmailAlreadyInUse_ThrowsDomainException()
     {
         // Given
         var existingUser = UserTestData.GenerateValidUser();
@@ -111,7 +111,7 @@ public class UpdateUserHandlerTests
 
         // Then
         await act.Should()
-            .ThrowAsync<InvalidOperationException>()
+            .ThrowAsync<DomainException>()
             .WithMessage($"Email {command.Email} is already in use by another user");
     }
 

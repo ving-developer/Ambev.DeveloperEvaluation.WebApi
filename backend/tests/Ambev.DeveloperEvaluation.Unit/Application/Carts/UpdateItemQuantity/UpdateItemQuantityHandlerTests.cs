@@ -82,7 +82,7 @@ public class UpdateItemQuantityHandlerTests
         await _cartRepository.DidNotReceive().SaveChangesAsync(Arg.Any<CancellationToken>());
     }
 
-    [Fact(DisplayName = "Handle updating non-existent item → throws InvalidOperationException or ArgumentException")]
+    [Fact(DisplayName = "Handle updating non-existent item → throws DomainException or ArgumentException")]
     public async Task Handle_ItemNotFound_ThrowsException()
     {
         // Given
@@ -98,7 +98,7 @@ public class UpdateItemQuantityHandlerTests
         Func<Task> act = async () => await _handler.Handle(command, CancellationToken.None);
 
         // Then
-        await act.Should().ThrowAsync<InvalidOperationException>()
+        await act.Should().ThrowAsync<DomainException>()
             .WithMessage($"Item {command.ItemId} not found*");
 
         await _cartRepository.Received(1).GetByIdAsync(cart.Id, Arg.Any<CancellationToken>());

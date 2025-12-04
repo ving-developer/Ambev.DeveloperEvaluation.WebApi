@@ -57,6 +57,7 @@ namespace Ambev.DeveloperEvaluation.WebApi.Middleware
                     };
                     break;
 
+                case DomainException:
                 case InvalidOperationException:
                     status = HttpStatusCode.BadRequest;
                     response = new ApiResponse

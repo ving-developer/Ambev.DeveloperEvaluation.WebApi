@@ -69,8 +69,8 @@ public class CancelCartHandlerTests
             .ThrowAsync<EntityNotFoundException>();
     }
 
-    [Fact(DisplayName = "Cancellation reason is empty → throws InvalidOperationException")]
-    public async Task Handle_EmptyReason_ThrowsInvalidOperationException()
+    [Fact(DisplayName = "Cancellation reason is empty → throws DomainException")]
+    public async Task Handle_EmptyReason_ThrowsDomainException()
     {
         // Given
         var cart = CartTestData.GenerateValidCart();
@@ -81,12 +81,12 @@ public class CancelCartHandlerTests
 
         // Then
         await act.Should()
-            .ThrowAsync<InvalidOperationException>()
+            .ThrowAsync<DomainException>()
             .WithMessage("Cancellation reason is required");
     }
 
-    [Fact(DisplayName = "Cancel already canceled cart → throws InvalidOperationException")]
-    public async Task Handle_CancelAlreadyCanceledCart_ThrowsInvalidOperationException()
+    [Fact(DisplayName = "Cancel already canceled cart → throws DomainException")]
+    public async Task Handle_CancelAlreadyCanceledCart_ThrowsDomainException()
     {
         // Given
         var cart = CartTestData.GenerateCanceledCart("Initial reason");
@@ -100,7 +100,7 @@ public class CancelCartHandlerTests
 
         // Then
         await act.Should()
-            .ThrowAsync<InvalidOperationException>()
+            .ThrowAsync<DomainException>()
             .WithMessage("Sale is already canceled.");
     }
 }

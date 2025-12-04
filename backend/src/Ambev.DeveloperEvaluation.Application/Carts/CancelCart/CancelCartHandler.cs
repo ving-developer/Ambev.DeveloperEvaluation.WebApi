@@ -27,7 +27,7 @@ public class CancelCartHandler : IRequestHandler<CancelCartCommand, Unit>
         _logger.LogInformation("Cancelling cart {CartId}", command.CartId);
 
         if (string.IsNullOrWhiteSpace(command.Reason))
-            throw new InvalidOperationException("Cancellation reason is required");
+            throw new DomainException("Cancellation reason is required");
 
         var cart = await _cartRepository.GetByIdAsync(command.CartId, cancellationToken) ?? throw new EntityNotFoundException(nameof(Cart), command.CartId);
 

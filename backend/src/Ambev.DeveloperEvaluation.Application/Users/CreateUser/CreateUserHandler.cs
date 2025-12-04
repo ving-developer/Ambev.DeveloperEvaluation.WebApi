@@ -1,6 +1,7 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Users.Common;
 using Ambev.DeveloperEvaluation.Common.Security;
 using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using AutoMapper;
 using MediatR;
@@ -51,7 +52,7 @@ public class CreateUserHandler : IRequestHandler<CreateUserCommand, UserResult>
         if (existingUser != null)
         {
             _logger.LogWarning("[WRN] User with Email={Email} already exists. Aborting CreateUser.", command.Email);
-            throw new InvalidOperationException($"User with email {command.Email} already exists");
+            throw new DomainException($"User with email {command.Email} already exists");
         }
 
         command.Password = _passwordHasher.HashPassword(command.Password);

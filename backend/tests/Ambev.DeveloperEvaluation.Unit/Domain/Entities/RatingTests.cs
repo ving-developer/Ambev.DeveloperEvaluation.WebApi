@@ -1,4 +1,5 @@
 ﻿using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using FluentAssertions;
 using Xunit;
 
@@ -50,7 +51,7 @@ public class RatingTests
         Action act = () => new Rating(invalidRate, count);
 
         // Then
-        act.Should().Throw<InvalidOperationException>();
+        act.Should().Throw<DomainException>();
     }
 
     [Theory(DisplayName = "Given invalid count, when creating Rating, then it should throw")]
@@ -65,6 +66,6 @@ public class RatingTests
         Action act = () => new Rating(rate, invalidCount);
 
         // Then
-        act.Should().Throw<InvalidOperationException>();
+        act.Should().Throw<DomainException>();
     }
 }

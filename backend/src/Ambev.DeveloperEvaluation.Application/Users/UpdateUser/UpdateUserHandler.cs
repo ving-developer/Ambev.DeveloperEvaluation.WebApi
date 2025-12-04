@@ -57,7 +57,7 @@ public class UpdateUserHandler : IRequestHandler<UpdateUserCommand, UserResult>
             if (userWithSameEmail != null)
             {
                 _logger.LogWarning("[WRN] Email={Email} already in use by another user. Aborting UpdateUser.", command.Email);
-                throw new InvalidOperationException($"Email {command.Email} is already in use by another user");
+                throw new DomainException($"Email {command.Email} is already in use by another user");
             }
         }
 

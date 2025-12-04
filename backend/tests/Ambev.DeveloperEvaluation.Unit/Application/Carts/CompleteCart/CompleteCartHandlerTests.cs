@@ -78,8 +78,8 @@ public class CompleteCartHandlerTests
             .ThrowAsync<EntityNotFoundException>();
     }
 
-    [Fact(DisplayName = "Completing empty cart → throws InvalidOperationException")]
-    public async Task Handle_EmptyCart_ThrowsInvalidOperationException()
+    [Fact(DisplayName = "Completing empty cart → throws DomainException")]
+    public async Task Handle_EmptyCart_ThrowsDomainException()
     {
         // Given
         var cart = CartTestData.GenerateCartWithItems(0);
@@ -93,7 +93,7 @@ public class CompleteCartHandlerTests
 
         // Then
         await act.Should()
-            .ThrowAsync<InvalidOperationException>()
+            .ThrowAsync<DomainException>()
             .WithMessage("Cannot complete a sale without items.");
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Ambev.DeveloperEvaluation.Domain.Common;
 using Ambev.DeveloperEvaluation.Domain.Enums;
+using Ambev.DeveloperEvaluation.Domain.Exceptions;
 
 namespace Ambev.DeveloperEvaluation.Domain.Entities;
 
@@ -136,13 +137,13 @@ public class Cart : BaseEntity
     /// <param name="productId">The unique identifier of the product to add.</param>
     /// <param name="quantity">The quantity to add. Must be greater than zero.</param>
     /// <param name="unitPrice">The unit price of the product. Must be greater than zero.</param>
-    /// <exception cref="InvalidOperationException">Thrown when cart is not in pending state.</exception>
+    /// <exception cref="DomainException">Thrown when cart is not in pending state.</exception>
     /// <exception cref="ArgumentException">Thrown when parameters are invalid.</exception>
-    /// <exception cref="InvalidOperationException">Thrown when exceeding maximum quantity limit.</exception>
+    /// <exception cref="DomainException">Thrown when exceeding maximum quantity limit.</exception>
     public void AddItem(Guid productId, int quantity, decimal unitPrice)
     {
         if (Status != CartStatus.Pending)
-            throw new InvalidOperationException("Cannot add items to a completed or canceled sale.");
+            throw new DomainException("Cannot add items to a completed or canceled sale.");
 
         if (quantity <= 0)
             throw new ArgumentException("Quantity must be greater than zero.", nameof(quantity));
@@ -154,7 +155,7 @@ public class Cart : BaseEntity
         var newTotalQuantity = existingQuantity + quantity;
 
         if (newTotalQuantity > 20)
-            throw new InvalidOperationException(
+            throw new DomainException(
                 $"Cannot sell more than 20 units of the same product. " +
                 $"Current: {existingQuantity}, Attempting to add: {quantity}");
 
@@ -183,14 +184,14 @@ public class Cart : BaseEntity
     /// - Final total is calculated with all discounts applied
     /// - Cart status changes to Completed
     /// </summary>
-    /// <exception cref="InvalidOperationException">Thrown when cart is not pending or has no items.</exception>
+    /// <exception cref="DomainException">Thrown when cart is not pending or has no items.</exception>
     public void Complete()
     {
         if (Status != CartStatus.Pending)
-            throw new InvalidOperationException("Only pending sales can be completed.");
+            throw new DomainException("Only pending sales can be completed.");
 
         if (_items.Count == 0)
-            throw new InvalidOperationException("Cannot complete a sale without items.");
+            throw new DomainException("Cannot complete a sale without items.");
 
         Status = CartStatus.Completed;
         UpdatedAt = DateTime.UtcNow;
@@ -205,11 +206,11 @@ public class Cart : BaseEntity
     /// - Cart status changes to Canceled
     /// </summary>
     /// <param name="reason">The reason for cancellation. Must not be null.</param>
-    /// <exception cref="InvalidOperationException">Thrown when cart is already canceled.</exception>
+    /// <exception cref="DomainException">Thrown when cart is already canceled.</exception>
     public void Cancel(string reason)
     {
         if (Status == CartStatus.Canceled)
-            throw new InvalidOperationException("Sale is already canceled.");
+            throw new DomainException("Sale is already canceled.");
 
         Status = CartStatus.Canceled;
         CancellationReason = reason ?? "No reason provided";
@@ -225,12 +226,12 @@ public class Cart : BaseEntity
     /// - Discounts for remaining items of the same product are recalculated
     /// </summary>
     /// <param name="itemId">The unique identifier of the item to remove.</param>
-    /// <exception cref="InvalidOperationException">Thrown when cart is not in pending state.</exception>
+    /// <exception cref="DomainException">Thrown when cart is not in pending state.</exception>
     /// <exception cref="ArgumentException">Thrown when item is not found in cart.</exception>
     public void RemoveItem(Guid itemId)
     {
         if (Status != CartStatus.Pending)
-            throw new InvalidOperationException("Cannot remove items from completed or canceled sale.");
+            throw new DomainException("Cannot remove items from completed or canceled sale.");
 
         var item = _items.FirstOrDefault(i => i.Id == itemId) ?? throw new ArgumentException($"Item {itemId} not found in cart.", nameof(itemId));
         var productId = item.ProductId;
@@ -251,23 +252,23 @@ public class Cart : BaseEntity
     /// </summary>
     /// <param name="itemId">The unique identifier of the item to update.</param>
     /// <param name="newQuantity">The new quantity. Must be greater than zero.</param>
-    /// <exception cref="InvalidOperationException">Thrown when cart is not pending or quantity limit exceeded.</exception>
-    /// <exception cref="InvalidOperationException">Thrown when item not found or quantity invalid.</exception>
+    /// <exception cref="DomainException">Thrown when cart is not pending or quantity limit exceeded.</exception>
+    /// <exception cref="DomainException">Thrown when item not found or quantity invalid.</exception>
     public void UpdateItemQuantity(Guid itemId, int newQuantity)
     {
         if (Status != CartStatus.Pending)
-            throw new InvalidOperationException("Cannot update items in completed or canceled sale.");
+            throw new DomainException("Cannot update items in completed or canceled sale.");
 
         if (newQuantity <= 0)
-            throw new InvalidOperationException("Quantity must be greater than zero.");
+            throw new DomainException("Quantity must be greater than zero.");
 
-        var item = _items.FirstOrDefault(i => i.Id == itemId) ?? throw new InvalidOperationException($"Item {itemId} not found in cart.");
+        var item = _items.FirstOrDefault(i => i.Id == itemId) ?? throw new DomainException($"Item {itemId} not found in cart.");
         var productId = item.ProductId;
         var otherItemsQuantity = GetTotalQuantityForProduct(productId) - item.Quantity;
         var newTotalQuantity = otherItemsQuantity + newQuantity;
 
         if (newTotalQuantity > 20)
-            throw new InvalidOperationException(
+            throw new DomainException(
                 $"Cannot have more than 20 units of the same product. " +
                 $"Would result in: {newTotalQuantity}");
 

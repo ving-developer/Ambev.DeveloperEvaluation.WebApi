@@ -44,7 +44,7 @@ public class AddItemToCartHandler : IRequestHandler<AddItemToCartCommand, CartRe
         
         if (existingItem is not null)
         {
-            throw new InvalidOperationException($"O produto {command.ProductId} já existe no carrinho, tente atualizar a quantidade dele.");
+            throw new DomainException($"O produto {command.ProductId} já existe no carrinho, tente atualizar a quantidade dele.");
         }
 
         cart.AddItem(command.ProductId, command.Quantity, product.Price);

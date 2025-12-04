@@ -131,8 +131,8 @@ public class AddItemToCartHandlerTests
             .ThrowAsync<EntityNotFoundException>();
     }
 
-    [Fact(DisplayName = "Item already exists in cart → throws InvalidOperationException")]
-    public async Task Handle_ItemAlreadyExists_ThrowsInvalidOperationException()
+    [Fact(DisplayName = "Item already exists in cart → throws DomainException")]
+    public async Task Handle_ItemAlreadyExists_ThrowsDomainException()
     {
         // Given
         var product = ProductTestData.GenerateValidProduct();
@@ -160,7 +160,7 @@ public class AddItemToCartHandlerTests
 
         // Then
         await act.Should()
-            .ThrowAsync<InvalidOperationException>()
+            .ThrowAsync<DomainException>()
             .WithMessage($"O produto {product.Id} já existe no carrinho, tente atualizar a quantidade dele.");
     }
 }
