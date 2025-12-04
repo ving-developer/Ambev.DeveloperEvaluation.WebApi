@@ -1,4 +1,6 @@
-﻿using Ambev.DeveloperEvaluation.Domain.Entities;
+﻿using Ambev.DeveloperEvaluation.Application.Events.Carts.SaleCancelled;
+using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Events;
 using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using MediatR;
@@ -13,13 +15,16 @@ public class CancelCartHandler : IRequestHandler<CancelCartCommand, Unit>
 {
     private readonly ICartRepository _cartRepository;
     private readonly ILogger<CancelCartHandler> _logger;
+    private readonly IMediator _mediator;
 
     public CancelCartHandler(
         ICartRepository cartRepository,
-        ILogger<CancelCartHandler> logger)
+        ILogger<CancelCartHandler> logger,
+        IMediator mediator)
     {
         _cartRepository = cartRepository;
         _logger = logger;
+        _mediator = mediator;
     }
 
     public async Task<Unit> Handle(CancelCartCommand command, CancellationToken cancellationToken)
@@ -35,6 +40,10 @@ public class CancelCartHandler : IRequestHandler<CancelCartCommand, Unit>
 
         await _cartRepository.UpdateAsync(cart, cancellationToken);
         await _cartRepository.SaveChangesAsync(cancellationToken);
+
+        _logger.LogInformation("Publishing SaleCancelled Notification Message.");
+
+        await _mediator.Publish(new SaleCancelledNotification(new SaleCancelledEvent(cart, command.Reason)), cancellationToken);
 
         _logger.LogInformation("Cart {CartId} cancelled successfully", command.CartId);
 
