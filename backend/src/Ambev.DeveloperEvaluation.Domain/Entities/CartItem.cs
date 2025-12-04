@@ -72,9 +72,6 @@ public class CartItem : BaseEntity
     /// <exception cref="ArgumentException">Thrown when any parameter fails validation.</exception>
     public CartItem(Guid cartId, Guid productId, int quantity, decimal unitPrice, decimal discountPercentage)
     {
-        if (cartId == Guid.Empty)
-            throw new ArgumentException("Cart ID cannot be empty.", nameof(cartId));
-
         if (productId == Guid.Empty)
             throw new ArgumentException("Product ID cannot be empty.", nameof(productId));
 

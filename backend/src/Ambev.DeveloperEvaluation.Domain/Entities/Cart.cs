@@ -169,6 +169,7 @@ public class Cart : BaseEntity
         );
 
         _items.Add(item);
+        TotalAmount += item.TotalPrice;
         UpdatedAt = DateTime.UtcNow;
 
         RecalculateDiscountsForProduct(productId);
@@ -188,10 +189,9 @@ public class Cart : BaseEntity
         if (Status != CartStatus.Pending)
             throw new InvalidOperationException("Only pending sales can be completed.");
 
-        if (!_items.Any())
+        if (_items.Count == 0)
             throw new InvalidOperationException("Cannot complete a sale without items.");
 
-        TotalAmount = _items.Sum(item => item.TotalPrice);
         Status = CartStatus.Completed;
         UpdatedAt = DateTime.UtcNow;
     }
@@ -232,11 +232,9 @@ public class Cart : BaseEntity
         if (Status != CartStatus.Pending)
             throw new InvalidOperationException("Cannot remove items from completed or canceled sale.");
 
-        var item = _items.FirstOrDefault(i => i.Id == itemId);
-        if (item == null)
-            throw new ArgumentException($"Item {itemId} not found in cart.", nameof(itemId));
-
+        var item = _items.FirstOrDefault(i => i.Id == itemId) ?? throw new ArgumentException($"Item {itemId} not found in cart.", nameof(itemId));
         var productId = item.ProductId;
+
         _items.Remove(item);
         UpdatedAt = DateTime.UtcNow;
 
@@ -254,16 +252,16 @@ public class Cart : BaseEntity
     /// <param name="itemId">The unique identifier of the item to update.</param>
     /// <param name="newQuantity">The new quantity. Must be greater than zero.</param>
     /// <exception cref="InvalidOperationException">Thrown when cart is not pending or quantity limit exceeded.</exception>
-    /// <exception cref="ArgumentException">Thrown when item not found or quantity invalid.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when item not found or quantity invalid.</exception>
     public void UpdateItemQuantity(Guid itemId, int newQuantity)
     {
         if (Status != CartStatus.Pending)
             throw new InvalidOperationException("Cannot update items in completed or canceled sale.");
 
         if (newQuantity <= 0)
-            throw new ArgumentException("Quantity must be greater than zero.", nameof(newQuantity));
+            throw new InvalidOperationException("Quantity must be greater than zero.");
 
-        var item = _items.FirstOrDefault(i => i.Id == itemId) ?? throw new ArgumentException($"Item {itemId} not found in cart.", nameof(itemId));
+        var item = _items.FirstOrDefault(i => i.Id == itemId) ?? throw new InvalidOperationException($"Item {itemId} not found in cart.");
         var productId = item.ProductId;
         var otherItemsQuantity = GetTotalQuantityForProduct(productId) - item.Quantity;
         var newTotalQuantity = otherItemsQuantity + newQuantity;
@@ -288,15 +286,15 @@ public class Cart : BaseEntity
     /// </summary>
     /// <param name="totalQuantity">The total quantity of a specific product in the cart.</param>
     /// <returns>The applicable discount percentage (0, 10, or 20).</returns>
-    private decimal CalculateDiscountPercentage(int totalQuantity)
+    private static decimal CalculateDiscountPercentage(int totalQuantity)
     {
         if (totalQuantity < 4)
             return 0m;
 
-        if (totalQuantity >= 10 && totalQuantity <= 20)
-            return 20m;
+        if (totalQuantity < 10)
+            return 10m;
 
-        return 10m;
+        return 20m;
     }
 
     /// <summary>

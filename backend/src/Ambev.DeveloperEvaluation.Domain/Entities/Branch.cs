@@ -9,6 +9,11 @@ namespace Ambev.DeveloperEvaluation.Domain.Entities;
 public class Branch : BaseEntity
 {
     /// <summary>
+    /// Private property to hold the sales associated with this branch.
+    /// </summary>
+    private readonly List<Cart> _sales = new();
+
+    /// <summary>
     /// Gets the name of the branch.
     /// </summary>
     public string Name { get; private set; } = string.Empty;
@@ -31,7 +36,7 @@ public class Branch : BaseEntity
     /// <summary>
     /// Navigation property for sales at this branch.
     /// </summary>
-    public IReadOnlyCollection<Cart> Sales { get; private set; } = [];
+    public IReadOnlyCollection<Cart> Sales => _sales;
 
     /// <summary>
     /// Initializes a new instance of the Branch class.
