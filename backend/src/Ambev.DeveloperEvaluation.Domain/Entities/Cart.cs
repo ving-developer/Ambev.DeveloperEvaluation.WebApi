@@ -228,7 +228,7 @@ public class Cart : BaseEntity
     /// <param name="itemId">The unique identifier of the item to remove.</param>
     /// <exception cref="DomainException">Thrown when cart is not in pending state.</exception>
     /// <exception cref="ArgumentException">Thrown when item is not found in cart.</exception>
-    public void RemoveItem(Guid itemId)
+    public CartItem RemoveItem(Guid itemId)
     {
         if (Status != CartStatus.Pending)
             throw new DomainException("Cannot remove items from completed or canceled sale.");
@@ -240,6 +240,8 @@ public class Cart : BaseEntity
         UpdatedAt = DateTime.UtcNow;
 
         RecalculateDiscountsForProduct(productId);
+
+        return item;
     }
 
     /// <summary>
