@@ -5,6 +5,7 @@ using Ambev.DeveloperEvaluation.Application.Carts.CreateCart;
 using Ambev.DeveloperEvaluation.Application.Carts.GetCart;
 using Ambev.DeveloperEvaluation.Application.Carts.ListCarts;
 using Ambev.DeveloperEvaluation.Application.Carts.RemoveItemFromCart;
+using Ambev.DeveloperEvaluation.Application.Carts.UpdateItemQuantity;
 using Ambev.DeveloperEvaluation.Common.Pagination;
 using Ambev.DeveloperEvaluation.WebApi.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Carts.AddItemToCart;
@@ -106,7 +107,7 @@ public class CartsController : BaseController
     /// <param name="request">The cancellation request with reason</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>Success response if the cart was canceled</returns>
-    [HttpDelete("{id:guid}")]
+    [HttpPatch("{id}/cancel")]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
@@ -133,7 +134,7 @@ public class CartsController : BaseController
     /// <param name="request">The item to add</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The updated cart details</returns>
-    [HttpPost("{id:guid}/items")]
+    [HttpPost("{id}/items")]
     [ProducesResponseType(typeof(ApiResponseWithData<CartResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
@@ -156,7 +157,7 @@ public class CartsController : BaseController
     /// <param name="itemId">The item ID to remove</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The updated cart details</returns>
-    [HttpDelete("{cartId:guid}/items/{itemId:guid}")]
+    [HttpDelete("{cartId}/items/{itemId}")]
     [ProducesResponseType(typeof(ApiResponseWithData<CartResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
@@ -211,17 +212,10 @@ public class CartsController : BaseController
         [FromBody] UpdateItemQuantityRequest request,
         CancellationToken cancellationToken)
     {
-        // Nota: Você precisará criar este handler se quiser essa funcionalidade
-        // var command = new UpdateItemQuantityCommand(cartId, itemId, request.Quantity);
-        // var result = await _mediator.Send(command, cancellationToken);
-        // var cartResponse = _mapper.Map<CartResponse>(result);
+        var command = new UpdateItemQuantityCommand(cartId, itemId, request.Quantity);
+        var result = await _mediator.Send(command, cancellationToken);
+        var cartResponse = _mapper.Map<CartResponse>(result);
 
-        // return Ok(cartResponse);
-
-        return StatusCode(StatusCodes.Status501NotImplemented, new ApiResponse
-        {
-            Success = false,
-            Message = "Update item quantity not implemented yet"
-        });
+        return Ok(cartResponse);
     }
 }

@@ -6,6 +6,5 @@ public record CreateCartRequest
 {
     public Guid CustomerId { get; set; }
     public Guid BranchId { get; set; }
-    public string SaleNumber { get; set; } = string.Empty;
-    public List<CartProduct> Items { get; set; } = new();
+    public List<CartItem> Items { get; set; } = [];
 }

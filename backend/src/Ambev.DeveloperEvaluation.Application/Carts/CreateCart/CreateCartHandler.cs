@@ -10,52 +10,44 @@ namespace Ambev.DeveloperEvaluation.Application.Carts.CreateCart;
 /// <summary>
 /// Handler for processing CreateCartCommand requests
 /// </summary>
-public class CreateCartCommandHandler : IRequestHandler<CreateCartCommand, CartResult>
+public class CreateCartHandler : IRequestHandler<CreateCartCommand, CartResult>
 {
     private readonly ICartRepository _cartRepository;
-    private readonly IUserRepository _userRepository;
     private readonly IBranchRepository _branchRepository;
     private readonly IProductRepository _productRepository;
+    private readonly ISaleCounterRepository _saleCounterRepository;
     private readonly IMapper _mapper;
-    private readonly ILogger<CreateCartCommandHandler> _logger;
+    private readonly ILogger<CreateCartHandler> _logger;
 
-    public CreateCartCommandHandler(
+    public CreateCartHandler(
         ICartRepository cartRepository,
-        IUserRepository userRepository,
         IBranchRepository branchRepository,
         IProductRepository productRepository,
+        ISaleCounterRepository saleCounterRepository,
         IMapper mapper,
-        ILogger<CreateCartCommandHandler> logger)
+        ILogger<CreateCartHandler> logger)
     {
         _cartRepository = cartRepository;
-        _userRepository = userRepository;
         _branchRepository = branchRepository;
         _productRepository = productRepository;
+        _saleCounterRepository = saleCounterRepository;
         _mapper = mapper;
         _logger = logger;
     }
 
     public async Task<CartResult> Handle(CreateCartCommand command, CancellationToken cancellationToken)
     {
-        _logger.LogInformation("Creating new cart for customer {CustomerId}", command.CustomerId);
+        _logger.LogInformation("Creating new cart for customer {CustomerId} to branch: {BranchId}", command.CustomerId, command.BranchId);
 
-        var customer = await _userRepository.GetByIdAsync(command.CustomerId, cancellationToken)
-            ?? throw new KeyNotFoundException($"Customer {command.CustomerId} not found");
-
-        var branch = await _branchRepository.GetByIdAsync(command.BranchId, cancellationToken)
-            ?? throw new KeyNotFoundException($"Branch {command.BranchId} not found");
-
-        var cart = new Cart(command.CustomerId, command.BranchId, command.SaleNumber);
+        var branch = await _branchRepository.GetByIdAsync(command.BranchId, cancellationToken) ?? throw new KeyNotFoundException($"Branch with ID {command.BranchId} not found.");
+        var saleCount = await _saleCounterRepository.GetAndIncrementSaleNumberAsync(command.BranchId, cancellationToken);
+        var cart = new Cart(command.CustomerId, command.BranchId, $"{branch.Code}{saleCount:D6}");
 
         foreach (var item in command.Items)
         {
-            var product = await _productRepository.GetByIdAsync(item.ProductId, cancellationToken)
-                ?? throw new InvalidOperationException($"Product {item.ProductId} not found");
-
-            cart.AddItem(item.ProductId, item.Quantity, item.UnitPrice);
+            var product = await _productRepository.GetByIdAsync(item.ProductId) ?? throw new KeyNotFoundException($"Product with ID {item.ProductId} not found.");
+            cart.AddItem(item.ProductId, item.Quantity, product.Price);
         }
-
-        cart.Complete();
 
         await _cartRepository.CreateAsync(cart, cancellationToken);
         await _cartRepository.SaveChangesAsync(cancellationToken);
