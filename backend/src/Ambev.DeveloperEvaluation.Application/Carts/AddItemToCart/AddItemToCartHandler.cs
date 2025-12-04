@@ -9,18 +9,18 @@ namespace Ambev.DeveloperEvaluation.Application.Carts.AddItemToCart;
 /// <summary>
 /// Handler for processing AddItemToCartCommand requests
 /// </summary>
-public class AddItemToCartCommandHandler : IRequestHandler<AddItemToCartCommand, CartResult>
+public class AddItemToCartHandler : IRequestHandler<AddItemToCartCommand, CartResult>
 {
     private readonly ICartRepository _cartRepository;
     private readonly IProductRepository _productRepository;
     private readonly IMapper _mapper;
-    private readonly ILogger<AddItemToCartCommandHandler> _logger;
+    private readonly ILogger<AddItemToCartHandler> _logger;
 
-    public AddItemToCartCommandHandler(
+    public AddItemToCartHandler(
         ICartRepository cartRepository,
         IProductRepository productRepository,
         IMapper mapper,
-        ILogger<AddItemToCartCommandHandler> logger)
+        ILogger<AddItemToCartHandler> logger)
     {
         _cartRepository = cartRepository;
         _productRepository = productRepository;
@@ -32,24 +32,20 @@ public class AddItemToCartCommandHandler : IRequestHandler<AddItemToCartCommand,
     {
         _logger.LogInformation("Adding item to cart {CartId}", command.CartId);
 
-        var cart = await _cartRepository.GetByIdAsync(command.CartId, cancellationToken);
-        if (cart == null)
-            throw new KeyNotFoundException($"Cart {command.CartId} not found");
+        var cart = await _cartRepository.GetByIdAsync(command.CartId, cancellationToken) ?? throw new KeyNotFoundException($"Cart {command.CartId} not found");
+        var product = await _productRepository.GetByIdAsync(command.ProductId, cancellationToken) ?? throw new KeyNotFoundException($"Product {command.ProductId} not found");
+        var existingItem = cart.Items.FirstOrDefault(i => i.ProductId == command.ProductId);
+        
+        if (existingItem is not null)
+        {
+            throw new InvalidOperationException($"O produto {command.ProductId} já existe no carrinho, tente atualizar a quantidade dele.");
+        }
 
-        // Verificar se produto existe
-        var product = await _productRepository.GetByIdAsync(command.ProductId, cancellationToken);
-        if (product == null)
-            throw new KeyNotFoundException($"Product {command.ProductId} not found");
+        cart.AddItem(command.ProductId, command.Quantity, product.Price);
 
-        // Adicionar item (a entidade aplica todas as regras de negócio)
-        cart.AddItem(command.ProductId, command.Quantity, command.UnitPrice);
-
-        // Se a venda estava completa, voltar para pendente? Decisão de negócio.
-        // Por enquanto, assumimos que só se adiciona a vendas pendentes.
         if (cart.Status == Domain.Enums.CartStatus.Completed)
         {
-            _logger.LogWarning("Adding item to completed cart {CartId} - consider business rules", command.CartId);
-            // Talvez lançar exceção ou criar nova venda
+            _logger.LogWarning("Adding item to completed cart {CartId}", command.CartId);
         }
 
         await _cartRepository.UpdateAsync(cart, cancellationToken);

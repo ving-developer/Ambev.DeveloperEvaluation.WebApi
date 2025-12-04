@@ -8,5 +8,4 @@ public record AddItemToCartCommand : IRequest<CartResult>
     public Guid CartId { get; init; }
     public Guid ProductId { get; init; }
     public int Quantity { get; init; }
-    public decimal UnitPrice { get; init; }
 }

@@ -1,7 +1,7 @@
 ﻿namespace Ambev.DeveloperEvaluation.WebApi.Features.Carts.Common;
 
-public record CartProduct
+public record CartItem
 {
-    public int ProductId { get; set; }
+    public Guid ProductId { get; set; }
     public int Quantity { get; set; }
 }
