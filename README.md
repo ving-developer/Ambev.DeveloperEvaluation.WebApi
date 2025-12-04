@@ -81,3 +81,10 @@ dotnet run
 ```
 3. **Access the API**
 The application will be available at: http://localhost:5119/swagger/index.html
+
+## Final Considerations
+The technical test is quite extensive, and therefore I couldn't complete the frontend of the project. So if I had more time, I would have done the frontend using Angular.
+
+Another important point that I couldn't achieve due to time constraints is unlinking Cart from a Sale. Due to lack of time, I modeled Cart to be the Sale itself through an Enum indicating the Sale's Status.
+
+I also didn't have time to cover 100% of the tests. However, I achieved 100% coverage of the handlers, 90% in the domain, and 80% in the controllers.
