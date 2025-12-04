@@ -1,4 +1,5 @@
 ﻿using Ambev.DeveloperEvaluation.Common.Validation;
+using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.WebApi.Common;
 using FluentValidation;
 using FluentValidation.Results;
@@ -47,7 +48,7 @@ namespace Ambev.DeveloperEvaluation.WebApi.Middleware
 
             switch (exception)
             {
-                case KeyNotFoundException:
+                case EntityNotFoundException:
                     status = HttpStatusCode.NotFound;
                     response = new ApiResponse
                     {

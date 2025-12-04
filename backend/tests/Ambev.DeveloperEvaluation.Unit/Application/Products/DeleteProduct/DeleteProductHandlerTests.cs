@@ -1,4 +1,5 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Products.DeleteProduct;
+using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
@@ -43,8 +44,8 @@ namespace Ambev.DeveloperEvaluation.Unit.Application.Products.DeleteProduct
             await _productRepository.Received(1).SaveChangesAsync(Arg.Any<CancellationToken>());
         }
 
-        [Fact(DisplayName = "Delete product fails → throws KeyNotFoundException")]
-        public async Task Handle_DeleteFails_ThrowsKeyNotFoundException()
+        [Fact(DisplayName = "Delete product fails → throws EntityNotFoundException")]
+        public async Task Handle_DeleteFails_ThrowsEntityNotFoundException()
         {
             // Given
             var command = new DeleteProductCommand(Guid.NewGuid());
@@ -61,8 +62,7 @@ namespace Ambev.DeveloperEvaluation.Unit.Application.Products.DeleteProduct
 
             // Then
             await act.Should()
-                .ThrowAsync<KeyNotFoundException>()
-                .WithMessage($"Product with ID {command.Id} not found");
+                .ThrowAsync<EntityNotFoundException>();
 
             await _productRepository.Received(1).DeleteAsync(command.Id, Arg.Any<CancellationToken>());
             await _productRepository.Received(1).SaveChangesAsync(Arg.Any<CancellationToken>());

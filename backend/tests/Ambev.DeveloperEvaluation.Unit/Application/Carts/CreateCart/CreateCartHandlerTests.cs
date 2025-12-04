@@ -1,6 +1,7 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Carts.Common;
 using Ambev.DeveloperEvaluation.Application.Carts.CreateCart;
 using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Ambev.DeveloperEvaluation.Unit.Application.TestData.Carts;
 using Ambev.DeveloperEvaluation.Unit.Domain.Entities.TestData;
@@ -82,8 +83,8 @@ public class CreateCartHandlerTests
         await _cartRepository.Received(1).SaveChangesAsync(Arg.Any<CancellationToken>());
     }
 
-    [Fact(DisplayName = "Branch not found → throws KeyNotFoundException")]
-    public async Task Handle_BranchNotFound_ThrowsKeyNotFoundException()
+    [Fact(DisplayName = "Branch not found → throws EntityNotFoundException")]
+    public async Task Handle_BranchNotFound_ThrowsEntityNotFoundException()
     {
         // Given
         var command = CreateCartHandlerTestData.GenerateValidCommand();
@@ -95,12 +96,11 @@ public class CreateCartHandlerTests
 
         // Then
         await act.Should()
-            .ThrowAsync<KeyNotFoundException>()
-            .WithMessage($"Branch with ID {command.BranchId} not found.");
+            .ThrowAsync<EntityNotFoundException>();
     }
 
-    [Fact(DisplayName = "Product not found → throws KeyNotFoundException")]
-    public async Task Handle_ProductNotFound_ThrowsKeyNotFoundException()
+    [Fact(DisplayName = "Product not found → throws EntityNotFoundException")]
+    public async Task Handle_ProductNotFound_ThrowsEntityNotFoundException()
     {
         // Given
         var command = CreateCartHandlerTestData.GenerateValidCommand();
@@ -116,7 +116,6 @@ public class CreateCartHandlerTests
 
         // Then
         await act.Should()
-            .ThrowAsync<KeyNotFoundException>()
-            .WithMessage($"Product with ID {command.Items.First().ProductId} not found.");
+            .ThrowAsync<EntityNotFoundException>();
     }
 }

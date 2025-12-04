@@ -1,4 +1,6 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Carts.Common;
+using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using AutoMapper;
 using MediatR;
@@ -30,8 +32,9 @@ public class RemoveItemFromCartHandler : IRequestHandler<RemoveItemFromCartComma
         _logger.LogInformation("Removing item {ItemId} from cart {CartId}",
             command.ItemId, command.CartId);
 
-        var cart = await _cartRepository.GetByIdAsync(command.CartId, cancellationToken) ?? throw new KeyNotFoundException($"Cart {command.CartId} not found");
-        
+        var cart = await _cartRepository.GetByIdAsync(command.CartId, cancellationToken)
+            ?? throw new EntityNotFoundException(nameof(Cart), command.CartId);
+
         cart.RemoveItem(command.ItemId);
 
         await _cartRepository.UpdateAsync(cart, cancellationToken);

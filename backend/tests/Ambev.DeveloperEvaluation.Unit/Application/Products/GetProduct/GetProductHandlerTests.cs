@@ -1,6 +1,7 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Products.Common;
 using Ambev.DeveloperEvaluation.Application.Products.GetProduct;
 using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Ambev.DeveloperEvaluation.Unit.Domain.Entities.TestData;
 using AutoMapper;
@@ -65,8 +66,8 @@ public class GetProductHandlerTests
                 Arg.Any<System.Linq.Expressions.Expression<Func<Product, object>>>());
     }
 
-    [Fact(DisplayName = "Product not found → throws KeyNotFoundException")]
-    public async Task Handle_ProductNotFound_ThrowsKeyNotFoundException()
+    [Fact(DisplayName = "Product not found → throws EntityNotFoundException")]
+    public async Task Handle_ProductNotFound_ThrowsEntityNotFoundException()
     {
         // Given
         var command = new GetProductCommand(Guid.NewGuid());
@@ -84,8 +85,7 @@ public class GetProductHandlerTests
 
         // Then
         await act.Should()
-            .ThrowAsync<KeyNotFoundException>()
-            .WithMessage($"Product with ID {command.Id} not found");
+            .ThrowAsync<EntityNotFoundException>();
 
         await _productRepository.Received(1)
             .GetByIdAsync(

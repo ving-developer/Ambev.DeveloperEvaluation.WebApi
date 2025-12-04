@@ -1,5 +1,6 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Branches.Common;
 using Ambev.DeveloperEvaluation.Common.Pagination;
+using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Integration.Shared.Fixtures;
 using Ambev.DeveloperEvaluation.Integration.Shared.Helpers;
 using Ambev.DeveloperEvaluation.Integration.Shared.TestData.Branches;
@@ -57,8 +58,8 @@ public class BranchesControllerTests : IntegrationTestBase
         response.Data!.Id.Should().Be(createdBranch.Id);
     }
 
-    [Fact(DisplayName = "GetBranch should throw KeyNotFoundException when branch does not exist")]
-    public async Task GetBranch_ShouldThrowKeyNotFoundException()
+    [Fact(DisplayName = "GetBranch should throw EntityNotFoundException when branch does not exist")]
+    public async Task GetBranch_ShouldThrowEntityNotFoundException()
     {
         // Given
         var controller = CreateController<BranchesController>();
@@ -68,8 +69,7 @@ public class BranchesControllerTests : IntegrationTestBase
         await FluentActions
             .Invoking(() => controller.GetBranch(nonExistingBranchId, default))
             .Should()
-            .ThrowAsync<KeyNotFoundException>()
-            .WithMessage($"Branch with ID {nonExistingBranchId} not found");
+            .ThrowAsync<EntityNotFoundException>();
     }
     #endregion
 
@@ -113,8 +113,8 @@ public class BranchesControllerTests : IntegrationTestBase
         response.Success.Should().BeTrue();
     }
 
-    [Fact(DisplayName = "DeleteBranch should throw KeyNotFoundException when branch does not exist")]
-    public async Task DeleteBranch_ShouldThrowKeyNotFoundException()
+    [Fact(DisplayName = "DeleteBranch should throw EntityNotFoundException when branch does not exist")]
+    public async Task DeleteBranch_ShouldThrowEntityNotFoundException()
     {
         // Given
         var controller = CreateController<BranchesController>();
@@ -124,8 +124,7 @@ public class BranchesControllerTests : IntegrationTestBase
         await FluentActions
             .Invoking(() => controller.DeleteBranch(nonExistingBranchId, default))
             .Should()
-            .ThrowAsync<KeyNotFoundException>()
-            .WithMessage("Key to delete has not found.");
+            .ThrowAsync<EntityNotFoundException>();
     }
     #endregion
 

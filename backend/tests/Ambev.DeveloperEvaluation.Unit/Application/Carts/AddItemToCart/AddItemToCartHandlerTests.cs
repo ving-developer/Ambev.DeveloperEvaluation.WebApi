@@ -1,6 +1,7 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Carts.AddItemToCart;
 using Ambev.DeveloperEvaluation.Application.Carts.Common;
 using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Ambev.DeveloperEvaluation.Unit.Domain.Entities.TestData;
 using AutoMapper;
@@ -80,8 +81,8 @@ public class AddItemToCartHandlerTests
         await _cartRepository.Received(1).SaveChangesAsync(Arg.Any<CancellationToken>());
     }
 
-    [Fact(DisplayName = "Cart not found → throws KeyNotFoundException")]
-    public async Task Handle_CartNotFound_ThrowsKeyNotFoundException()
+    [Fact(DisplayName = "Cart not found → throws EntityNotFoundException")]
+    public async Task Handle_CartNotFound_ThrowsEntityNotFoundException()
     {
         // Given
         var command = new AddItemToCartCommand
@@ -99,12 +100,11 @@ public class AddItemToCartHandlerTests
 
         // Then
         await act.Should()
-            .ThrowAsync<KeyNotFoundException>()
-            .WithMessage($"Cart {command.CartId} not found");
+            .ThrowAsync<EntityNotFoundException>();
     }
 
-    [Fact(DisplayName = "Product not found → throws KeyNotFoundException")]
-    public async Task Handle_ProductNotFound_ThrowsKeyNotFoundException()
+    [Fact(DisplayName = "Product not found → throws EntityNotFoundException")]
+    public async Task Handle_ProductNotFound_ThrowsEntityNotFoundException()
     {
         // Given
         var cart = CartTestData.GenerateValidCart();
@@ -128,8 +128,7 @@ public class AddItemToCartHandlerTests
 
         // Then
         await act.Should()
-            .ThrowAsync<KeyNotFoundException>()
-            .WithMessage($"Product {command.ProductId} not found");
+            .ThrowAsync<EntityNotFoundException>();
     }
 
     [Fact(DisplayName = "Item already exists in cart → throws InvalidOperationException")]

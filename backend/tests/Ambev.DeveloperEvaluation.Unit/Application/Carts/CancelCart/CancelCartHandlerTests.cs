@@ -1,6 +1,7 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Carts.CancelCart;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Enums;
+using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Ambev.DeveloperEvaluation.Unit.Domain.Entities.TestData;
 using FluentAssertions;
@@ -50,8 +51,8 @@ public class CancelCartHandlerTests
         await _cartRepository.Received(1).SaveChangesAsync(Arg.Any<CancellationToken>());
     }
 
-    [Fact(DisplayName = "Cart not found → throws KeyNotFoundException")]
-    public async Task Handle_CartNotFound_ThrowsKeyNotFoundException()
+    [Fact(DisplayName = "Cart not found → throws EntityNotFoundException")]
+    public async Task Handle_CartNotFound_ThrowsEntityNotFoundException()
     {
         // Given
         var cartId = Guid.NewGuid();
@@ -65,8 +66,7 @@ public class CancelCartHandlerTests
 
         // Then
         await act.Should()
-            .ThrowAsync<KeyNotFoundException>()
-            .WithMessage($"Cart {cartId} not found");
+            .ThrowAsync<EntityNotFoundException>();
     }
 
     [Fact(DisplayName = "Cancellation reason is empty → throws InvalidOperationException")]

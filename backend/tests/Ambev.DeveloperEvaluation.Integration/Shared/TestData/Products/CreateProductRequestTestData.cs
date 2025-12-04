@@ -20,7 +20,12 @@ namespace Ambev.DeveloperEvaluation.Integration.Shared.TestData.Products
                 .RuleFor(p => p.Title, f => f.Commerce.ProductName())
                 .RuleFor(p => p.Description, f => f.Commerce.ProductDescription())
                 .RuleFor(p => p.Price, f => decimal.Parse(f.Commerce.Price(1, 1000)))
-                .RuleFor(p => p.Category, f => f.PickRandom<ProductCategory>())
+                .RuleFor(p => p.Category, f => f.PickRandom<ProductCategory>(
+                            Enum.GetValues(typeof(ProductCategory))
+                                .Cast<ProductCategory>()
+                                .Where(c => c != 0)
+                                .ToArray()
+                        ))
                 .RuleFor(p => p.Image, f => f.Image.PicsumUrl())
                 .RuleFor(p => p.Rating, f => new ProductRatingResponse
                 {

@@ -1,5 +1,6 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Carts.Common;
 using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using AutoMapper;
 using MediatR;
@@ -31,7 +32,7 @@ public class CompleteCartHandler : IRequestHandler<CompleteCartCommand, CartResu
         _logger.LogInformation("Completing cart {CartId}", command.CartId);
 
         var cart = await _cartRepository.GetByIdAsync(command.CartId, cancellationToken)
-            ?? throw new KeyNotFoundException($"Cart {command.CartId} not found");
+           ?? throw new EntityNotFoundException(nameof(Cart), command.CartId);
 
         cart.Complete();
 

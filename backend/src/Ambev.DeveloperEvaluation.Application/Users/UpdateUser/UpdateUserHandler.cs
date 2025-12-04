@@ -1,4 +1,6 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Users.Common;
+using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using AutoMapper;
 using MediatR;
@@ -46,7 +48,7 @@ public class UpdateUserHandler : IRequestHandler<UpdateUserCommand, UserResult>
         if (existingUser == null)
         {
             _logger.LogWarning("[WRN] User with UserId={UserId} not found. Aborting UpdateUser.", command.Id);
-            throw new KeyNotFoundException($"User with ID {command.Id} not found");
+            throw new EntityNotFoundException(nameof(User), command.Id);
         }
 
         if (existingUser.Email != command.Email)

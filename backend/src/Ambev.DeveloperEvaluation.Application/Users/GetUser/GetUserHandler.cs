@@ -1,4 +1,6 @@
 using Ambev.DeveloperEvaluation.Application.Users.Common;
+using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using AutoMapper;
 using MediatR;
@@ -45,7 +47,7 @@ public class GetUserHandler : IRequestHandler<GetUserCommand, UserResult>
         if (user == null)
         {
             _logger.LogWarning("[WRN] User not found. UserId={UserId}", request.Id);
-            throw new KeyNotFoundException($"User with ID {request.Id} not found");
+            throw new EntityNotFoundException(nameof(User), request.Id);
         }
 
         _logger.LogInformation("[INF] User retrieved successfully. UserId={UserId}", request.Id);

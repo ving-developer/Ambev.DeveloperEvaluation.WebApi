@@ -1,6 +1,7 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Branches.Common;
 using Ambev.DeveloperEvaluation.Application.Branches.GetBranch;
 using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Ambev.DeveloperEvaluation.Unit.Application.TestData.Branches;
 using Ambev.DeveloperEvaluation.Unit.Domain.Entities.TestData;
@@ -70,8 +71,8 @@ namespace Ambev.DeveloperEvaluation.Unit.Application.Branches.GetBranch
             _mapper.Received(1).Map<BranchResult>(branch);
         }
 
-        [Fact(DisplayName = "Given non-existing branch ID When getting branch Then throws KeyNotFoundException")]
-        public async Task Handle_NonExistingBranch_ThrowsKeyNotFoundException()
+        [Fact(DisplayName = "Given non-existing branch ID When getting branch Then throws EntityNotFoundException")]
+        public async Task Handle_NonExistingBranch_ThrowsEntityNotFoundException()
         {
             // Given
             var command = new GetBranchCommand(Guid.NewGuid());
@@ -83,8 +84,7 @@ namespace Ambev.DeveloperEvaluation.Unit.Application.Branches.GetBranch
             Func<Task> act = () => _handler.Handle(command, CancellationToken.None);
 
             // Then
-            await act.Should().ThrowAsync<KeyNotFoundException>()
-                .WithMessage($"Branch with ID {command.Id} not found");
+            await act.Should().ThrowAsync<EntityNotFoundException>();
 
             await _branchRepository.Received(1)
                 .GetByIdAsync(command.Id, Arg.Any<CancellationToken>());

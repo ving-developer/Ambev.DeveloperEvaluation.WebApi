@@ -1,4 +1,6 @@
 using Ambev.DeveloperEvaluation.Application.Products.Common;
+using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using AutoMapper;
 using MediatR;
@@ -50,7 +52,7 @@ public class GetProductHandler : IRequestHandler<GetProductCommand, ProductResul
         if (product == null)
         {
             _logger.LogWarning("[WRN] Product not found. ProductId={ProductId}", request.Id);
-            throw new KeyNotFoundException($"Product with ID {request.Id} not found");
+            throw new EntityNotFoundException(nameof(Product), request.Id);
         }
 
         _logger.LogInformation("[INF] Product retrieved successfully. ProductId={ProductId}", request.Id);

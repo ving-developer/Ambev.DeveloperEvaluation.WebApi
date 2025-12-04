@@ -1,4 +1,6 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Carts.Common;
+using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using AutoMapper;
 using MediatR;
@@ -32,8 +34,12 @@ public class AddItemToCartHandler : IRequestHandler<AddItemToCartCommand, CartRe
     {
         _logger.LogInformation("Adding item to cart {CartId}", command.CartId);
 
-        var cart = await _cartRepository.GetByIdAsync(command.CartId, cancellationToken) ?? throw new KeyNotFoundException($"Cart {command.CartId} not found");
-        var product = await _productRepository.GetByIdAsync(command.ProductId, cancellationToken) ?? throw new KeyNotFoundException($"Product {command.ProductId} not found");
+        var cart = await _cartRepository.GetByIdAsync(command.CartId, cancellationToken)
+           ?? throw new EntityNotFoundException(nameof(Cart), command.CartId);
+
+        var product = await _productRepository.GetByIdAsync(command.ProductId, cancellationToken)
+                      ?? throw new EntityNotFoundException(nameof(Product), command.ProductId);
+
         var existingItem = cart.Items.FirstOrDefault(i => i.ProductId == command.ProductId);
         
         if (existingItem is not null)

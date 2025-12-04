@@ -1,4 +1,5 @@
 ﻿using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -28,7 +29,7 @@ public class CancelCartHandler : IRequestHandler<CancelCartCommand, Unit>
         if (string.IsNullOrWhiteSpace(command.Reason))
             throw new InvalidOperationException("Cancellation reason is required");
 
-        var cart = await _cartRepository.GetByIdAsync(command.CartId, cancellationToken) ?? throw new KeyNotFoundException($"Cart {command.CartId} not found");
+        var cart = await _cartRepository.GetByIdAsync(command.CartId, cancellationToken) ?? throw new EntityNotFoundException(nameof(Cart), command.CartId);
 
         cart.Cancel(command.Reason);
 
