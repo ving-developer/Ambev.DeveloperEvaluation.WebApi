@@ -1,5 +1,7 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Carts.Common;
+using Ambev.DeveloperEvaluation.Application.Events.Carts.SaleCreated;
 using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Events;
 using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using AutoMapper;
@@ -19,6 +21,7 @@ public class CreateCartHandler : IRequestHandler<CreateCartCommand, CartResult>
     private readonly ISaleCounterRepository _saleCounterRepository;
     private readonly IMapper _mapper;
     private readonly ILogger<CreateCartHandler> _logger;
+    private readonly IMediator _mediator;
 
     public CreateCartHandler(
         ICartRepository cartRepository,
@@ -26,7 +29,8 @@ public class CreateCartHandler : IRequestHandler<CreateCartCommand, CartResult>
         IProductRepository productRepository,
         ISaleCounterRepository saleCounterRepository,
         IMapper mapper,
-        ILogger<CreateCartHandler> logger)
+        ILogger<CreateCartHandler> logger,
+        IMediator mediator)
     {
         _cartRepository = cartRepository;
         _branchRepository = branchRepository;
@@ -34,6 +38,7 @@ public class CreateCartHandler : IRequestHandler<CreateCartCommand, CartResult>
         _saleCounterRepository = saleCounterRepository;
         _mapper = mapper;
         _logger = logger;
+        _mediator = mediator;
     }
 
     public async Task<CartResult> Handle(CreateCartCommand command, CancellationToken cancellationToken)
@@ -52,6 +57,10 @@ public class CreateCartHandler : IRequestHandler<CreateCartCommand, CartResult>
 
         await _cartRepository.CreateAsync(cart, cancellationToken);
         await _cartRepository.SaveChangesAsync(cancellationToken);
+
+        _logger.LogInformation("Publishing SaleModified Notification Message.");
+
+        await _mediator.Publish(new SaleCreatedNotification(new SaleCreatedEvent(cart)), cancellationToken);
 
         _logger.LogInformation("Cart {CartId} created successfully with {ItemCount} items",
             cart.Id, cart.Items.Count);
