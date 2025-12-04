@@ -22,6 +22,190 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("Ambev.DeveloperEvaluation.Domain.Entities.Branch", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasDefaultValueSql("gen_random_uuid()");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("City");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)")
+                        .HasColumnName("Code");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("Name");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasMaxLength(2)
+                        .HasColumnType("character(2)")
+                        .HasColumnName("State")
+                        .IsFixedLength();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("City")
+                        .HasDatabaseName("IX_Branches_City");
+
+                    b.HasIndex("Code")
+                        .IsUnique()
+                        .HasDatabaseName("IX_Branches_Code");
+
+                    b.HasIndex("State")
+                        .HasDatabaseName("IX_Branches_State");
+
+                    b.HasIndex("State", "City")
+                        .HasDatabaseName("IX_Branches_State_City");
+
+                    b.ToTable("Branches", (string)null);
+                });
+
+            modelBuilder.Entity("Ambev.DeveloperEvaluation.Domain.Entities.Cart", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasDefaultValueSql("gen_random_uuid()");
+
+                    b.Property<Guid>("BranchId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("CanceledAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CancellationReason")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)")
+                        .HasColumnName("CancellationReason");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("NOW()");
+
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("SaleDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("SaleNumber")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("SaleNumber");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<decimal>("TotalAmount")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("decimal(18,2)")
+                        .HasDefaultValue(0m);
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BranchId")
+                        .HasDatabaseName("IX_Carts_BranchId");
+
+                    b.HasIndex("CanceledAt")
+                        .HasDatabaseName("IX_Carts_CanceledAt");
+
+                    b.HasIndex("CreatedAt")
+                        .HasDatabaseName("IX_Carts_CreatedAt");
+
+                    b.HasIndex("CustomerId")
+                        .HasDatabaseName("IX_Carts_CustomerId");
+
+                    b.HasIndex("SaleDate")
+                        .HasDatabaseName("IX_Carts_SaleDate");
+
+                    b.HasIndex("SaleNumber")
+                        .IsUnique()
+                        .HasDatabaseName("IX_Carts_SaleNumber");
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("IX_Carts_Status");
+
+                    b.HasIndex("BranchId", "SaleDate")
+                        .HasDatabaseName("IX_Carts_BranchId_SaleDate");
+
+                    b.HasIndex("BranchId", "Status")
+                        .HasDatabaseName("IX_Carts_BranchId_Status");
+
+                    b.HasIndex("CustomerId", "CreatedAt")
+                        .HasDatabaseName("IX_Carts_CustomerId_CreatedAt");
+
+                    b.HasIndex("Status", "CreatedAt")
+                        .HasDatabaseName("IX_Carts_Status_CreatedAt");
+
+                    b.ToTable("Carts", (string)null);
+                });
+
+            modelBuilder.Entity("Ambev.DeveloperEvaluation.Domain.Entities.CartItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasDefaultValueSql("gen_random_uuid()");
+
+                    b.Property<Guid>("CartId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("NOW()");
+
+                    b.Property<decimal>("DiscountPercentage")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("decimal(5,2)")
+                        .HasDefaultValue(0m);
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CartId")
+                        .HasDatabaseName("IX_CartItems_CartId");
+
+                    b.HasIndex("CreatedAt")
+                        .HasDatabaseName("IX_CartItems_CreatedAt");
+
+                    b.HasIndex("ProductId")
+                        .HasDatabaseName("IX_CartItems_ProductId");
+
+                    b.HasIndex("CartId", "CreatedAt")
+                        .HasDatabaseName("IX_CartItems_CartId_CreatedAt");
+
+                    b.HasIndex("CartId", "ProductId")
+                        .IsUnique()
+                        .HasDatabaseName("IX_CartItems_CartId_ProductId");
+
+                    b.ToTable("CartItems", (string)null);
+                });
+
             modelBuilder.Entity("Ambev.DeveloperEvaluation.Domain.Entities.Product", b =>
                 {
                     b.Property<Guid>("Id")
@@ -87,6 +271,33 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                     b.ToTable("Ratings", (string)null);
                 });
 
+            modelBuilder.Entity("Ambev.DeveloperEvaluation.Domain.Entities.SaleCounter", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasDefaultValueSql("gen_random_uuid()");
+
+                    b.Property<Guid>("BranchId")
+                        .HasColumnType("uuid");
+
+                    b.Property<long>("LastNumber")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasDefaultValue(0L);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BranchId")
+                        .IsUnique()
+                        .HasDatabaseName("IX_SaleCounters_BranchId_Unique");
+
+                    b.HasIndex("LastNumber")
+                        .HasDatabaseName("IX_SaleCounters_LastNumber");
+
+                    b.ToTable("SaleCounters", (string)null);
+                });
+
             modelBuilder.Entity("Ambev.DeveloperEvaluation.Domain.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -135,19 +346,77 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                     b.ToTable("Users", (string)null);
                 });
 
+            modelBuilder.Entity("Ambev.DeveloperEvaluation.Domain.Entities.Cart", b =>
+                {
+                    b.HasOne("Ambev.DeveloperEvaluation.Domain.Entities.Branch", "Branch")
+                        .WithMany("Sales")
+                        .HasForeignKey("BranchId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Ambev.DeveloperEvaluation.Domain.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Branch");
+                });
+
+            modelBuilder.Entity("Ambev.DeveloperEvaluation.Domain.Entities.CartItem", b =>
+                {
+                    b.HasOne("Ambev.DeveloperEvaluation.Domain.Entities.Cart", "Cart")
+                        .WithMany("Items")
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Ambev.DeveloperEvaluation.Domain.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Cart");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("Ambev.DeveloperEvaluation.Domain.Entities.Rating", b =>
                 {
-                    b.HasOne("Ambev.DeveloperEvaluation.Domain.Entities.Product", null)
-                        .WithOne("ProductRating")
+                    b.HasOne("Ambev.DeveloperEvaluation.Domain.Entities.Product", "Product")
+                        .WithOne("Rating")
                         .HasForeignKey("Ambev.DeveloperEvaluation.Domain.Entities.Rating", "ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Ambev.DeveloperEvaluation.Domain.Entities.SaleCounter", b =>
+                {
+                    b.HasOne("Ambev.DeveloperEvaluation.Domain.Entities.Branch", "Branch")
+                        .WithOne()
+                        .HasForeignKey("Ambev.DeveloperEvaluation.Domain.Entities.SaleCounter", "BranchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Branch");
+                });
+
+            modelBuilder.Entity("Ambev.DeveloperEvaluation.Domain.Entities.Branch", b =>
+                {
+                    b.Navigation("Sales");
+                });
+
+            modelBuilder.Entity("Ambev.DeveloperEvaluation.Domain.Entities.Cart", b =>
+                {
+                    b.Navigation("Items");
                 });
 
             modelBuilder.Entity("Ambev.DeveloperEvaluation.Domain.Entities.Product", b =>
                 {
-                    b.Navigation("ProductRating")
-                        .IsRequired();
+                    b.Navigation("Rating");
                 });
 #pragma warning restore 612, 618
         }

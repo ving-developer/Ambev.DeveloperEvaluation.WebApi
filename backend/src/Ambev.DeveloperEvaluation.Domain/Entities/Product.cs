@@ -13,44 +13,44 @@ public class Product : BaseEntity
     /// Gets the product title.
     /// Must not be null or empty.
     /// </summary>
-    public string Title { get; set; } = string.Empty;
+    public string Title { get; private set; } = string.Empty;
 
     /// <summary>
     /// Gets the product price.
     /// Must be a positive value.
     /// </summary>
-    public decimal Price { get; set; }
+    public decimal Price { get; private set; }
 
     /// <summary>
     /// Gets the product description.
     /// </summary>
-    public string Description { get; set; } = string.Empty;
+    public string Description { get; private set; } = string.Empty;
 
     /// <summary>
     /// Gets the product category.
     /// Must not be null or empty.
     /// </summary>
-    public ProductCategory Category { get; set; }
+    public ProductCategory Category { get; private set; }
 
     /// <summary>
     /// Gets the URL of the product image.
     /// </summary>
-    public string Image { get; set; } = string.Empty;
+    public string Image { get; private set; } = string.Empty;
 
     /// <summary>
     /// Gets the product rating.
     /// </summary>
-    public Rating ProductRating { get; set; } = new Rating();
+    public Rating? Rating { get; private set; }
 
     /// <summary>
     /// Gets the date and time when the product was created.
     /// </summary>
-    public DateTime CreatedAt { get; set; }
+    public DateTime CreatedAt { get; private set; }
 
     /// <summary>
     /// Gets the date and time of the last update to the product.
     /// </summary>
-    public DateTime? UpdatedAt { get; set; }
+    public DateTime? UpdatedAt { get; private set; }
 
     /// <summary>
     /// Initializes a new instance of the Product class.

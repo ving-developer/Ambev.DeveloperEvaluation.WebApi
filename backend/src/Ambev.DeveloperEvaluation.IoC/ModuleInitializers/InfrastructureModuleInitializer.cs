@@ -11,8 +11,12 @@ public class InfrastructureModuleInitializer : IModuleInitializer
 {
     public void Initialize(WebApplicationBuilder builder)
     {
-        builder.Services.AddScoped<DbContext>(provider => provider.GetRequiredService<DefaultContext>());
-        builder.Services.AddScoped<IUserRepository, UserRepository>();
-        builder.Services.AddScoped<IProductRepository, ProductRepository>();
+        builder.Services
+            .AddScoped<DbContext>(provider => provider.GetRequiredService<DefaultContext>())
+            .AddScoped<IUserRepository, UserRepository>()
+            .AddScoped<IProductRepository, ProductRepository>()
+            .AddScoped<IBranchRepository, BranchRepository>()
+            .AddScoped<ICartRepository, CartRepository>()
+            .AddScoped<ISaleCounterRepository, SaleCounterRepository>();
     }
 }

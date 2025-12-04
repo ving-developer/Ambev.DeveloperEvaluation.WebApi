@@ -16,10 +16,10 @@ public class UpdateUserProfile : Profile
     public UpdateUserProfile()
     {
         CreateMap<UpdateUserCommand, User>()
-            .ForMember(dest => dest.Id, opt => opt.Ignore()) // Não atualiza ID da entidade
-            .ForMember(dest => dest.Password, opt => opt.Ignore()) // Senha não é atualizada aqui
-            .ForMember(dest => dest.CreatedAt, opt => opt.Ignore()) // Mantém data de criação original
-            .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(_ => DateTime.UtcNow)) // Atualiza data de modificação
+            .ForMember(dest => dest.Id, opt => opt.Ignore())
+            .ForMember(dest => dest.Password, opt => opt.Ignore())
+            .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
+            .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(_ => DateTime.UtcNow))
             .ForAllMembers(opts => opts.Condition((src, dest, srcMember) =>
                 srcMember != null));
     }

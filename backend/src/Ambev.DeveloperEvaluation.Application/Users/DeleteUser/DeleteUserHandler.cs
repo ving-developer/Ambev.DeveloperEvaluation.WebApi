@@ -7,7 +7,7 @@ namespace Ambev.DeveloperEvaluation.Application.Users.DeleteUser;
 /// <summary>
 /// Handler for processing DeleteUserCommand requests
 /// </summary>
-public class DeleteUserHandler : IRequestHandler<DeleteUserCommand, DeleteUserResponse>
+public class DeleteUserHandler : IRequestHandler<DeleteUserCommand, bool>
 {
     private readonly IUserRepository _userRepository;
     private readonly ILogger<DeleteUserHandler> _logger;
@@ -31,20 +31,16 @@ public class DeleteUserHandler : IRequestHandler<DeleteUserCommand, DeleteUserRe
     /// <param name="request">The DeleteUser command</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The result of the delete operation</returns>
-    public async Task<DeleteUserResponse> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
+    public async Task<bool> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
     {
         _logger.LogInformation("[INF] Starting DeleteUserHandler for UserId={UserId}", request.Id);
 
-        var success = await _userRepository.DeleteAsync(request.Id, cancellationToken);
+        await _userRepository.DeleteAsync(request.Id, cancellationToken);
 
-        if (!success)
-        {
-            _logger.LogWarning("[WRN] Delete failed. UserId={UserId} not found", request.Id);
-            throw new KeyNotFoundException($"User with ID {request.Id} not found");
-        }
+        var success = await _userRepository.SaveChangesAsync(cancellationToken);
 
         _logger.LogInformation("[INF] User deleted successfully. UserId={UserId}", request.Id);
 
-        return new DeleteUserResponse { Success = true };
+        return true;
     }
 }

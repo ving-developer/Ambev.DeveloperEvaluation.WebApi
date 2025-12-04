@@ -19,7 +19,7 @@ public class UserTests
     {
         // Arrange
         var user = UserTestData.GenerateValidUser();
-        user.Status = UserStatus.Suspended;
+        user.SetStatus(UserStatus.Suspended);
 
         // Act
         user.Activate();
@@ -36,7 +36,7 @@ public class UserTests
     {
         // Arrange
         var user = UserTestData.GenerateValidUser();
-        user.Status = UserStatus.Active;
+        user.SetStatus(UserStatus.Active);
 
         // Act
         user.Suspend();

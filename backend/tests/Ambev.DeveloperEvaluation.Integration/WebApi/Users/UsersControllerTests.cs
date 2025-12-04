@@ -3,10 +3,8 @@ using Ambev.DeveloperEvaluation.Integration.Shared.Fixtures;
 using Ambev.DeveloperEvaluation.Integration.Shared.Helpers;
 using Ambev.DeveloperEvaluation.Integration.Shared.TestData.Users;
 using Ambev.DeveloperEvaluation.WebApi.Common;
-using Ambev.DeveloperEvaluation.WebApi.Features.Products;
 using Ambev.DeveloperEvaluation.WebApi.Features.Users;
 using Ambev.DeveloperEvaluation.WebApi.Features.Users.Common;
-using Ambev.DeveloperEvaluation.WebApi.Features.Users.CreateUser;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Xunit;
@@ -113,7 +111,7 @@ public class UsersControllerTests : IntegrationTestBase
             .Invoking(() => controller.DeleteUser(nonExistentUserId, default))
             .Should()
             .ThrowAsync<KeyNotFoundException>()
-            .WithMessage($"User with ID {nonExistentUserId} not found");
+            .WithMessage("Key to delete has not found.");
     }
     #endregion
 

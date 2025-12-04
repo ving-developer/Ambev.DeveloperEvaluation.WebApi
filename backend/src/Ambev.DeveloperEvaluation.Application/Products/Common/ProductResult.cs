@@ -10,7 +10,7 @@ namespace Ambev.DeveloperEvaluation.Application.Products.Common;
 /// along with its details and initial rating, which can be used for subsequent
 /// operations or reference.
 /// </remarks>
-public class ProductResult
+public record ProductResult
 {
     /// <summary>
     /// Gets or sets the unique identifier of the newly created product.

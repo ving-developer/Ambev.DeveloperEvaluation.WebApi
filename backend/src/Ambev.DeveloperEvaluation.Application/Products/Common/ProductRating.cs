@@ -3,7 +3,7 @@
 /// <summary>
 /// Represent's product rating.
 /// </summary>
-public class ProductRating
+public record ProductRating
 {
     /// <summary>
     /// The average rate of the product.

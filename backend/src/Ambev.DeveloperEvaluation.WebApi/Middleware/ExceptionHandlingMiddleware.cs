@@ -1,5 +1,7 @@
-﻿using Ambev.DeveloperEvaluation.WebApi.Common;
+﻿using Ambev.DeveloperEvaluation.Common.Validation;
+using Ambev.DeveloperEvaluation.WebApi.Common;
 using FluentValidation;
+using FluentValidation.Results;
 using System.Net;
 using System.Text.Json;
 
@@ -54,6 +56,15 @@ namespace Ambev.DeveloperEvaluation.WebApi.Middleware
                     };
                     break;
 
+                case InvalidOperationException:
+                    status = HttpStatusCode.BadRequest;
+                    response = new ApiResponse
+                    {
+                        Success = false,
+                        Message = exception.Message
+                    };
+                    break;
+
                 case ValidationException:
                     throw exception;
 
@@ -71,7 +82,7 @@ namespace Ambev.DeveloperEvaluation.WebApi.Middleware
                     response = new ApiResponse
                     {
                         Success = false,
-                        Message = "Validation failed"
+                        Message = "Validation failed",
                     };
                     break;
 

@@ -39,8 +39,8 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
 
         builder.Property(p => p.UpdatedAt);
 
-        builder.HasOne(p => p.ProductRating)
-               .WithOne()
+        builder.HasOne(p => p.Rating)
+               .WithOne(r => r.Product)
                .HasForeignKey<Rating>(r => r.ProductId)
                .OnDelete(DeleteBehavior.Cascade);
     }

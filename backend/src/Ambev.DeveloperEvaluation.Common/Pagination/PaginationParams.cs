@@ -19,4 +19,11 @@ public record PaginationParams
     /// Sorting order, e.g., "username asc, email desc"
     /// </summary>
     public string? OrderBy { get; set; }
+
+    public PaginationParams(int page, int pageSize, string? orderBy)
+    {
+        Page = page;
+        PageSize = pageSize;
+        OrderBy = orderBy;
+    }
 }
