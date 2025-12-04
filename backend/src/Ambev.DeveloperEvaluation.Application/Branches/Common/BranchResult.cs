@@ -3,7 +3,7 @@
 /// <summary>
 /// Response model for GetBranch operation
 /// </summary>
-public class BranchResult
+public record BranchResult
 {
     /// <summary>
     /// The unique identifier of the branch

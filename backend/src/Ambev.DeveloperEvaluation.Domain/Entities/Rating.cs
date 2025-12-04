@@ -26,4 +26,15 @@ public class Rating : BaseEntity
     /// Gets the number of ratings has received.
     /// </summary>
     public int Count { get; private set; }
+
+    /// <summary>
+    /// Public constructor, used to instantiate Rating entity
+    /// </summary>
+    /// <param name="rate"></param>
+    /// <param name="count"></param>
+    public Rating(decimal rate, int count)
+    {
+        Rate = rate;
+        Count = count;
+    }
 }

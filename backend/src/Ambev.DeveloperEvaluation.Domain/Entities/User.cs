@@ -194,7 +194,7 @@ public class User : BaseEntity, IUser
         if (string.IsNullOrWhiteSpace(password))
             throw new DomainException("Password cannot be null or empty.");
 
-        UpdatedAt = DateTime.UtcNow;
+        Password = password;
     }
 
     /// <summary>

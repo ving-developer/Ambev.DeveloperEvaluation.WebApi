@@ -55,10 +55,8 @@ public abstract class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where T
 
     public virtual async Task DeleteAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        var entity = await GetByIdAsync(id, cancellationToken);
-        if (entity == null)
-            throw new InvalidOperationException("Key to delete has not found.");
-
+        var entity = await GetByIdAsync(id, cancellationToken) ?? throw new KeyNotFoundException("Key to delete has not found.");
+        
         _dbSet.Remove(entity);
     }
 
