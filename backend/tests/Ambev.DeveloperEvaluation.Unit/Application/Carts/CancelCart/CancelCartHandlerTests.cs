@@ -5,6 +5,7 @@ using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Ambev.DeveloperEvaluation.Unit.Domain.Entities.TestData;
 using FluentAssertions;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Xunit;
@@ -15,13 +16,15 @@ public class CancelCartHandlerTests
 {
     private readonly ICartRepository _cartRepository;
     private readonly ILogger<CancelCartHandler> _logger;
+    private readonly IMediator _mediator;
     private readonly CancelCartHandler _handler;
 
     public CancelCartHandlerTests()
     {
         _cartRepository = Substitute.For<ICartRepository>();
         _logger = Substitute.For<ILogger<CancelCartHandler>>();
-        _handler = new CancelCartHandler(_cartRepository, _logger);
+        _mediator = Substitute.For<IMediator>();
+        _handler = new CancelCartHandler(_cartRepository, _logger, _mediator);
     }
 
     [Fact(DisplayName = "Cancel cart successfully → returns Unit")]

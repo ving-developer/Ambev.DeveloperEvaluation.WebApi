@@ -7,6 +7,7 @@ using Ambev.DeveloperEvaluation.Unit.Application.TestData.Carts;
 using Ambev.DeveloperEvaluation.Unit.Domain.Entities.TestData;
 using AutoMapper;
 using FluentAssertions;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Xunit;
@@ -20,6 +21,7 @@ public class CreateCartHandlerTests
     private readonly IProductRepository _productRepository;
     private readonly ISaleCounterRepository _saleCounterRepository;
     private readonly IMapper _mapper;
+    private readonly IMediator _mediator;
     private readonly CreateCartHandler _handler;
 
     public CreateCartHandlerTests()
@@ -36,6 +38,7 @@ public class CreateCartHandlerTests
         });
 
         _mapper = mapperConfig.CreateMapper();
+        _mediator = Substitute.For<IMediator>();
 
         _handler = new CreateCartHandler(
             _cartRepository,
@@ -43,7 +46,8 @@ public class CreateCartHandlerTests
             _productRepository,
             _saleCounterRepository,
             _mapper,
-            Substitute.For<ILogger<CreateCartHandler>>());
+            Substitute.For<ILogger<CreateCartHandler>>(),
+            _mediator);
     }
 
     [Fact(DisplayName = "Create cart successfully → returns CartResult")]

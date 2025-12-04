@@ -6,6 +6,7 @@ using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Ambev.DeveloperEvaluation.Unit.Domain.Entities.TestData;
 using AutoMapper;
 using FluentAssertions;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Xunit;
@@ -17,12 +18,14 @@ public class AddItemToCartHandlerTests
     private readonly ICartRepository _cartRepository;
     private readonly IProductRepository _productRepository;
     private readonly IMapper _mapper;
+    private readonly IMediator _mediator;
     private readonly AddItemToCartHandler _handler;
 
     public AddItemToCartHandlerTests()
     {
         _cartRepository = Substitute.For<ICartRepository>();
         _productRepository = Substitute.For<IProductRepository>();
+        _mediator = Substitute.For<IMediator>();
 
         var mapperConfig = new MapperConfiguration(cfg =>
         {
@@ -36,7 +39,8 @@ public class AddItemToCartHandlerTests
             _cartRepository,
             _productRepository,
             _mapper,
-            Substitute.For<ILogger<AddItemToCartHandler>>());
+            Substitute.For<ILogger<AddItemToCartHandler>>(),
+            _mediator);
     }
 
     [Fact(DisplayName = "Add item successfully → returns CartResult")]

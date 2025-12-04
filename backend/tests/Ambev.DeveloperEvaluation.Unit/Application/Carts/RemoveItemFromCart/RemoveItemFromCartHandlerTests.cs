@@ -6,6 +6,7 @@ using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Ambev.DeveloperEvaluation.Unit.Domain.Entities.TestData;
 using AutoMapper;
 using FluentAssertions;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Xunit;
@@ -16,6 +17,7 @@ public class RemoveItemFromCartHandlerTests
 {
     private readonly ICartRepository _cartRepository;
     private readonly IMapper _mapper;
+    private readonly IMediator _mediator;
     private readonly RemoveItemFromCartHandler _handler;
 
     public RemoveItemFromCartHandlerTests()
@@ -24,11 +26,13 @@ public class RemoveItemFromCartHandlerTests
 
         var mapperConfig = new MapperConfiguration(cfg => cfg.CreateMap<Cart, CartResult>());
         _mapper = mapperConfig.CreateMapper();
+        _mediator = Substitute.For<IMediator>();
 
         _handler = new RemoveItemFromCartHandler(
             _cartRepository,
             _mapper,
-            Substitute.For<ILogger<RemoveItemFromCartHandler>>());
+            Substitute.For<ILogger<RemoveItemFromCartHandler>>(),
+            _mediator);
     }
 
     [Fact(DisplayName = "Handle valid request → removes item from cart")]
