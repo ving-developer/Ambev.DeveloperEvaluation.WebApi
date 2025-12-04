@@ -34,6 +34,12 @@ public class Rating : BaseEntity
     /// <param name="count"></param>
     public Rating(decimal rate, int count)
     {
+        if (count < 0)
+            throw new InvalidOperationException("Count cannot be negative.");
+
+        if (rate < 0 || rate > 5)
+            throw new InvalidOperationException("Rate must be between 0 and 5.");
+
         Rate = rate;
         Count = count;
     }

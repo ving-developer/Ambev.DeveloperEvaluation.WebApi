@@ -25,18 +25,4 @@ internal class CreateUserRequestTestData
             .RuleFor(u => u.Role, f => f.PickRandom(UserRole.Customer, UserRole.Admin))
             .Generate();
     }
-
-    /// <summary>
-    /// Generates invalid CreateUserRequest with empty fields.
-    /// </summary>
-    public static CreateUserRequest GetInvalidCreateUserRequest()
-    {
-        return new CreateUserRequest
-        {
-            Username = "",
-            Email = "",
-            Password = "",
-            Phone = ""
-        };
-    }
 }

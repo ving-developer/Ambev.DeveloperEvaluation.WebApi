@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Products;
 
 /// <summary>
-/// Controller for managing user operations
+/// Controller for managing Product operations
 /// </summary>
 [ApiController]
 [Route("api/[controller]")]
@@ -24,7 +24,7 @@ public class ProductsController : BaseController
     private readonly IMapper _mapper;
 
     /// <summary>
-    /// Initializes a new instance of UsersController
+    /// Initializes a new instance of ProductController
     /// </summary>
     /// <param name="mediator">The mediator instance</param>
     /// <param name="mapper">The AutoMapper instance</param>
@@ -35,21 +35,21 @@ public class ProductsController : BaseController
     }
 
     /// <summary>
-    /// Creates a new user
+    /// Creates a new product
     /// </summary>
-    /// <param name="request">The user creation request</param>
+    /// <param name="request">The product creation request</param>
     /// <param name="cancellationToken">Cancellation token</param>
-    /// <returns>The created user details</returns>
+    /// <returns>The created product details</returns>
     [HttpPost]
     [ProducesResponseType(typeof(ApiResponseWithData<ProductResponse>), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> CreateUser([FromBody] CreateProductRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateProduct([FromBody] CreateProductRequest request, CancellationToken cancellationToken)
     {
         var command = _mapper.Map<CreateProductCommand>(request);
         var response = await _mediator.Send(command, cancellationToken);
-        var userResponse = _mapper.Map<ProductResponse>(response);
+        var productResponse = _mapper.Map<ProductResponse>(response);
 
-        return Created("GetUserById", new { id = userResponse.Id }, userResponse);
+        return Created("GetProductById", new { id = productResponse.Id }, productResponse);
     }
 
     /// <summary>

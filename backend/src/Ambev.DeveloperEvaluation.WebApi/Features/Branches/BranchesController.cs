@@ -51,10 +51,7 @@ public class BranchesController : BaseController
         var response = await _mediator.Send(command, cancellationToken);
         var branchResponse = _mapper.Map<BranchResponse>(response);
 
-        return CreatedAtAction(
-            nameof(GetBranch),
-            new { id = branchResponse.Id },
-            branchResponse);
+        return Created("GetBranchById", new { id = branchResponse.Id }, branchResponse);
     }
 
     /// <summary>

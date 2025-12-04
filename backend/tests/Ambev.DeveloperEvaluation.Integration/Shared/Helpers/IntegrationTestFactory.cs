@@ -1,5 +1,8 @@
 ﻿using Ambev.DeveloperEvaluation.Common.Security;
+using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Integration.Shared.Constants;
+using Ambev.DeveloperEvaluation.Integration.Shared.TestData.Branches;
+using Ambev.DeveloperEvaluation.Integration.Shared.TestData.Products;
 using Ambev.DeveloperEvaluation.Integration.Shared.TestData.Users;
 using Ambev.DeveloperEvaluation.ORM;
 using Ambev.DeveloperEvaluation.WebApi;
@@ -67,20 +70,17 @@ public class IntegrationTestFactory : WebApplicationFactory<Program>, IAsyncLife
     {
         builder.ConfigureServices(services =>
         {
-            // Remove the existing DbContext configuration
             var descriptor = services.SingleOrDefault(
                 d => d.ServiceType == typeof(DbContextOptions<DefaultContext>));
 
             if (descriptor != null)
                 services.Remove(descriptor);
 
-            // Replace with PostgreSQL Testcontainer
             services.AddDbContext<DefaultContext>(options =>
             {
                 options.UseNpgsql(_dbContainer.GetConnectionString());
             });
 
-            // Build provider so we can run migrations and seed data
             var provider = services.BuildServiceProvider();
 
             using var scope = provider.CreateScope();
@@ -99,18 +99,26 @@ public class IntegrationTestFactory : WebApplicationFactory<Program>, IAsyncLife
     /// <param name="db">The test database context.</param>
     private static void SeedData(DefaultContext db)
     {
-        if (!db.Users.Any())
+        AddIfEmpty(db.Users, db, () =>
         {
             var hasher = new BCryptPasswordHasher();
-            var user = UserTestData.GetValidUser();
+            return UserTestData.GetInitialUser(hasher);
+        });
 
-            user.SetEmail(IntegrationTestConstants.InitialUserEmail);
-            user.SetPassword(hasher.HashPassword(IntegrationTestConstants.InitialUserPassword));
-            user.Id = IntegrationTestConstants.InitialUserId;
+        AddIfEmpty(db.Branches, db, BranchTestData.GetInitialBranch);
+        AddIfEmpty(db.Products, db, ProductTestData.GetInitialProduct);
+    }
 
-            db.Users.Add(user);
-
-            db.SaveChanges();
+    /// <summary>
+    /// Insert an entity if table is Empty
+    /// </summary>
+    private static void AddIfEmpty<TEntity>(DbSet<TEntity> dbSet, DefaultContext dbContext, Func<TEntity> createEntity)
+        where TEntity : class
+    {
+        if (!dbSet.Any())
+        {
+            dbSet.Add(createEntity());
+            dbContext.SaveChanges();
         }
     }
 }
