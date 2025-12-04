@@ -1,5 +1,6 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Products.Common;
 using Ambev.DeveloperEvaluation.Common.Pagination;
+using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Integration.Shared.Fixtures;
 using Ambev.DeveloperEvaluation.Integration.Shared.Helpers;
 using Ambev.DeveloperEvaluation.Integration.Shared.TestData.Products;
@@ -65,8 +66,8 @@ public class ProductsControllerTests : IntegrationTestBase
         response.Data!.Id.Should().Be(createdResponse.Id);
     }
 
-    [Fact(DisplayName = "GetProduct should throw KeyNotFoundException when product does not exist")]
-    public async Task GetProduct_ShouldThrowKeyNotFoundException()
+    [Fact(DisplayName = "GetProduct should throw EntityNotFoundException when product does not exist")]
+    public async Task GetProduct_ShouldThrowEntityNotFoundException()
     {
         // Given
         var controller = CreateController<ProductsController>();
@@ -76,7 +77,7 @@ public class ProductsControllerTests : IntegrationTestBase
         await FluentActions
             .Invoking(() => controller.GetProduct(nonExistingProductId, default))
             .Should()
-            .ThrowAsync<KeyNotFoundException>();
+            .ThrowAsync<EntityNotFoundException>();
     }
     #endregion
 
@@ -104,8 +105,8 @@ public class ProductsControllerTests : IntegrationTestBase
             .Which.Success.Should().BeTrue();
     }
 
-    [Fact(DisplayName = "DeleteProduct should throw KeyNotFoundException when product does not exist")]
-    public async Task DeleteProduct_ShouldThrowKeyNotFoundException()
+    [Fact(DisplayName = "DeleteProduct should throw EntityNotFoundException when product does not exist")]
+    public async Task DeleteProduct_ShouldThrowEntityNotFoundException()
     {
         // Given
         var controller = CreateController<ProductsController>();
@@ -115,7 +116,7 @@ public class ProductsControllerTests : IntegrationTestBase
         await FluentActions
             .Invoking(() => controller.DeleteProduct(nonExistingProductId, default))
             .Should()
-            .ThrowAsync<KeyNotFoundException>();
+            .ThrowAsync<EntityNotFoundException>();
     }
     #endregion
 

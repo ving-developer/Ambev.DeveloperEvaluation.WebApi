@@ -1,4 +1,6 @@
 using Ambev.DeveloperEvaluation.Application.Branches.Common;
+using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using AutoMapper;
 using MediatR;
@@ -45,7 +47,7 @@ public class GetBranchHandler : IRequestHandler<GetBranchCommand, BranchResult>
         if (branch == null)
         {
             _logger.LogWarning("[WRN] Branch not found. BranchId={BranchId}", request.Id);
-            throw new KeyNotFoundException($"Branch with ID {request.Id} not found");
+            throw new EntityNotFoundException(nameof(Branch), request.Id);
         }
 
         _logger.LogInformation("[INF] Branch retrieved successfully. BranchId={BranchId}", request.Id);

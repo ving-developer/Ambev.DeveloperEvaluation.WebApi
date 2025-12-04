@@ -1,4 +1,5 @@
 ﻿using Ambev.DeveloperEvaluation.Domain.Enums;
+using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Integration.Shared.Constants;
 using Ambev.DeveloperEvaluation.Integration.Shared.Fixtures;
 using Ambev.DeveloperEvaluation.Integration.Shared.Helpers;
@@ -191,7 +192,7 @@ namespace Ambev.DeveloperEvaluation.Integration.WebApi.Carts
                 return directResponse;
             }
 
-            throw new InvalidOperationException($"Could not extract CartResponse. Value type: {createdObject.Value?.GetType().Name}");
+            throw new DomainException($"Could not extract CartResponse. Value type: {createdObject.Value?.GetType().Name}");
         }
 
         private static async Task<CartResponse> CreateTestCart(

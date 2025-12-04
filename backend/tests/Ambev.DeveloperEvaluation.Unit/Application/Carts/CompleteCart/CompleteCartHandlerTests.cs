@@ -1,6 +1,7 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Carts.Common;
 using Ambev.DeveloperEvaluation.Application.Carts.CompleteCart;
 using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Ambev.DeveloperEvaluation.Unit.Domain.Entities.TestData;
 using AutoMapper;
@@ -60,8 +61,8 @@ public class CompleteCartHandlerTests
         await _cartRepository.Received(1).SaveChangesAsync(Arg.Any<CancellationToken>());
     }
 
-    [Fact(DisplayName = "Cart not found → throws KeyNotFoundException")]
-    public async Task Handle_CartNotFound_ThrowsKeyNotFoundException()
+    [Fact(DisplayName = "Cart not found → throws EntityNotFoundException")]
+    public async Task Handle_CartNotFound_ThrowsEntityNotFoundException()
     {
         // Given
         var command = new CompleteCartCommand(Guid.NewGuid());
@@ -74,12 +75,11 @@ public class CompleteCartHandlerTests
 
         // Then
         await act.Should()
-            .ThrowAsync<KeyNotFoundException>()
-            .WithMessage($"Cart {command.CartId} not found");
+            .ThrowAsync<EntityNotFoundException>();
     }
 
-    [Fact(DisplayName = "Completing empty cart → throws InvalidOperationException")]
-    public async Task Handle_EmptyCart_ThrowsInvalidOperationException()
+    [Fact(DisplayName = "Completing empty cart → throws DomainException")]
+    public async Task Handle_EmptyCart_ThrowsDomainException()
     {
         // Given
         var cart = CartTestData.GenerateCartWithItems(0);
@@ -93,7 +93,7 @@ public class CompleteCartHandlerTests
 
         // Then
         await act.Should()
-            .ThrowAsync<InvalidOperationException>()
+            .ThrowAsync<DomainException>()
             .WithMessage("Cannot complete a sale without items.");
     }
 }

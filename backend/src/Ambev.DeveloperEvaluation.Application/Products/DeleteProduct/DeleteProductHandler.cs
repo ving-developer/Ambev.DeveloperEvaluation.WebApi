@@ -1,3 +1,5 @@
+using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -42,7 +44,7 @@ public class DeleteProductHandler : IRequestHandler<DeleteProductCommand, Delete
         if (!success)
         {
             _logger.LogWarning("[WRN] Delete failed. ProductId={ProductId} not found", request.Id);
-            throw new KeyNotFoundException($"Product with ID {request.Id} not found");
+            throw new EntityNotFoundException(nameof(Product), request.Id);
         }
 
         _logger.LogInformation("[INF] Product deleted successfully. ProductId={ProductId}", request.Id);

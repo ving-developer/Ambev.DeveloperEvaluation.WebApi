@@ -16,6 +16,7 @@ using Ambev.DeveloperEvaluation.WebApi.Features.Carts.ListCarts;
 using Ambev.DeveloperEvaluation.WebApi.Features.Carts.UpdateItemQuantity;
 using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Carts;
@@ -24,6 +25,7 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Carts;
 /// Controller for managing cart operations
 /// </summary>
 [ApiController]
+[Authorize]
 [Route("api/[controller]")]
 public class CartsController : BaseController
 {

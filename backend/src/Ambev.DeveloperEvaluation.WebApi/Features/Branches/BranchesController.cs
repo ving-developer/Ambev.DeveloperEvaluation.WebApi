@@ -9,6 +9,7 @@ using Ambev.DeveloperEvaluation.WebApi.Features.Branches.CreateBranch;
 using Ambev.DeveloperEvaluation.WebApi.Features.Branches.ListBranches;
 using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Branches;
@@ -17,6 +18,7 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Branches;
 /// Controller for managing branch operations
 /// </summary>
 [ApiController]
+[Authorize]
 [Route("api/[controller]")]
 public class BranchesController : BaseController
 {

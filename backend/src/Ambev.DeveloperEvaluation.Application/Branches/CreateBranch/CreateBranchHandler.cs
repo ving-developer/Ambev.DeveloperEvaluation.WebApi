@@ -1,5 +1,6 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Branches.Common;
 using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using AutoMapper;
 using MediatR;
@@ -47,7 +48,7 @@ public class CreateBranchHandler : IRequestHandler<CreateBranchCommand, BranchRe
         if (existingBranch != null)
         {
             _logger.LogWarning("[WRN] Branch with Code={Code} already exists. Aborting CreateBranch.", command.Code);
-            throw new InvalidOperationException($"Branch with code {command.Code} already exists");
+            throw new DomainException($"Branch with code {command.Code} already exists");
         }
 
         var branch = _mapper.Map<Branch>(command);

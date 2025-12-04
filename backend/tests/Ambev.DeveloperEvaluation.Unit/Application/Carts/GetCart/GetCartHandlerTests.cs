@@ -1,6 +1,7 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Carts.Common;
 using Ambev.DeveloperEvaluation.Application.Carts.GetCart;
 using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Ambev.DeveloperEvaluation.Unit.Domain.Entities.TestData;
 using AutoMapper;
@@ -57,8 +58,8 @@ public class GetCartHandlerTests
         await _cartRepository.Received(1).GetByIdAsync(cart.Id, Arg.Any<CancellationToken>());
     }
 
-    [Fact(DisplayName = "Cart not found → throws KeyNotFoundException")]
-    public async Task Handle_CartNotFound_ThrowsKeyNotFoundException()
+    [Fact(DisplayName = "Cart not found → throws EntityNotFoundException")]
+    public async Task Handle_CartNotFound_ThrowsEntityNotFoundException()
     {
         // Given
         var cartId = Guid.NewGuid();
@@ -72,8 +73,7 @@ public class GetCartHandlerTests
 
         // Then
         await act.Should()
-            .ThrowAsync<KeyNotFoundException>()
-            .WithMessage($"Cart {cartId} not found");
+            .ThrowAsync<EntityNotFoundException>();
 
         await _cartRepository.Received(1).GetByIdAsync(cartId, Arg.Any<CancellationToken>());
     }

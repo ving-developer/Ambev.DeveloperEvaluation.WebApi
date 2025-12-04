@@ -1,4 +1,5 @@
-﻿using Ambev.DeveloperEvaluation.Integration.Shared.Constants;
+﻿using Ambev.DeveloperEvaluation.Domain.Exceptions;
+using Ambev.DeveloperEvaluation.Integration.Shared.Constants;
 using Ambev.DeveloperEvaluation.Integration.Shared.TestData.Products;
 using Ambev.DeveloperEvaluation.WebApi.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products;
@@ -65,9 +66,9 @@ public static class ProductTestHelper
                 return responseWrapper.Data!;
             }
 
-            throw new InvalidOperationException($"Expected ApiResponseWithData<ProductResponse> but got {createdResult.Value?.GetType().Name}");
+            throw new DomainException($"Expected ApiResponseWithData<ProductResponse> but got {createdResult.Value?.GetType().Name}");
         }
 
-        throw new InvalidOperationException($"Expected CreatedAtRouteResult but got {result?.GetType().Name}");
+        throw new DomainException($"Expected CreatedAtRouteResult but got {result?.GetType().Name}");
     }
 }

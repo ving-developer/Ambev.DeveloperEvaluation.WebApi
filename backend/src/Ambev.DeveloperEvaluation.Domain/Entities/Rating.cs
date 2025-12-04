@@ -1,4 +1,5 @@
 ﻿using Ambev.DeveloperEvaluation.Domain.Common;
+using Ambev.DeveloperEvaluation.Domain.Exceptions;
 
 namespace Ambev.DeveloperEvaluation.Domain.Entities;
 
@@ -35,10 +36,10 @@ public class Rating : BaseEntity
     public Rating(decimal rate, int count)
     {
         if (count < 0)
-            throw new InvalidOperationException("Count cannot be negative.");
+            throw new DomainException("Count cannot be negative.");
 
         if (rate < 0 || rate > 5)
-            throw new InvalidOperationException("Rate must be between 0 and 5.");
+            throw new DomainException("Rate must be between 0 and 5.");
 
         Rate = rate;
         Count = count;

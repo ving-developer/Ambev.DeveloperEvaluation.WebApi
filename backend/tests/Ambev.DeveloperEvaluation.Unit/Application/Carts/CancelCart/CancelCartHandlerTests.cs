@@ -1,6 +1,7 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Carts.CancelCart;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Enums;
+using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Ambev.DeveloperEvaluation.Unit.Domain.Entities.TestData;
 using FluentAssertions;
@@ -50,8 +51,8 @@ public class CancelCartHandlerTests
         await _cartRepository.Received(1).SaveChangesAsync(Arg.Any<CancellationToken>());
     }
 
-    [Fact(DisplayName = "Cart not found → throws KeyNotFoundException")]
-    public async Task Handle_CartNotFound_ThrowsKeyNotFoundException()
+    [Fact(DisplayName = "Cart not found → throws EntityNotFoundException")]
+    public async Task Handle_CartNotFound_ThrowsEntityNotFoundException()
     {
         // Given
         var cartId = Guid.NewGuid();
@@ -65,12 +66,11 @@ public class CancelCartHandlerTests
 
         // Then
         await act.Should()
-            .ThrowAsync<KeyNotFoundException>()
-            .WithMessage($"Cart {cartId} not found");
+            .ThrowAsync<EntityNotFoundException>();
     }
 
-    [Fact(DisplayName = "Cancellation reason is empty → throws InvalidOperationException")]
-    public async Task Handle_EmptyReason_ThrowsInvalidOperationException()
+    [Fact(DisplayName = "Cancellation reason is empty → throws DomainException")]
+    public async Task Handle_EmptyReason_ThrowsDomainException()
     {
         // Given
         var cart = CartTestData.GenerateValidCart();
@@ -81,12 +81,12 @@ public class CancelCartHandlerTests
 
         // Then
         await act.Should()
-            .ThrowAsync<InvalidOperationException>()
+            .ThrowAsync<DomainException>()
             .WithMessage("Cancellation reason is required");
     }
 
-    [Fact(DisplayName = "Cancel already canceled cart → throws InvalidOperationException")]
-    public async Task Handle_CancelAlreadyCanceledCart_ThrowsInvalidOperationException()
+    [Fact(DisplayName = "Cancel already canceled cart → throws DomainException")]
+    public async Task Handle_CancelAlreadyCanceledCart_ThrowsDomainException()
     {
         // Given
         var cart = CartTestData.GenerateCanceledCart("Initial reason");
@@ -100,7 +100,7 @@ public class CancelCartHandlerTests
 
         // Then
         await act.Should()
-            .ThrowAsync<InvalidOperationException>()
+            .ThrowAsync<DomainException>()
             .WithMessage("Sale is already canceled.");
     }
 }

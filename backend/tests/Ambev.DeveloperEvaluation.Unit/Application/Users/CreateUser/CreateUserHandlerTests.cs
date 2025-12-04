@@ -4,6 +4,7 @@ using Ambev.DeveloperEvaluation.Application.Users.CreateUser;
 using Ambev.DeveloperEvaluation.Application.Users.UpdateUser;
 using Ambev.DeveloperEvaluation.Common.Security;
 using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Ambev.DeveloperEvaluation.Unit.Application.TestData.Users;
 using Ambev.DeveloperEvaluation.Unit.Domain.Entities.TestData;
@@ -152,8 +153,8 @@ public class CreateUserHandlerTests
     /// <summary>
     /// Tests when the request is valid, but the email field already exists.
     /// </summary>
-    [Fact(DisplayName = "Given The user's email address is repeated Then throws InvalidOperationException")]
-    public async Task Returns_InvalidOperationException_When_EmailAlreadyExists()
+    [Fact(DisplayName = "Given The user's email address is repeated Then throws DomainException")]
+    public async Task Returns_DomainException_When_EmailAlreadyExists()
     {
         // Guiven
         var command = CreateUserHandlerTestData.GenerateValidCommand();
@@ -168,7 +169,7 @@ public class CreateUserHandlerTests
         Func<Task> act = () => _handler.Handle(command, CancellationToken.None);
 
         // Then
-        await act.Should().ThrowAsync<InvalidOperationException>()
+        await act.Should().ThrowAsync<DomainException>()
             .WithMessage($"User with email {command.Email} already exists");
 
         await _userRepository.DidNotReceive().CreateAsync(Arg.Any<User>(), Arg.Any<CancellationToken>());

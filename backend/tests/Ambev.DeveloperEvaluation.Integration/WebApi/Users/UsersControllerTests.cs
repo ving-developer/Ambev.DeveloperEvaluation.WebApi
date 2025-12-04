@@ -1,5 +1,6 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Users.Common;
 using Ambev.DeveloperEvaluation.Common.Pagination;
+using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Integration.Shared.Constants;
 using Ambev.DeveloperEvaluation.Integration.Shared.Fixtures;
 using Ambev.DeveloperEvaluation.Integration.Shared.Helpers;
@@ -57,8 +58,8 @@ public class UsersControllerTests : IntegrationTestBase
         response.Data!.Id.Should().Be(IntegrationTestConstants.InitialUserId);
     }
 
-    [Fact(DisplayName = "GetUser should throw KeyNotFoundException when user does not exist")]
-    public async Task GetUser_ShouldThrowKeyNotFoundException()
+    [Fact(DisplayName = "GetUser should throw EntityNotFoundException when user does not exist")]
+    public async Task GetUser_ShouldThrowEntityNotFoundException()
     {
         var controller = CreateController<UsersController>();
         var nonExistingUserId = Guid.NewGuid();
@@ -66,8 +67,7 @@ public class UsersControllerTests : IntegrationTestBase
         await FluentActions
             .Invoking(() => controller.GetUser(nonExistingUserId, default))
             .Should()
-            .ThrowAsync<KeyNotFoundException>()
-            .WithMessage($"User with ID {nonExistingUserId} not found");
+            .ThrowAsync<EntityNotFoundException>();
     }
     #endregion
 
@@ -103,8 +103,8 @@ public class UsersControllerTests : IntegrationTestBase
         updatedUser.Name.Should().StartWith("Updated_");
     }
 
-    [Fact(DisplayName = "UpdateUser should throw KeyNotFoundException when user does not exist")]
-    public async Task UpdateUser_ShouldThrowKeyNotFoundException()
+    [Fact(DisplayName = "UpdateUser should throw EntityNotFoundException when user does not exist")]
+    public async Task UpdateUser_ShouldThrowEntityNotFoundException()
     {
         // Arrange
         var controller = CreateController<UsersController>();
@@ -115,7 +115,7 @@ public class UsersControllerTests : IntegrationTestBase
         await FluentActions
             .Invoking(() => controller.UpdateUser(nonExistingUserId, updateRequest, default))
             .Should()
-            .ThrowAsync<KeyNotFoundException>();
+            .ThrowAsync<EntityNotFoundException>();
     }
     #endregion
 
@@ -166,8 +166,8 @@ public class UsersControllerTests : IntegrationTestBase
             .Which.Success.Should().BeTrue();
     }
 
-    [Fact(DisplayName = "DeleteUser should throw KeyNotFoundException when user does not exist")]
-    public async Task DeleteUser_ShouldThrowKeyNotFoundException()
+    [Fact(DisplayName = "DeleteUser should throw EntityNotFoundException when user does not exist")]
+    public async Task DeleteUser_ShouldThrowEntityNotFoundException()
     {
         var controller = CreateController<UsersController>();
         var nonExistentUserId = Guid.NewGuid();
@@ -175,8 +175,7 @@ public class UsersControllerTests : IntegrationTestBase
         await FluentActions
             .Invoking(() => controller.DeleteUser(nonExistentUserId, default))
             .Should()
-            .ThrowAsync<KeyNotFoundException>()
-            .WithMessage("Key to delete has not found.");
+            .ThrowAsync<EntityNotFoundException>();
     }
     #endregion
 

@@ -1,6 +1,7 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Carts.Common;
 using Ambev.DeveloperEvaluation.Application.Carts.UpdateItemQuantity;
 using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Ambev.DeveloperEvaluation.Unit.Domain.Entities.TestData;
 using AutoMapper;
@@ -61,8 +62,8 @@ public class UpdateItemQuantityHandlerTests
         await _cartRepository.Received(1).SaveChangesAsync(Arg.Any<CancellationToken>());
     }
 
-    [Fact(DisplayName = "Handle non-existent cart → throws KeyNotFoundException")]
-    public async Task Handle_CartNotFound_ThrowsKeyNotFoundException()
+    [Fact(DisplayName = "Handle non-existent cart → throws EntityNotFoundException")]
+    public async Task Handle_CartNotFound_ThrowsEntityNotFoundException()
     {
         // Given
         var cartId = Guid.NewGuid();
@@ -74,15 +75,14 @@ public class UpdateItemQuantityHandlerTests
         Func<Task> act = async () => await _handler.Handle(command, CancellationToken.None);
 
         // Then
-        await act.Should().ThrowAsync<KeyNotFoundException>()
-            .WithMessage($"Cart {cartId} not found");
+        await act.Should().ThrowAsync<EntityNotFoundException>();
 
         await _cartRepository.Received(1).GetByIdAsync(cartId, Arg.Any<CancellationToken>());
         await _cartRepository.DidNotReceive().UpdateAsync(Arg.Any<Cart>(), Arg.Any<CancellationToken>());
         await _cartRepository.DidNotReceive().SaveChangesAsync(Arg.Any<CancellationToken>());
     }
 
-    [Fact(DisplayName = "Handle updating non-existent item → throws InvalidOperationException or ArgumentException")]
+    [Fact(DisplayName = "Handle updating non-existent item → throws DomainException or ArgumentException")]
     public async Task Handle_ItemNotFound_ThrowsException()
     {
         // Given
@@ -98,7 +98,7 @@ public class UpdateItemQuantityHandlerTests
         Func<Task> act = async () => await _handler.Handle(command, CancellationToken.None);
 
         // Then
-        await act.Should().ThrowAsync<InvalidOperationException>()
+        await act.Should().ThrowAsync<DomainException>()
             .WithMessage($"Item {command.ItemId} not found*");
 
         await _cartRepository.Received(1).GetByIdAsync(cart.Id, Arg.Any<CancellationToken>());

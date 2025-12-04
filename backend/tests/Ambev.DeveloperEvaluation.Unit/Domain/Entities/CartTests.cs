@@ -1,5 +1,6 @@
 ﻿using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Enums;
+using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Unit.Domain.Entities.TestData;
 using Xunit;
 
@@ -43,7 +44,7 @@ public class CartTests
         var cart = CartTestData.GeneratePendingCart();
         var productId = Guid.NewGuid();
 
-        Assert.Throws<InvalidOperationException>(() => cart.AddItem(productId, 21, 10m));
+        Assert.Throws<DomainException>(() => cart.AddItem(productId, 21, 10m));
     }
 
     [Fact(DisplayName = "Given cart with item, When updating quantity, Then quantity and discount are recalculated")]
@@ -66,7 +67,7 @@ public class CartTests
         var cart = CartTestData.GenerateCompletedCart();
         var itemId = cart.Items.First().Id;
 
-        Assert.Throws<InvalidOperationException>(() => cart.UpdateItemQuantity(itemId, 5));
+        Assert.Throws<DomainException>(() => cart.UpdateItemQuantity(itemId, 5));
     }
 
     [Fact(DisplayName = "Given cart is canceled, When adding item, Then should throw")]
@@ -75,7 +76,7 @@ public class CartTests
         var cart = CartTestData.GenerateCanceledCart();
         var productId = Guid.NewGuid();
 
-        Assert.Throws<InvalidOperationException>(() => cart.AddItem(productId, 1, 10m));
+        Assert.Throws<DomainException>(() => cart.AddItem(productId, 1, 10m));
     }
 
     [Fact(DisplayName = "Given pending cart, When removing item, Then item is removed and discount recalculated")]

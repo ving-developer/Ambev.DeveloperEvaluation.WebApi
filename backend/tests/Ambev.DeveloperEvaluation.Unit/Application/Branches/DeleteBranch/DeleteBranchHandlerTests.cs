@@ -1,4 +1,5 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Branches.DeleteBranch;
+using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
@@ -44,7 +45,7 @@ namespace Ambev.DeveloperEvaluation.Unit.Application.Branches.DeleteBranch
                 .DeleteAsync(command.Id, Arg.Any<CancellationToken>());
         }
 
-        [Fact(DisplayName = "Given valid branch ID When delete fails Then throws KeyNotFoundException")]
+        [Fact(DisplayName = "Given valid branch ID When delete fails Then throws EntityNotFoundException")]
         public async Task Handle_DeleteFails_ThrowsException()
         {
             // Given
@@ -60,8 +61,7 @@ namespace Ambev.DeveloperEvaluation.Unit.Application.Branches.DeleteBranch
             var act = async () => await _handler.Handle(command, CancellationToken.None);
 
             // Then
-            await act.Should().ThrowAsync<KeyNotFoundException>()
-                .WithMessage($"Branch with ID {command.Id} not found");
+            await act.Should().ThrowAsync<EntityNotFoundException>();
         }
     }
 }

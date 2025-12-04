@@ -1,6 +1,7 @@
 using Ambev.DeveloperEvaluation.Application.Users.Common;
 using Ambev.DeveloperEvaluation.Application.Users.GetUser;
 using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Ambev.DeveloperEvaluation.Unit.Application.TestData.Users;
 using Ambev.DeveloperEvaluation.Unit.Domain.Entities.TestData;
@@ -63,8 +64,8 @@ namespace Ambev.DeveloperEvaluation.Unit.Application.Users.GetUser
             _mapper.Received(1).Map<UserResult>(user);
         }
 
-        [Fact(DisplayName = "Given non-existing user ID When getting user Then throws KeyNotFoundException")]
-        public async Task Handle_NonExistingUser_ThrowsKeyNotFoundException()
+        [Fact(DisplayName = "Given non-existing user ID When getting user Then throws EntityNotFoundException")]
+        public async Task Handle_NonExistingUser_ThrowsEntityNotFoundException()
         {
             // Given
             var command = GetUserHandlerTestData.GenerateValidCommand();
@@ -75,8 +76,7 @@ namespace Ambev.DeveloperEvaluation.Unit.Application.Users.GetUser
             Func<Task> act = () => _handler.Handle(command, CancellationToken.None);
 
             // Then
-            await act.Should().ThrowAsync<KeyNotFoundException>()
-                .WithMessage($"User with ID {command.Id} not found");
+            await act.Should().ThrowAsync<EntityNotFoundException>();
 
             await _userRepository.Received(1).GetByIdAsync(command.Id, Arg.Any<CancellationToken>());
         }

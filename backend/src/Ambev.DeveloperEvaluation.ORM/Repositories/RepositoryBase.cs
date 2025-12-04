@@ -1,5 +1,6 @@
 ﻿using Ambev.DeveloperEvaluation.Common.Pagination;
 using Ambev.DeveloperEvaluation.Domain.Common;
+using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
@@ -55,8 +56,8 @@ public abstract class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where T
 
     public virtual async Task DeleteAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        var entity = await GetByIdAsync(id, cancellationToken) ?? throw new KeyNotFoundException("Key to delete has not found.");
-        
+        var entity = await GetByIdAsync(id, cancellationToken) ?? throw new EntityNotFoundException("Entity", id);
+
         _dbSet.Remove(entity);
     }
 

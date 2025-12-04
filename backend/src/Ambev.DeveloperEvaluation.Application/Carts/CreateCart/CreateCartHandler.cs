@@ -1,5 +1,6 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Carts.Common;
 using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using AutoMapper;
 using MediatR;
@@ -39,13 +40,13 @@ public class CreateCartHandler : IRequestHandler<CreateCartCommand, CartResult>
     {
         _logger.LogInformation("Creating new cart for customer {CustomerId} to branch: {BranchId}", command.CustomerId, command.BranchId);
 
-        var branch = await _branchRepository.GetByIdAsync(command.BranchId, cancellationToken) ?? throw new KeyNotFoundException($"Branch with ID {command.BranchId} not found.");
+        var branch = await _branchRepository.GetByIdAsync(command.BranchId, cancellationToken) ?? throw new EntityNotFoundException(nameof(Branch), command.BranchId);
         var saleCount = await _saleCounterRepository.GetAndIncrementSaleNumberAsync(command.BranchId, cancellationToken);
         var cart = new Cart(command.CustomerId, command.BranchId, $"{branch.Code}{saleCount:D6}");
 
         foreach (var item in command.Items)
         {
-            var product = await _productRepository.GetByIdAsync(item.ProductId) ?? throw new KeyNotFoundException($"Product with ID {item.ProductId} not found.");
+            var product = await _productRepository.GetByIdAsync(item.ProductId) ?? throw new EntityNotFoundException(nameof(Product), item.ProductId);
             cart.AddItem(item.ProductId, item.Quantity, product.Price);
         }
 

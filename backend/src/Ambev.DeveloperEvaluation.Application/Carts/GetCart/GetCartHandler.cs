@@ -1,4 +1,6 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Carts.Common;
+using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using AutoMapper;
 using MediatR;
@@ -33,7 +35,7 @@ public class GetCartHandler : IRequestHandler<GetCartCommand, CartResult>
         if (cart == null)
         {
             _logger.LogWarning("Cart {CartId} not found", command.CartId);
-            throw new KeyNotFoundException($"Cart {command.CartId} not found");
+            throw new EntityNotFoundException(nameof(Cart), command.CartId);
         }
 
         _logger.LogInformation("Cart {CartId} retrieved successfully", command.CartId);

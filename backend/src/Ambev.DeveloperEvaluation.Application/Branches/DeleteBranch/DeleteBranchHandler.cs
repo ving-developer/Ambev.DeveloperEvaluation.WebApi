@@ -1,3 +1,5 @@
+using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -42,7 +44,7 @@ public class DeleteBranchHandler : IRequestHandler<DeleteBranchCommand, bool>
         if (!success)
         {
             _logger.LogWarning("[WRN] Delete failed. BranchId={BranchId} not found", request.Id);
-            throw new KeyNotFoundException($"Branch with ID {request.Id} not found");
+            throw new EntityNotFoundException(nameof(Branch), request.Id);
         }
 
         _logger.LogInformation("[INF] Branch deleted successfully. BranchId={BranchId}", request.Id);

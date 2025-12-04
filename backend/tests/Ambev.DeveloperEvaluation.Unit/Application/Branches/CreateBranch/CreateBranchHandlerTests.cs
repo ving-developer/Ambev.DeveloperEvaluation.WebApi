@@ -1,6 +1,7 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Branches.Common;
 using Ambev.DeveloperEvaluation.Application.Branches.CreateBranch;
 using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Ambev.DeveloperEvaluation.Unit.Application.TestData.Branches;
 using AutoMapper;
@@ -70,13 +71,13 @@ public class CreateBranchHandlerTests
     }
 
     /// <summary>
-    /// Tests that attempting to create a branch with an existing code throws an <see cref="InvalidOperationException"/>.
+    /// Tests that attempting to create a branch with an existing code throws an <see cref="DomainException"/>.
     /// Verifies that:
     /// - The exception is thrown with the correct message
     /// - The branch is not created
     /// </summary>
-    [Fact(DisplayName = "Given existing branch code When creating branch Then throws InvalidOperationException")]
-    public async Task Handle_ExistingBranchCode_ThrowsInvalidOperationException()
+    [Fact(DisplayName = "Given existing branch code When creating branch Then throws DomainException")]
+    public async Task Handle_ExistingBranchCode_ThrowsDomainException()
     {
         // Given
         var command = CreateBranchHandlerTestData.GenerateValidCommand();
@@ -88,7 +89,7 @@ public class CreateBranchHandlerTests
         Func<Task> act = () => _handler.Handle(command, CancellationToken.None);
 
         // Then
-        await act.Should().ThrowAsync<InvalidOperationException>()
+        await act.Should().ThrowAsync<DomainException>()
             .WithMessage($"Branch with code {command.Code} already exists");
 
         await _branchRepository.Received(1).GetByCodeAsync(command.Code, Arg.Any<CancellationToken>());
