@@ -8,6 +8,7 @@ using Ambev.DeveloperEvaluation.ORM;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Extensions;
 
@@ -39,13 +40,38 @@ public static class WebApplicationBuilderExtensions
     }
 
     /// <summary>
-    /// Adds controllers and Swagger for API documentation.
+    /// Adds controllers and Swagger for API documentation with JWT support.
     /// </summary>
     private static void ConfigureApiServices(WebApplicationBuilder builder)
     {
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
+
+        builder.Services.AddSwaggerGen(c =>
+        {
+            c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+            {
+                Description = "JWT Authorization header using the Bearer scheme. Example: \"Bearer {token}\"",
+                Name = "Authorization",
+                In = ParameterLocation.Header,
+                Type = SecuritySchemeType.ApiKey
+            });
+
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement
+        {
+            {
+                new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    }
+                },
+                Array.Empty<string>()
+            }
+        });
+        });
     }
 
     /// <summary>
@@ -74,6 +100,7 @@ public static class WebApplicationBuilderExtensions
 
         builder.Services.AddAutoMapper(typeof(Program).Assembly, typeof(ApplicationLayer).Assembly);
         builder.Services.AddValidatorsFromAssembly(typeof(ApplicationLayer).Assembly);
+        builder.Services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
     }
 
     /// <summary>
