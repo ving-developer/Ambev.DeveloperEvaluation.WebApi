@@ -39,12 +39,6 @@ public class DeleteUserHandler : IRequestHandler<DeleteUserCommand, bool>
 
         var success = await _userRepository.SaveChangesAsync(cancellationToken);
 
-        if (!success)
-        {
-            _logger.LogWarning("[WRN] Delete failed. UserId={UserId} not found", request.Id);
-            throw new KeyNotFoundException($"User with ID {request.Id} not found");
-        }
-
         _logger.LogInformation("[INF] User deleted successfully. UserId={UserId}", request.Id);
 
         return true;

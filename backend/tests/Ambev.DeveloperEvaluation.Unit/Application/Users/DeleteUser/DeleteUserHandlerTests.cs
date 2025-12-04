@@ -30,29 +30,12 @@ namespace Ambev.DeveloperEvaluation.Unit.Application.Users.DeleteUser
             var command = DeleteUserHandlerTestData.GenerateValidCommand();
 
             _userRepository.DeleteAsync(command.Id, Arg.Any<CancellationToken>()).Returns(Task.CompletedTask);
+            _userRepository.SaveChangesAsync(Arg.Any<CancellationToken>()).Returns(true);
 
             // When
             await _handler.Handle(command, CancellationToken.None);
 
             // Then
-            await _userRepository.Received(1).DeleteAsync(command.Id, Arg.Any<CancellationToken>());
-        }
-
-        [Fact(DisplayName = "Given non-existing user ID When deleting user Then throws KeyNotFoundException")]
-        public async Task Handle_NonExistingUser_ThrowsKeyNotFoundException()
-        {
-            // Given
-            var command = DeleteUserHandlerTestData.GenerateValidCommand();
-
-            _userRepository.DeleteAsync(command.Id, Arg.Any<CancellationToken>()).Returns(Task.CompletedTask);
-
-            // When
-            Func<Task> act = () => _handler.Handle(command, CancellationToken.None);
-
-            // Then
-            await act.Should().ThrowAsync<KeyNotFoundException>()
-                .WithMessage($"User with ID {command.Id} not found");
-
             await _userRepository.Received(1).DeleteAsync(command.Id, Arg.Any<CancellationToken>());
         }
     }

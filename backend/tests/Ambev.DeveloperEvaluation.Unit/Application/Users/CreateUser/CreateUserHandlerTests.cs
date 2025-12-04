@@ -82,25 +82,34 @@ public class CreateUserHandlerTests
         var command = CreateUserHandlerTestData.GenerateValidCommand();
         var originalPassword = command.Password;
         const string hashedPassword = "h@shedPassw0rd";
-        var user = new User(
+
+        _passwordHasher.HashPassword(originalPassword).Returns(hashedPassword);
+        _userRepository.GetByEmailAsync(command.Email, Arg.Any<CancellationToken>())
+            .Returns((User)null!);
+
+        var userWithHashedPassword = new User(
             Guid.NewGuid(),
             command.Username,
             command.Email,
             command.Phone,
-            command.Password,
+            hashedPassword,
             command.Role,
             command.Status);
 
-        _mapper.Map<User>(command).Returns(user);
+        _mapper.Map<User>(command).Returns(userWithHashedPassword);
+
         _userRepository.CreateAsync(Arg.Any<User>(), Arg.Any<CancellationToken>())
-            .Returns(user);
-        _passwordHasher.HashPassword(originalPassword).Returns(hashedPassword);
+            .Returns(userWithHashedPassword);
 
         // When
         await _handler.Handle(command, CancellationToken.None);
 
         // Then
         _passwordHasher.Received(1).HashPassword(originalPassword);
+
+        _mapper.Received(1).Map<User>(
+            Arg.Is<CreateUserCommand>(c => c.Password == hashedPassword));
+
         await _userRepository.Received(1).CreateAsync(
             Arg.Is<User>(u => u.Password == hashedPassword),
             Arg.Any<CancellationToken>());

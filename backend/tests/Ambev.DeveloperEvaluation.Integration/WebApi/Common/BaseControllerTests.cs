@@ -169,14 +169,13 @@ public class BaseControllerTests : IntegrationTestBase
 
         // Then
         var okResult = result.Should().BeOfType<OkObjectResult>().Which;
-        var response = okResult.Value.Should().BeAssignableTo<ApiResponseWithData<PaginatedResponse<string>>>().Which;
+        var response = okResult.Value.Should().BeAssignableTo<PaginatedResponse<string>>().Which;
 
-        response.Success.Should().BeTrue();
         response.Data.Should().NotBeNull();
-        response.Data!.Data.Should().BeEquivalentTo(items);
-        response.Data.CurrentPage.Should().Be(1);
-        response.Data.TotalPages.Should().Be(1);
-        response.Data.TotalCount.Should().Be(3);
+        response.Data.Should().BeEquivalentTo(items);
+        response.CurrentPage.Should().Be(1);
+        response.TotalPages.Should().Be(1);
+        response.TotalCount.Should().Be(3);
     }
     #endregion
 

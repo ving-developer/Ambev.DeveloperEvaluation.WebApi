@@ -111,7 +111,7 @@ public class UsersControllerTests : IntegrationTestBase
             .Invoking(() => controller.DeleteUser(nonExistentUserId, default))
             .Should()
             .ThrowAsync<KeyNotFoundException>()
-            .WithMessage($"User with ID {nonExistentUserId} not found");
+            .WithMessage("Key to delete has not found.");
     }
     #endregion
 
