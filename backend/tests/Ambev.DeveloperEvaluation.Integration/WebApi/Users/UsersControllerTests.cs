@@ -1,10 +1,14 @@
-﻿using Ambev.DeveloperEvaluation.Integration.Shared.Constants;
+﻿using Ambev.DeveloperEvaluation.Application.Users.Common;
+using Ambev.DeveloperEvaluation.Common.Pagination;
+using Ambev.DeveloperEvaluation.Integration.Shared.Constants;
 using Ambev.DeveloperEvaluation.Integration.Shared.Fixtures;
 using Ambev.DeveloperEvaluation.Integration.Shared.Helpers;
 using Ambev.DeveloperEvaluation.Integration.Shared.TestData.Users;
 using Ambev.DeveloperEvaluation.WebApi.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Users;
 using Ambev.DeveloperEvaluation.WebApi.Features.Users.Common;
+using Ambev.DeveloperEvaluation.WebApi.Features.Users.ListUsers;
+using Ambev.DeveloperEvaluation.WebApi.Features.Users.UpdateUser;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Xunit;
@@ -24,14 +28,11 @@ public class UsersControllerTests : IntegrationTestBase
     [Fact(DisplayName = "CreateUser should return Created when request is valid")]
     public async Task CreateUser_ShouldReturnCreated()
     {
-        // Guiven
         var controller = CreateController<UsersController>();
         var request = CreateUserRequestTestData.GetValidCreateUserRequest();
 
-        // When
         var result = await controller.CreateUser(request, default);
 
-        // Then
         var createdUser = ExtractCreatedUserResponse(result);
         createdUser.Id.Should().NotBeEmpty();
     }
@@ -41,13 +42,10 @@ public class UsersControllerTests : IntegrationTestBase
     [Fact(DisplayName = "GetUser should return user when user exists")]
     public async Task GetUser_ShouldReturnUser()
     {
-        // Guiven
         var controller = CreateController<UsersController>();
 
-        // When
         var result = await controller.GetUser(IntegrationTestConstants.InitialUserId, default);
 
-        // Then
         var ok = result.Should()
             .BeOfType<OkObjectResult>()
             .Which;
@@ -62,11 +60,9 @@ public class UsersControllerTests : IntegrationTestBase
     [Fact(DisplayName = "GetUser should throw KeyNotFoundException when user does not exist")]
     public async Task GetUser_ShouldThrowKeyNotFoundException()
     {
-        // Given
         var controller = CreateController<UsersController>();
         var nonExistingUserId = Guid.NewGuid();
 
-        // When & Then
         await FluentActions
             .Invoking(() => controller.GetUser(nonExistingUserId, default))
             .Should()
@@ -75,21 +71,92 @@ public class UsersControllerTests : IntegrationTestBase
     }
     #endregion
 
+    #region /PUT/{id} UPDATE USER
+    [Fact(DisplayName = "UpdateUser should return updated user when request is valid")]
+    public async Task UpdateUser_ShouldReturnUpdatedUser()
+    {
+        var controller = CreateController<UsersController>();
+        var createRequest = CreateUserRequestTestData.GetValidCreateUserRequest();
+        var createdResult = await controller.CreateUser(createRequest, default);
+        var createdUser = ExtractCreatedUserResponse(createdResult);
+
+        var updateRequest = new UpdateUserRequest
+        {
+            Username = "Updated_" + createdUser.Name,
+            Email = "updated_" + createdUser.Email,
+            Phone = "11900000000",
+            Status = createdUser.Status,
+            Role = createdUser.Role
+        };
+
+        var result = await controller.UpdateUser(createdUser.Id, updateRequest, default);
+
+        var ok = result.Should()
+            .BeOfType<OkObjectResult>()
+            .Which;
+        var responseWrapper = ok.Value.Should()
+            .BeAssignableTo<ApiResponseWithData<UserResponse>>()
+            .Which;
+        var updatedUser = responseWrapper.Data!;
+
+        updatedUser.Id.Should().Be(createdUser.Id);
+        updatedUser.Name.Should().StartWith("Updated_");
+    }
+
+    [Fact(DisplayName = "UpdateUser should throw KeyNotFoundException when user does not exist")]
+    public async Task UpdateUser_ShouldThrowKeyNotFoundException()
+    {
+        // Arrange
+        var controller = CreateController<UsersController>();
+        var nonExistingUserId = Guid.NewGuid();
+        var updateRequest = UpdateUserRequestTestData.GetValidUpdateUserRequest();
+
+        // Act & Assert
+        await FluentActions
+            .Invoking(() => controller.UpdateUser(nonExistingUserId, updateRequest, default))
+            .Should()
+            .ThrowAsync<KeyNotFoundException>();
+    }
+    #endregion
+
+    #region /GET LIST USERS
+    [Fact(DisplayName = "ListUsers should return paginated list of users")]
+    public async Task ListUsers_ShouldReturnPaginatedUsers()
+    {
+        var controller = CreateController<UsersController>();
+        var request = new ListUsersRequest
+        {
+            Page = 1,
+            Size = 10
+        };
+
+        var result = await controller.ListUsers(request, default);
+
+        var ok = result.Should()
+            .BeOfType<OkObjectResult>()
+            .Which;
+
+        var paginated = ok.Value.Should()
+            .BeAssignableTo<PaginatedResponse<UserResult>>()
+            .Which;
+
+        paginated.Data.Should().NotBeNull();
+        paginated.CurrentPage.Should().Be(1);
+        paginated.Data.Count.Should().BeLessOrEqualTo(10);
+    }
+    #endregion
+
     #region /DELETE/{id} DELETE USER
     [Fact(DisplayName = "DeleteUser should return Ok when user exists")]
     public async Task DeleteUser_ShouldReturnOk()
     {
-        // Guiven
         var controller = CreateController<UsersController>();
         var createRequest = CreateUserRequestTestData.GetValidCreateUserRequest();
-
         var createdResult = await controller.CreateUser(createRequest, default);
-        var createdResponse = ExtractCreatedUserResponse(createdResult);
+        var createdUser = ExtractCreatedUserResponse(createdResult);
 
-        // When
-        var result = await controller.DeleteUser(createdResponse.Id, default);
+        var result = await controller.DeleteUser(createdUser.Id, default);
 
-        // Then
         var ok = result.Should()
             .BeOfType<OkObjectResult>()
             .Which;
@@ -102,11 +169,9 @@ public class UsersControllerTests : IntegrationTestBase
     [Fact(DisplayName = "DeleteUser should throw KeyNotFoundException when user does not exist")]
     public async Task DeleteUser_ShouldThrowKeyNotFoundException()
     {
-        // Given
         var controller = CreateController<UsersController>();
         var nonExistentUserId = Guid.NewGuid();
 
-        // When & Then
         await FluentActions
             .Invoking(() => controller.DeleteUser(nonExistentUserId, default))
             .Should()
@@ -119,9 +184,7 @@ public class UsersControllerTests : IntegrationTestBase
     private static UserResponse ExtractCreatedUserResponse(IActionResult result)
     {
         var createdObject = result as CreatedAtRouteResult;
-
         var responseWrapper = createdObject!.Value as ApiResponseWithData<UserResponse>;
-
         return responseWrapper!.Data!;
     }
     #endregion

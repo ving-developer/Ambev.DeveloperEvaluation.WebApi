@@ -59,4 +59,23 @@ public class Product : BaseEntity
     {
         CreatedAt = DateTime.UtcNow;
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="title"></param>
+    /// <param name="price"></param>
+    /// <param name="description"></param>
+    /// <param name="category"></param>
+    /// <param name="image"></param>
+    public Product(Guid id, string title, decimal price, string description, ProductCategory category, string image)
+    {
+        Title = title;
+        Price = price;
+        Description = description;
+        Category = category;
+        Image = image;
+        CreatedAt = DateTime.UtcNow;
+    }
 }
