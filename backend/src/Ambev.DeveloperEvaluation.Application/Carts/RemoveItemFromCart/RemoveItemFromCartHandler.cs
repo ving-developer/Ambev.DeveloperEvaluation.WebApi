@@ -1,5 +1,8 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Carts.Common;
+using Ambev.DeveloperEvaluation.Application.Events.Carts.ItemCancelled;
+using Ambev.DeveloperEvaluation.Application.Events.Carts.SaleModified;
 using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Events;
 using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using AutoMapper;
@@ -16,15 +19,18 @@ public class RemoveItemFromCartHandler : IRequestHandler<RemoveItemFromCartComma
     private readonly ICartRepository _cartRepository;
     private readonly IMapper _mapper;
     private readonly ILogger<RemoveItemFromCartHandler> _logger;
+    private readonly IMediator _mediator;
 
     public RemoveItemFromCartHandler(
         ICartRepository cartRepository,
         IMapper mapper,
-        ILogger<RemoveItemFromCartHandler> logger)
+        ILogger<RemoveItemFromCartHandler> logger,
+        IMediator mediator)
     {
         _cartRepository = cartRepository;
         _mapper = mapper;
         _logger = logger;
+        _mediator = mediator;
     }
 
     public async Task<CartResult> Handle(RemoveItemFromCartCommand command, CancellationToken cancellationToken)
@@ -35,10 +41,17 @@ public class RemoveItemFromCartHandler : IRequestHandler<RemoveItemFromCartComma
         var cart = await _cartRepository.GetByIdAsync(command.CartId, cancellationToken)
             ?? throw new EntityNotFoundException(nameof(Cart), command.CartId);
 
-        cart.RemoveItem(command.ItemId);
+        var removedItem = cart.RemoveItem(command.ItemId);
 
         await _cartRepository.UpdateAsync(cart, cancellationToken);
         await _cartRepository.SaveChangesAsync(cancellationToken);
+
+        _logger.LogInformation("Publishing SaleModified Notification Message.");
+
+        await _mediator.Publish(
+            new ItemCancelledNotification(new ItemCancelledEvent(cart, removedItem)),
+            cancellationToken
+        );
 
         _logger.LogInformation("Item {ItemId} removed from cart {CartId} successfully",
             command.ItemId, command.CartId);

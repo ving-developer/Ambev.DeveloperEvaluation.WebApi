@@ -1,5 +1,7 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Carts.Common;
+using Ambev.DeveloperEvaluation.Application.Events.Carts.SaleModified;
 using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Events;
 using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using AutoMapper;
@@ -17,17 +19,20 @@ public class AddItemToCartHandler : IRequestHandler<AddItemToCartCommand, CartRe
     private readonly IProductRepository _productRepository;
     private readonly IMapper _mapper;
     private readonly ILogger<AddItemToCartHandler> _logger;
+    private readonly IMediator _mediator;
 
     public AddItemToCartHandler(
         ICartRepository cartRepository,
         IProductRepository productRepository,
         IMapper mapper,
-        ILogger<AddItemToCartHandler> logger)
+        ILogger<AddItemToCartHandler> logger,
+        IMediator mediator)
     {
         _cartRepository = cartRepository;
         _productRepository = productRepository;
         _mapper = mapper;
         _logger = logger;
+        _mediator = mediator;
     }
 
     public async Task<CartResult> Handle(AddItemToCartCommand command, CancellationToken cancellationToken)
@@ -56,6 +61,10 @@ public class AddItemToCartHandler : IRequestHandler<AddItemToCartCommand, CartRe
 
         await _cartRepository.UpdateAsync(cart, cancellationToken);
         await _cartRepository.SaveChangesAsync(cancellationToken);
+
+        _logger.LogInformation("Publishing SaleModified Notification Message.");
+
+        await _mediator.Publish(new SaleModifiedNotification(new SaleModifiedEvent(cart)), cancellationToken);
 
         _logger.LogInformation("Item added to cart {CartId} successfully", command.CartId);
 
