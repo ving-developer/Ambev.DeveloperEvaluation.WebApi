@@ -1,5 +1,5 @@
-﻿using Ambev.DeveloperEvaluation.Application.Branches.Common;
-using Ambev.DeveloperEvaluation.Application.Branches.ListBranches;
+﻿using Ambev.DeveloperEvaluation.Application.Common.Branches;
+using Ambev.DeveloperEvaluation.Application.Queries.Branches.SearchBranches;
 using Ambev.DeveloperEvaluation.Common.Pagination;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
@@ -14,22 +14,22 @@ using Xunit;
 namespace Ambev.DeveloperEvaluation.Unit.Application.Branches.ListBranches
 {
     /// <summary>
-    /// Contains unit tests for the <see cref="ListBranchesHandler"/> class.
+    /// Contains unit tests for the <see cref="SearchBranchesHandler"/> class.
     /// </summary>
     public class ListBranchesHandlerTests
     {
         private readonly IBranchRepository _branchRepository;
         private readonly IMapper _mapper;
-        private readonly ListBranchesHandler _handler;
+        private readonly SearchBranchesHandler _handler;
 
         public ListBranchesHandlerTests()
         {
             _branchRepository = Substitute.For<IBranchRepository>();
             _mapper = Substitute.For<IMapper>();
-            _handler = new ListBranchesHandler(
+            _handler = new SearchBranchesHandler(
                 _branchRepository,
                 _mapper,
-                Substitute.For<ILogger<ListBranchesHandler>>());
+                Substitute.For<ILogger<SearchBranchesHandler>>());
         }
 
         [Fact(DisplayName = "Given valid request When listing branches Then returns paginated result")]

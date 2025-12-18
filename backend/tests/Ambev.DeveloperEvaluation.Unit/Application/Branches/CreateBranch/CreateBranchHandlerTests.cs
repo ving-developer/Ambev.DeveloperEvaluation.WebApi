@@ -1,5 +1,5 @@
-﻿using Ambev.DeveloperEvaluation.Application.Branches.Common;
-using Ambev.DeveloperEvaluation.Application.Branches.CreateBranch;
+﻿using Ambev.DeveloperEvaluation.Application.Commands.Branches.CreateBranch;
+using Ambev.DeveloperEvaluation.Application.Common.Branches;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;

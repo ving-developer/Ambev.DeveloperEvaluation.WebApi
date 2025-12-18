@@ -1,5 +1,5 @@
-﻿using Ambev.DeveloperEvaluation.Application.Carts.Common;
-using Ambev.DeveloperEvaluation.Application.Carts.CreateCart;
+﻿using Ambev.DeveloperEvaluation.Application.Commands.Carts.CreateCart;
+using Ambev.DeveloperEvaluation.Application.Common.Carts;
 using Ambev.DeveloperEvaluation.WebApi.Features.Carts.Common;
 using AutoMapper;
 

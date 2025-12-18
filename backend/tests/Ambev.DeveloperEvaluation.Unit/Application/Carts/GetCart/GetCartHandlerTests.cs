@@ -1,5 +1,5 @@
-﻿using Ambev.DeveloperEvaluation.Application.Carts.Common;
-using Ambev.DeveloperEvaluation.Application.Carts.GetCart;
+﻿using Ambev.DeveloperEvaluation.Application.Common.Carts;
+using Ambev.DeveloperEvaluation.Application.Queries.Carts.GetCartById;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
@@ -16,7 +16,7 @@ public class GetCartHandlerTests
 {
     private readonly ICartRepository _cartRepository;
     private readonly IMapper _mapper;
-    private readonly GetCartHandler _handler;
+    private readonly GetCartByIdHandler _handler;
 
     public GetCartHandlerTests()
     {
@@ -30,10 +30,10 @@ public class GetCartHandlerTests
 
         _mapper = mapperConfig.CreateMapper();
 
-        _handler = new GetCartHandler(
+        _handler = new GetCartByIdHandler(
             _cartRepository,
             _mapper,
-            Substitute.For<ILogger<GetCartHandler>>());
+            Substitute.For<ILogger<GetCartByIdHandler>>());
     }
 
     [Fact(DisplayName = "Get cart successfully → returns CartResult")]
@@ -44,7 +44,7 @@ public class GetCartHandlerTests
         _cartRepository.GetByIdAsync(cart.Id, Arg.Any<CancellationToken>())
             .Returns(cart);
 
-        var command = new GetCartCommand(cart.Id);
+        var command = new GetCartByIdQuery(cart.Id);
 
         // When
         var result = await _handler.Handle(command, CancellationToken.None);
@@ -66,7 +66,7 @@ public class GetCartHandlerTests
         _cartRepository.GetByIdAsync(cartId, Arg.Any<CancellationToken>())
             .Returns((Cart?)null);
 
-        var command = new GetCartCommand(cartId);
+        var command = new GetCartByIdQuery(cartId);
 
         // When
         Func<Task> act = async () => await _handler.Handle(command, CancellationToken.None);

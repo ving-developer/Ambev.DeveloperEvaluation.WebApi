@@ -1,5 +1,5 @@
-﻿using Ambev.DeveloperEvaluation.Application.Carts.Common;
-using Ambev.DeveloperEvaluation.Application.Carts.GetCart;
+﻿using Ambev.DeveloperEvaluation.Application.Common.Carts;
+using Ambev.DeveloperEvaluation.Application.Queries.Carts.GetCartById;
 using Ambev.DeveloperEvaluation.WebApi.Features.Carts.Common;
 using AutoMapper;
 
@@ -9,8 +9,8 @@ public class GetCartProfile : Profile
 {
     public GetCartProfile()
     {
-        CreateMap<Guid, GetCartCommand>()
-            .ConstructUsing(id => new GetCartCommand(id));
+        CreateMap<Guid, GetCartByIdQuery>()
+            .ConstructUsing(id => new GetCartByIdQuery(id));
 
         CreateMap<CartResult, CartResponse>();
     }

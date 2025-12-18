@@ -1,4 +1,4 @@
-﻿using Ambev.DeveloperEvaluation.Application.Branches.GetBranch;
+﻿using Ambev.DeveloperEvaluation.Application.Queries.Branches.GetBranchById;
 using FluentValidation.TestHelper;
 using Xunit;
 

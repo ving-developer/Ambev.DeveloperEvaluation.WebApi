@@ -1,4 +1,4 @@
-﻿using Ambev.DeveloperEvaluation.Application.Branches.CreateBranch;
+﻿using Ambev.DeveloperEvaluation.Application.Commands.Branches.CreateBranch;
 using FluentValidation.TestHelper;
 using Xunit;
 

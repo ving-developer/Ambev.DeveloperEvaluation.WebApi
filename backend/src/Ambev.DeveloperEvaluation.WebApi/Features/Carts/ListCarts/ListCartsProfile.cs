@@ -1,5 +1,5 @@
-﻿using Ambev.DeveloperEvaluation.Application.Carts.Common;
-using Ambev.DeveloperEvaluation.Application.Carts.ListCarts;
+﻿using Ambev.DeveloperEvaluation.Application.Common.Carts;
+using Ambev.DeveloperEvaluation.Application.Queries.Carts.SearchCarts;
 using Ambev.DeveloperEvaluation.WebApi.Features.Carts.Common;
 using AutoMapper;
 
@@ -9,7 +9,7 @@ public class ListCartsProfile : Profile
 {
     public ListCartsProfile()
     {
-        CreateMap<ListCartsRequest, ListCartsCommand>()
+        CreateMap<ListCartsRequest, SearchCartsQuery>()
             .ForCtorParam("page", opt => opt.MapFrom(src => src.Page))
             .ForCtorParam("pageSize", opt => opt.MapFrom(src => src.Size))
             .ForCtorParam("orderBy", opt => opt.MapFrom(src => src.Order));
