@@ -1,4 +1,4 @@
-﻿using Ambev.DeveloperEvaluation.Application.Users.Common;
+﻿using Ambev.DeveloperEvaluation.Application.Common.Users;
 using Ambev.DeveloperEvaluation.Common.Security;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Exceptions;
@@ -7,7 +7,7 @@ using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Ambev.DeveloperEvaluation.Application.Users.CreateUser;
+namespace Ambev.DeveloperEvaluation.Application.Commands.Users.CreateUser;
 
 /// <summary>
 /// Handler for processing CreateUserCommand requests

@@ -1,5 +1,5 @@
-using Ambev.DeveloperEvaluation.Application.Users.Common;
-using Ambev.DeveloperEvaluation.Application.Users.CreateUser;
+using Ambev.DeveloperEvaluation.Application.Commands.Users.CreateUser;
+using Ambev.DeveloperEvaluation.Application.Common.Users;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Unit.Application.TestData.Users;
 using Ambev.DeveloperEvaluation.Unit.Domain.Entities.TestData;

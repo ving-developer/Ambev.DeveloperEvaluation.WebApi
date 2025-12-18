@@ -1,8 +1,8 @@
-﻿using Ambev.DeveloperEvaluation.Application.Users.Common;
+﻿using Ambev.DeveloperEvaluation.Application.Common.Users;
 using Ambev.DeveloperEvaluation.Domain.Enums;
 using MediatR;
 
-namespace Ambev.DeveloperEvaluation.Application.Users.UpdateUser;
+namespace Ambev.DeveloperEvaluation.Application.Commands.Users.UpdateUser;
 
 /// <summary>
 /// Command for updating an existing user.

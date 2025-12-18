@@ -1,5 +1,5 @@
 using Ambev.DeveloperEvaluation.Application.Products.GetProduct;
-using Ambev.DeveloperEvaluation.Application.Users.GetUser;
+using Ambev.DeveloperEvaluation.Application.Queries.Users.GetUserById;
 
 namespace Ambev.DeveloperEvaluation.Unit.Application.TestData.Users;
 

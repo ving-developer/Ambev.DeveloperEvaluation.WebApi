@@ -1,5 +1,5 @@
-﻿using Ambev.DeveloperEvaluation.Application.Users.Common;
-using Ambev.DeveloperEvaluation.Application.Users.UpdateUser;
+﻿using Ambev.DeveloperEvaluation.Application.Commands.Users.UpdateUser;
+using Ambev.DeveloperEvaluation.Application.Common.Users;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;

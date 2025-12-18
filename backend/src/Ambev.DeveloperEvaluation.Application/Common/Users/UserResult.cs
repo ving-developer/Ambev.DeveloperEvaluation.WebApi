@@ -1,11 +1,11 @@
 using Ambev.DeveloperEvaluation.Domain.Enums;
 
-namespace Ambev.DeveloperEvaluation.Application.Users.Common;
+namespace Ambev.DeveloperEvaluation.Application.Common.Users;
 
 /// <summary>
 /// Response model for GetUser operation
 /// </summary>
-public class UserResult
+public record UserResult
 {
     /// <summary>
     /// The unique identifier of the user

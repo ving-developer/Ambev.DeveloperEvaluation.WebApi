@@ -1,4 +1,4 @@
-using Ambev.DeveloperEvaluation.Application.Users.Common;
+using Ambev.DeveloperEvaluation.Application.Common.Users;
 using Ambev.DeveloperEvaluation.Common.Pagination;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using AutoMapper;
@@ -6,28 +6,28 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Linq.Expressions;
 
-namespace Ambev.DeveloperEvaluation.Application.Users.ListUsers;
+namespace Ambev.DeveloperEvaluation.Application.Queries.Users.SearchUsers;
 
 /// <summary>
-/// Handler for processing ListUserCommand requests
+/// Handler for processing SearchUsersCommand requests
 /// </summary>
-public class ListUsersHandler : IRequestHandler<ListUsersCommand, PaginatedResponse<UserResult>>
+public class SearchUsersHandler : IRequestHandler<SearchUsersCommand, PaginatedResponse<UserResult>>
 {
     private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
-    private readonly ILogger<ListUsersHandler> _logger;
+    private readonly ILogger<SearchUsersHandler> _logger;
 
-    public ListUsersHandler(
+    public SearchUsersHandler(
         IUserRepository userRepository,
         IMapper mapper,
-        ILogger<ListUsersHandler> logger)
+        ILogger<SearchUsersHandler> logger)
     {
         _userRepository = userRepository;
         _mapper = mapper;
         _logger = logger;
     }
 
-    public async Task<PaginatedResponse<UserResult>> Handle(ListUsersCommand request, CancellationToken cancellationToken)
+    public async Task<PaginatedResponse<UserResult>> Handle(SearchUsersCommand request, CancellationToken cancellationToken)
     {
         _logger.LogInformation("[INF] Starting ListUserHandler. Page={Page}, PageSize={PageSize}", request.Page, request.PageSize);
 

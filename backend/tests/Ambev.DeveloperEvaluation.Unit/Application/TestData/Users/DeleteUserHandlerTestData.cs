@@ -1,4 +1,4 @@
-using Ambev.DeveloperEvaluation.Application.Users.DeleteUser;
+using Ambev.DeveloperEvaluation.Application.Commands.Users.DeleteUser;
 
 namespace Ambev.DeveloperEvaluation.Unit.Application.TestData.Users;
 

@@ -2,7 +2,7 @@
 using Ambev.DeveloperEvaluation.Domain.Enums;
 using FluentValidation;
 
-namespace Ambev.DeveloperEvaluation.Application.Users.CreateUser;
+namespace Ambev.DeveloperEvaluation.Application.Commands.Users.CreateUser;
 
 /// <summary>
 /// Validator for CreateUserCommand that defines validation rules for user creation command.

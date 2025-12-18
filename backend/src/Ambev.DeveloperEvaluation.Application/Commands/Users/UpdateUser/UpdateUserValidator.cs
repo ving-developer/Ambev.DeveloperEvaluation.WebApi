@@ -2,7 +2,7 @@
 using Ambev.DeveloperEvaluation.Domain.Enums;
 using FluentValidation;
 
-namespace Ambev.DeveloperEvaluation.Application.Users.UpdateUser;
+namespace Ambev.DeveloperEvaluation.Application.Commands.Users.UpdateUser;
 
 /// <summary>
 /// Validator for UpdateUserCommand that defines validation rules for user update command.

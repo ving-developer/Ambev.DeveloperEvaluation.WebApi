@@ -2,7 +2,7 @@ using Ambev.DeveloperEvaluation.Domain.Repositories;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Ambev.DeveloperEvaluation.Application.Users.DeleteUser;
+namespace Ambev.DeveloperEvaluation.Application.Commands.Users.DeleteUser;
 
 /// <summary>
 /// Handler for processing DeleteUserCommand requests

@@ -1,5 +1,5 @@
-﻿using Ambev.DeveloperEvaluation.Application.Users.Common;
-using Ambev.DeveloperEvaluation.Application.Users.ListUsers;
+﻿using Ambev.DeveloperEvaluation.Application.Common.Users;
+using Ambev.DeveloperEvaluation.Application.Queries.Users.SearchUsers;
 using Ambev.DeveloperEvaluation.Common.Pagination;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
@@ -17,7 +17,7 @@ public class ListUsersHandlerTests
 {
     private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
-    private readonly ListUsersHandler _handler;
+    private readonly SearchUsersHandler _handler;
 
     public ListUsersHandlerTests()
     {
@@ -27,10 +27,10 @@ public class ListUsersHandlerTests
 
         _mapper = mapperConfig.CreateMapper();
 
-        _handler = new ListUsersHandler(
+        _handler = new SearchUsersHandler(
             _userRepository,
             _mapper,
-            Substitute.For<ILogger<ListUsersHandler>>());
+            Substitute.For<ILogger<SearchUsersHandler>>());
     }
 
     [Fact(DisplayName = "Handle valid request → returns paginated users")]
@@ -59,7 +59,7 @@ public class ListUsersHandlerTests
                 Arg.Any<CancellationToken>())
             .Returns(paginatedResult);
 
-        var command = new ListUsersCommand
+        var command = new SearchUsersCommand
         {
             Page = 1,
             PageSize = 10,
@@ -101,7 +101,7 @@ public class ListUsersHandlerTests
                 Arg.Any<CancellationToken>())
             .Returns(empty);
 
-        var command = new ListUsersCommand
+        var command = new SearchUsersCommand
         {
             Page = 1,
             PageSize = 10
