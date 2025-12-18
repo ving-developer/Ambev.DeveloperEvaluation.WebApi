@@ -1,8 +1,8 @@
-﻿using Ambev.DeveloperEvaluation.Application.Products.Common;
+﻿using Ambev.DeveloperEvaluation.Application.Common.Products;
 using Ambev.DeveloperEvaluation.Domain.Enums;
 using MediatR;
 
-namespace Ambev.DeveloperEvaluation.Application.Products.CreateProduct;
+namespace Ambev.DeveloperEvaluation.Application.Commands.Products.CreateProduct;
 
 /// <summary>
 /// Command for creating a new product.

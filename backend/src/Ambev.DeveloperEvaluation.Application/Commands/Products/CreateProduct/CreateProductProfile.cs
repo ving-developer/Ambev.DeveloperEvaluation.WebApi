@@ -1,8 +1,8 @@
-﻿using Ambev.DeveloperEvaluation.Application.Products.Common;
+﻿using Ambev.DeveloperEvaluation.Application.Common.Products;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using AutoMapper;
 
-namespace Ambev.DeveloperEvaluation.Application.Products.CreateProduct;
+namespace Ambev.DeveloperEvaluation.Application.Commands.Products.CreateProduct;
 
 /// <summary>
 /// Profile for mapping between Product entity and CreateProduct DTOs

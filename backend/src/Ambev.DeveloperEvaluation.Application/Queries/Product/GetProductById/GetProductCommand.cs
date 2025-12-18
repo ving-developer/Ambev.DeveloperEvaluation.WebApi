@@ -1,7 +1,7 @@
-using Ambev.DeveloperEvaluation.Application.Products.Common;
+using Ambev.DeveloperEvaluation.Application.Common.Products;
 using MediatR;
 
-namespace Ambev.DeveloperEvaluation.Application.Products.GetProduct;
+namespace Ambev.DeveloperEvaluation.Application.Queries.Product.GetProductById;
 
 /// <summary>
 /// Command for retrieving a product by its ID

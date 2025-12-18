@@ -1,4 +1,4 @@
-﻿using Ambev.DeveloperEvaluation.Application.Products.DeleteProduct;
+﻿using Ambev.DeveloperEvaluation.Application.Commands.Products.DeleteProduct;
 using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using FluentAssertions;

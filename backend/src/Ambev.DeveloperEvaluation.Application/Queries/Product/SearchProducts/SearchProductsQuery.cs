@@ -1,13 +1,13 @@
-using Ambev.DeveloperEvaluation.Application.Products.Common;
+using Ambev.DeveloperEvaluation.Application.Common.Products;
 using Ambev.DeveloperEvaluation.Common.Pagination;
 using MediatR;
 
-namespace Ambev.DeveloperEvaluation.Application.Products.ListProducts;
+namespace Ambev.DeveloperEvaluation.Application.Queries.Product.SearchProducts;
 
 /// <summary>
 /// Query for retrieving a paginated list of products
 /// </summary>
-public record ListProductsCommand : PaginationParams, IRequest<PaginatedResponse<ProductResult>>
+public record SearchProductsQuery : PaginationParams, IRequest<PaginatedResponse<ProductResult>>
 {
     /// <summary>
     /// Initializes a new instance of ListProductsCommand
@@ -15,6 +15,6 @@ public record ListProductsCommand : PaginationParams, IRequest<PaginatedResponse
     /// <param name="page">Page number</param>
     /// <param name="pageSize">Number of items per page</param>
     /// <param name="orderBy">Optional ordering</param>
-    public ListProductsCommand(int page = 1, int pageSize = 10, string? orderBy = null)
+    public SearchProductsQuery(int page = 1, int pageSize = 10, string? orderBy = null)
         : base(page, pageSize, orderBy) { }
 }

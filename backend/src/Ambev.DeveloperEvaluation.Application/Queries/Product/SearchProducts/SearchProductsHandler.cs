@@ -1,5 +1,4 @@
-using Ambev.DeveloperEvaluation.Application.Products.Common;
-using Ambev.DeveloperEvaluation.Application.Products.ListProducts;
+using Ambev.DeveloperEvaluation.Application.Common.Products;
 using Ambev.DeveloperEvaluation.Common.Pagination;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using AutoMapper;
@@ -7,28 +6,28 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Linq.Expressions;
 
-namespace Ambev.DeveloperEvaluation.Application.Products.ListProduct;
+namespace Ambev.DeveloperEvaluation.Application.Queries.Product.SearchProducts;
 
 /// <summary>
-/// Handler for processing ListProductsCommand requests
+/// Handler for processing SearchProductsQuery requests
 /// </summary>
-public class ListProductsHandler : IRequestHandler<ListProductsCommand, PaginatedResponse<ProductResult>>
+public class SearchProductsHandler : IRequestHandler<SearchProductsQuery, PaginatedResponse<ProductResult>>
 {
     private readonly IProductRepository _productRepository;
     private readonly IMapper _mapper;
-    private readonly ILogger<ListProductsHandler> _logger;
+    private readonly ILogger<SearchProductsHandler> _logger;
 
-    public ListProductsHandler(
+    public SearchProductsHandler(
         IProductRepository productRepository,
         IMapper mapper,
-        ILogger<ListProductsHandler> logger)
+        ILogger<SearchProductsHandler> logger)
     {
         _productRepository = productRepository;
         _mapper = mapper;
         _logger = logger;
     }
 
-    public async Task<PaginatedResponse<ProductResult>> Handle(ListProductsCommand request, CancellationToken cancellationToken)
+    public async Task<PaginatedResponse<ProductResult>> Handle(SearchProductsQuery request, CancellationToken cancellationToken)
     {
         _logger.LogInformation("[INF] Starting ListProductsHandler. Page={Page}, PageSize={PageSize}",
             request.Page, request.PageSize);

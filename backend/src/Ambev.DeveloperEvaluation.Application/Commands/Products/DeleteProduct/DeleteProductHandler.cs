@@ -4,7 +4,7 @@ using Ambev.DeveloperEvaluation.Domain.Repositories;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Ambev.DeveloperEvaluation.Application.Products.DeleteProduct;
+namespace Ambev.DeveloperEvaluation.Application.Commands.Products.DeleteProduct;
 
 /// <summary>
 /// Handler for processing DeleteProductCommand requests

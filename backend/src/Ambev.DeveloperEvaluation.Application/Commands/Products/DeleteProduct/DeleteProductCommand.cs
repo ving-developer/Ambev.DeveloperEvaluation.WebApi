@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace Ambev.DeveloperEvaluation.Application.Products.DeleteProduct;
+namespace Ambev.DeveloperEvaluation.Application.Commands.Products.DeleteProduct;
 
 /// <summary>
 /// Command for deleting a product

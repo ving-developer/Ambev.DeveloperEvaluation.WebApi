@@ -1,4 +1,4 @@
-﻿namespace Ambev.DeveloperEvaluation.Application.Products.Common;
+﻿namespace Ambev.DeveloperEvaluation.Application.Common.Products;
 
 /// <summary>
 /// Represent's product rating.

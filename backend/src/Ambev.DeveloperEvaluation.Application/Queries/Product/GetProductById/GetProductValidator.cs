@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Ambev.DeveloperEvaluation.Application.Products.GetProduct;
+namespace Ambev.DeveloperEvaluation.Application.Queries.Product.GetProductById;
 
 /// <summary>
 /// Validator for GetProductCommand

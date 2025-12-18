@@ -1,7 +1,7 @@
 ﻿using Ambev.DeveloperEvaluation.Domain.Enums;
 using FluentValidation;
 
-namespace Ambev.DeveloperEvaluation.Application.Products.CreateProduct;
+namespace Ambev.DeveloperEvaluation.Application.Commands.Products.CreateProduct;
 
 /// <summary>
 /// Validator for CreateProductCommand that defines validation rules for product creation.

@@ -1,4 +1,4 @@
-﻿using Ambev.DeveloperEvaluation.Application.Products.GetProduct;
+﻿using Ambev.DeveloperEvaluation.Application.Queries.Product.GetProductById;
 using FluentValidation.TestHelper;
 using Xunit;
 

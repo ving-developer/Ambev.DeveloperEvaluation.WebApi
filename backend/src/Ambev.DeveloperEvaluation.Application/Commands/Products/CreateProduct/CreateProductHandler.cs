@@ -1,11 +1,11 @@
-﻿using Ambev.DeveloperEvaluation.Application.Products.Common;
+﻿using Ambev.DeveloperEvaluation.Application.Common.Products;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Ambev.DeveloperEvaluation.Application.Products.CreateProduct;
+namespace Ambev.DeveloperEvaluation.Application.Commands.Products.CreateProduct;
 
 /// <summary>
 /// Handler for processing CreateProductCommand requests

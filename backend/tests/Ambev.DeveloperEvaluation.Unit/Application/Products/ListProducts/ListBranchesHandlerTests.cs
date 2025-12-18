@@ -1,5 +1,5 @@
-﻿using Ambev.DeveloperEvaluation.Application.Products.Common;
-using Ambev.DeveloperEvaluation.Application.Products.ListProduct;
+﻿using Ambev.DeveloperEvaluation.Application.Common.Products;
+using Ambev.DeveloperEvaluation.Application.Queries.Product.SearchProducts;
 using Ambev.DeveloperEvaluation.Common.Pagination;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
@@ -18,16 +18,16 @@ public class ListProductsHandlerTests
 {
     private readonly IProductRepository _productRepository;
     private readonly IMapper _mapper;
-    private readonly ListProductsHandler _handler;
+    private readonly SearchProductsHandler _handler;
 
     public ListProductsHandlerTests()
     {
         _productRepository = Substitute.For<IProductRepository>();
         _mapper = Substitute.For<IMapper>();
-        _handler = new ListProductsHandler(
+        _handler = new SearchProductsHandler(
             _productRepository,
             _mapper,
-            Substitute.For<ILogger<ListProductsHandler>>());
+            Substitute.For<ILogger<SearchProductsHandler>>());
     }
 
     [Fact(DisplayName = "Given valid request When listing products Then returns paginated result")]

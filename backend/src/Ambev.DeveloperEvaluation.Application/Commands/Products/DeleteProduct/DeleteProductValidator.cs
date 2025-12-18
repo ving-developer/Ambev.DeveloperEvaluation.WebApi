@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Ambev.DeveloperEvaluation.Application.Products.DeleteProduct;
+namespace Ambev.DeveloperEvaluation.Application.Commands.Products.DeleteProduct;
 
 /// <summary>
 /// Validator for DeleteProductCommand

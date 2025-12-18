@@ -1,5 +1,5 @@
-﻿using Ambev.DeveloperEvaluation.Application.Products.Common;
-using Ambev.DeveloperEvaluation.Application.Products.GetProduct;
+﻿using Ambev.DeveloperEvaluation.Application.Common.Products;
+using Ambev.DeveloperEvaluation.Application.Queries.Product.GetProductById;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;

@@ -1,6 +1,6 @@
 ﻿using Ambev.DeveloperEvaluation.Domain.Enums;
 
-namespace Ambev.DeveloperEvaluation.Application.Products.Common;
+namespace Ambev.DeveloperEvaluation.Application.Common.Products;
 
 /// <summary>
 /// Represents the response returned after successfully creating a new product.
