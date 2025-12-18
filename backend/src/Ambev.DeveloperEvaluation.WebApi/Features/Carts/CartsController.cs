@@ -12,7 +12,7 @@ using Ambev.DeveloperEvaluation.WebApi.Features.Carts.AddItemToCart;
 using Ambev.DeveloperEvaluation.WebApi.Features.Carts.CancelCart;
 using Ambev.DeveloperEvaluation.WebApi.Features.Carts.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Carts.CreateCart;
-using Ambev.DeveloperEvaluation.WebApi.Features.Carts.ListCarts;
+using Ambev.DeveloperEvaluation.WebApi.Features.Carts.SearchCarts;
 using Ambev.DeveloperEvaluation.WebApi.Features.Carts.UpdateItemQuantity;
 using AutoMapper;
 using MediatR;
@@ -53,7 +53,7 @@ public class CartsController : BaseController
     [ProducesResponseType(typeof(PaginatedResponse<CartResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> ListCarts(
-        [FromQuery] ListCartsRequest request,
+        [FromQuery] SearchCartsRequest request,
         CancellationToken cancellationToken)
     {
         var command = _mapper.Map<SearchCartsQuery>(request);

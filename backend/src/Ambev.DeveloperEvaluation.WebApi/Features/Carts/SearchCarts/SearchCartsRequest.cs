@@ -1,8 +1,8 @@
 ﻿using Ambev.DeveloperEvaluation.Domain.Enums;
 
-namespace Ambev.DeveloperEvaluation.WebApi.Features.Carts.ListCarts;
+namespace Ambev.DeveloperEvaluation.WebApi.Features.Carts.SearchCarts;
 
-public record ListCartsRequest
+public record SearchCartsRequest
 {
     public int Page { get; set; } = 1;
     public int Size { get; set; } = 10;

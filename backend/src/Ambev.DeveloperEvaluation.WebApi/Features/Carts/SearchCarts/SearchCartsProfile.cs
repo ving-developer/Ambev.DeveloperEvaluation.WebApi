@@ -1,20 +1,21 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Common.Carts;
 using Ambev.DeveloperEvaluation.Application.Queries.Carts.SearchCarts;
+using Ambev.DeveloperEvaluation.Domain.Queries.Carts;
 using Ambev.DeveloperEvaluation.WebApi.Features.Carts.Common;
 using AutoMapper;
 
-namespace Ambev.DeveloperEvaluation.WebApi.Features.Carts.ListCarts;
+namespace Ambev.DeveloperEvaluation.WebApi.Features.Carts.SearchCarts;
 
-public class ListCartsProfile : Profile
+public class SearchCartsProfile : Profile
 {
-    public ListCartsProfile()
+    public SearchCartsProfile()
     {
-        CreateMap<ListCartsRequest, SearchCartsQuery>()
+        CreateMap<SearchCartsRequest, SearchCartsQuery>()
             .ForCtorParam("page", opt => opt.MapFrom(src => src.Page))
             .ForCtorParam("pageSize", opt => opt.MapFrom(src => src.Size))
             .ForCtorParam("orderBy", opt => opt.MapFrom(src => src.Order));
 
-        CreateMap<CartResult, CartResponse>();
         CreateMap<CartProductResult, CartItem>();
+        CreateMap<SearchCartsQuery, CartSearchFilter>();
     }
 }

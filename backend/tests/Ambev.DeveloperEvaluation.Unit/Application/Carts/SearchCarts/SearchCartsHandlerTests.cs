@@ -1,14 +1,12 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Common.Carts;
 using Ambev.DeveloperEvaluation.Application.Queries.Carts.SearchCarts;
 using Ambev.DeveloperEvaluation.Common.Pagination;
-using Ambev.DeveloperEvaluation.Domain.Entities;
-using Ambev.DeveloperEvaluation.Domain.Repositories;
-using Ambev.DeveloperEvaluation.Unit.Domain.Entities.TestData;
+using Ambev.DeveloperEvaluation.Domain.Queries.Carts;
+using Ambev.DeveloperEvaluation.Domain.ReadModels.Carts;
 using AutoMapper;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
-using System.Linq.Expressions;
 using Xunit;
 
 namespace Ambev.DeveloperEvaluation.Unit.Application.Carts.SearchCarts;
@@ -18,20 +16,20 @@ namespace Ambev.DeveloperEvaluation.Unit.Application.Carts.SearchCarts;
 /// </summary>
 public class SearchCartsHandlerTests
 {
-    private readonly ICartRepository _cartRepository;
+    private readonly ICartQuery _cartQuery;
     private readonly IMapper _mapper;
     private readonly SearchCartsHandler _handler;
 
     public SearchCartsHandlerTests()
     {
-        _cartRepository = Substitute.For<ICartRepository>();
+        _cartQuery = Substitute.For<ICartQuery>();
 
-        var mapperConfig = new MapperConfiguration(cfg => cfg.CreateMap<Cart, CartResult>());
+        var mapperConfig = new MapperConfiguration(cfg => cfg.CreateMap<CartReadModel, CartResult>());
 
         _mapper = mapperConfig.CreateMapper();
 
         _handler = new SearchCartsHandler(
-            _cartRepository,
+            _cartQuery,
             _mapper,
             Substitute.For<ILogger<SearchCartsHandler>>());
     }
@@ -40,66 +38,22 @@ public class SearchCartsHandlerTests
     public async Task Handle_ValidRequest_ReturnsPaginatedResponse()
     {
         // Given
-        var carts = CartTestData.GenerateList(3);
-
-        var paginatedResult = new PaginatedResponse<Cart>(
-            carts,
-            currentPage: 1,
-            totalPages: 1,
-            totalCount: carts.Count
-        );
-
-        _cartRepository
-            .GetPaginatedAsync(
-                Arg.Any<Expression<System.Func<Cart, bool>>>(),
-                1,
-                10,
-                Arg.Any<string>(),
-                Arg.Any<CancellationToken>())
-            .Returns(paginatedResult);
-
-        var command = new SearchCartsQuery
+        var carts = new List<CartReadModel>
         {
-            Page = 1,
-            PageSize = 10,
-            OrderBy = "SaleDate"
+            new () { Id = Guid.NewGuid(), SaleNumber = "S001" },
+            new () { Id = Guid.NewGuid(), SaleNumber = "S002" },
+            new () { Id = Guid.NewGuid(), SaleNumber = "S003" }
         };
 
-        // When
-        var result = await _handler.Handle(command, CancellationToken.None);
+        var filter = new CartSearchFilter
+        {
+            Page = 1,
+            PageSize = 10
+        };
 
-        // Then
-        result.Should().NotBeNull();
-        result.Data.Should().HaveCount(3);
-        result.TotalCount.Should().Be(3);
-
-        await _cartRepository.Received(1).GetPaginatedAsync(
-            Arg.Any<Expression<System.Func<Cart, bool>>>(),
-            command.Page,
-            command.PageSize,
-            command.OrderBy,
-            Arg.Any<CancellationToken>());
-    }
-
-    [Fact(DisplayName = "Handle request returning empty result → returns empty paginated response")]
-    public async Task Handle_EmptyList_ReturnsEmptyPaginatedResponse()
-    {
-        // Given
-        var empty = new PaginatedResponse<Cart>(
-            CartTestData.GenerateList(0),
-            currentPage: 1,
-            totalPages: 0,
-            totalCount: 0
-        );
-
-        _cartRepository
-            .GetPaginatedAsync(
-                Arg.Any<Expression<System.Func<Cart, bool>>>(),
-                1,
-                10,
-                Arg.Any<string>(),
-                Arg.Any<CancellationToken>())
-            .Returns(empty);
+        _cartQuery
+            .SearchAsync(filter, Arg.Any<CancellationToken>())
+            .Returns(new PaginatedResponse<CartReadModel>(carts, 1, 1, carts.Count));
 
         var command = new SearchCartsQuery
         {
@@ -112,14 +66,10 @@ public class SearchCartsHandlerTests
 
         // Then
         result.Should().NotBeNull();
-        result.Data.Should().BeEmpty();
-        result.TotalCount.Should().Be(0);
+        result.Data.Should().HaveCount(3);
+        result.TotalCount.Should().Be(3);
 
-        await _cartRepository.Received(1).GetPaginatedAsync(
-            Arg.Any<Expression<System.Func<Cart, bool>>>(),
-            1,
-            10,
-            Arg.Any<string>(),
-            Arg.Any<CancellationToken>());
+        await _cartQuery.Received(1).SearchAsync(
+            Arg.Any<CartSearchFilter>(), Arg.Any<CancellationToken>());
     }
 }

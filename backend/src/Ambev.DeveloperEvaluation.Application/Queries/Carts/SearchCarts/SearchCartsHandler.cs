@@ -1,7 +1,6 @@
-using Ambev.DeveloperEvaluation.Application.Common.Carts;
+﻿using Ambev.DeveloperEvaluation.Application.Common.Carts;
 using Ambev.DeveloperEvaluation.Common.Pagination;
-using Ambev.DeveloperEvaluation.Domain.Entities;
-using Ambev.DeveloperEvaluation.Domain.Repositories;
+using Ambev.DeveloperEvaluation.Domain.Queries.Carts;
 using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -11,64 +10,48 @@ namespace Ambev.DeveloperEvaluation.Application.Queries.Carts.SearchCarts;
 /// <summary>
 /// Handler for processing SearchCartsQuery requests
 /// </summary>
-public class SearchCartsHandler : IRequestHandler<SearchCartsQuery, PaginatedResponse<CartResult>>
+public class SearchCartsHandler
+    : IRequestHandler<SearchCartsQuery, PaginatedResponse<CartResult>>
 {
-    private readonly ICartRepository _cartRepository;
+    private readonly ICartQuery _cartQuery;
     private readonly IMapper _mapper;
     private readonly ILogger<SearchCartsHandler> _logger;
 
     public SearchCartsHandler(
-        ICartRepository cartRepository,
+        ICartQuery cartQuery,
         IMapper mapper,
         ILogger<SearchCartsHandler> logger)
     {
-        _cartRepository = cartRepository;
+        _cartQuery = cartQuery;
         _mapper = mapper;
         _logger = logger;
     }
 
-    public async Task<PaginatedResponse<CartResult>> Handle(SearchCartsQuery command, CancellationToken cancellationToken)
+    public async Task<PaginatedResponse<CartResult>> Handle(
+        SearchCartsQuery query,
+        CancellationToken cancellationToken)
     {
-        _logger.LogInformation("Listing carts - Page: {Page}, Size: {PageSize}",
-            command.Page, command.PageSize);
+        _logger.LogInformation(
+            "Searching carts - Page: {Page}, Size: {Size}",
+            query.Page,
+            query.PageSize);
 
-        var paginatedCarts = await _cartRepository.GetPaginatedAsync(
-            predicate: BuildPredicate(command),
-            pageNumber: command.Page,
-            pageSize: command.PageSize,
-            orderBy: command.OrderBy,
-            cancellationToken: cancellationToken
-        );
+        var filter = _mapper.Map<CartSearchFilter>(query);
 
-        _logger.LogInformation("Retrieved {Count} carts of {Total}",
-            paginatedCarts.Data.Count, paginatedCarts.TotalCount);
+        var pagedReadModels = await _cartQuery.SearchAsync(filter, cancellationToken);
 
-        var cartResults = _mapper.Map<List<CartResult>>(paginatedCarts.Data);
+        _logger.LogInformation(
+            "Retrieved {Count} carts of {Total}",
+            pagedReadModels.Data.Count,
+            pagedReadModels.TotalCount);
+
+        var results = _mapper.Map<List<CartResult>>(pagedReadModels.Data);
 
         return new PaginatedResponse<CartResult>(
-            cartResults,
-            paginatedCarts.CurrentPage,
-            paginatedCarts.TotalPages,
-            paginatedCarts.TotalCount
+            results,
+            pagedReadModels.CurrentPage,
+            pagedReadModels.TotalPages,
+            pagedReadModels.TotalCount
         );
-    }
-
-    private static System.Linq.Expressions.Expression<Func<Cart, bool>>? BuildPredicate(SearchCartsQuery command)
-    {
-        if (!command.CustomerId.HasValue &&
-            !command.BranchId.HasValue &&
-            !command.Status.HasValue &&
-            !command.StartDate.HasValue &&
-            !command.EndDate.HasValue)
-        {
-            return null;
-        }
-
-        return cart =>
-            (!command.CustomerId.HasValue || cart.CustomerId == command.CustomerId.Value) &&
-            (!command.BranchId.HasValue || cart.BranchId == command.BranchId.Value) &&
-            (!command.Status.HasValue || cart.Status == command.Status.Value) &&
-            (!command.StartDate.HasValue || cart.CreatedAt >= command.StartDate.Value) &&
-            (!command.EndDate.HasValue || cart.CreatedAt <= command.EndDate.Value);
     }
 }
