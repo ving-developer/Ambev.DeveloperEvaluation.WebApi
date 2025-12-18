@@ -1,7 +1,7 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Commands.Products.CreateProduct;
 using Ambev.DeveloperEvaluation.Application.Commands.Products.DeleteProduct;
-using Ambev.DeveloperEvaluation.Application.Queries.Product.GetProductById;
-using Ambev.DeveloperEvaluation.Application.Queries.Product.SearchProducts;
+using Ambev.DeveloperEvaluation.Application.Queries.Products.GetProductById;
+using Ambev.DeveloperEvaluation.Application.Queries.Products.SearchProducts;
 using Ambev.DeveloperEvaluation.Common.Pagination;
 using Ambev.DeveloperEvaluation.WebApi.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.Common;
@@ -66,7 +66,7 @@ public class ProductsController : BaseController
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetProduct([FromRoute] Guid id, CancellationToken cancellationToken)
     {
-        var command = _mapper.Map<GetProductCommand>(id);
+        var command = _mapper.Map<GetProductByIdQuery>(id);
         var response = await _mediator.Send(command, cancellationToken);
 
         return Ok(_mapper.Map<ProductResponse>(response), "Product retrieved successfully");

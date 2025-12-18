@@ -14,6 +14,9 @@ using Xunit;
 
 namespace Ambev.DeveloperEvaluation.Unit.Application.Carts.CreateCart;
 
+/// <summary>
+/// Unit tests for <see cref="CreateCartHandler"/>
+/// </summary>
 public class CreateCartHandlerTests
 {
     private readonly ICartRepository _cartRepository;

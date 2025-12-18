@@ -1,6 +1,5 @@
 using Ambev.DeveloperEvaluation.Application.Commands.Users.CreateUser;
 using Ambev.DeveloperEvaluation.Application.Common.Users;
-using Ambev.DeveloperEvaluation.Application.Users.UpdateUser;
 using Ambev.DeveloperEvaluation.WebApi.Features.Users.Common;
 using AutoMapper;
 

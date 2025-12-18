@@ -13,6 +13,9 @@ using Xunit;
 
 namespace Ambev.DeveloperEvaluation.Unit.Application.Carts.RemoveItemFromCart;
 
+/// <summary>
+/// Unit tests for <see cref="RemoveItemFromCartHandler"/>
+/// </summary>
 public class RemoveItemFromCartHandlerTests
 {
     private readonly ICartRepository _cartRepository;

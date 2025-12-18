@@ -12,6 +12,9 @@ using Xunit;
 
 namespace Ambev.DeveloperEvaluation.Unit.Application.Carts.CancelCart;
 
+/// <summary>
+/// Unit tests for <see cref="CancelCartHandler"/>
+/// </summary>
 public class CancelCartHandlerTests
 {
     private readonly ICartRepository _cartRepository;

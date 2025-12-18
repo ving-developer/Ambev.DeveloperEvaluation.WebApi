@@ -1,4 +1,4 @@
-﻿using Ambev.DeveloperEvaluation.Application.Queries.Product.SearchProducts;
+﻿using Ambev.DeveloperEvaluation.Application.Queries.Products.SearchProducts;
 using Bogus;
 
 namespace Ambev.DeveloperEvaluation.Unit.Application.TestData.Products

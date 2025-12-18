@@ -1,0 +1,83 @@
+﻿using Ambev.DeveloperEvaluation.Application.Common.Carts;
+using Ambev.DeveloperEvaluation.Application.Queries.Carts.GetCartById;
+using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Exceptions;
+using Ambev.DeveloperEvaluation.Domain.Repositories;
+using Ambev.DeveloperEvaluation.Unit.Domain.Entities.TestData;
+using AutoMapper;
+using FluentAssertions;
+using Microsoft.Extensions.Logging;
+using NSubstitute;
+using Xunit;
+
+namespace Ambev.DeveloperEvaluation.Unit.Application.Carts.GetCartById;
+
+/// <summary>
+/// Unit tests for <see cref="GetCartByIdHandler"/>
+/// </summary>
+public class GetCartByIdHandlerTests
+{
+    private readonly ICartRepository _cartRepository;
+    private readonly IMapper _mapper;
+    private readonly GetCartByIdHandler _handler;
+
+    public GetCartByIdHandlerTests()
+    {
+        _cartRepository = Substitute.For<ICartRepository>();
+
+        var mapperConfig = new MapperConfiguration(cfg =>
+        {
+            cfg.CreateMap<Cart, CartResult>();
+            cfg.CreateMap<CartItem, CartItemCommand>();
+        });
+
+        _mapper = mapperConfig.CreateMapper();
+
+        _handler = new GetCartByIdHandler(
+            _cartRepository,
+            _mapper,
+            Substitute.For<ILogger<GetCartByIdHandler>>());
+    }
+
+    [Fact(DisplayName = "Get cart successfully → returns CartResult")]
+    public async Task Handle_ValidCartId_ReturnsCartResult()
+    {
+        // Given
+        var cart = CartTestData.GeneratePendingCart();
+        _cartRepository.GetByIdAsync(cart.Id, Arg.Any<CancellationToken>())
+            .Returns(cart);
+
+        var command = new GetCartByIdQuery(cart.Id);
+
+        // When
+        var result = await _handler.Handle(command, CancellationToken.None);
+
+        // Then
+        result.Should().NotBeNull();
+        result.Id.Should().Be(cart.Id);
+        result.CustomerId.Should().Be(cart.CustomerId);
+        result.Items.Count.Should().Be(cart.Items.Count);
+
+        await _cartRepository.Received(1).GetByIdAsync(cart.Id, Arg.Any<CancellationToken>());
+    }
+
+    [Fact(DisplayName = "Cart not found → throws EntityNotFoundException")]
+    public async Task Handle_CartNotFound_ThrowsEntityNotFoundException()
+    {
+        // Given
+        var cartId = Guid.NewGuid();
+        _cartRepository.GetByIdAsync(cartId, Arg.Any<CancellationToken>())
+            .Returns((Cart?)null);
+
+        var command = new GetCartByIdQuery(cartId);
+
+        // When
+        Func<Task> act = async () => await _handler.Handle(command, CancellationToken.None);
+
+        // Then
+        await act.Should()
+            .ThrowAsync<EntityNotFoundException>();
+
+        await _cartRepository.Received(1).GetByIdAsync(cartId, Arg.Any<CancellationToken>());
+    }
+}

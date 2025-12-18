@@ -1,4 +1,4 @@
-﻿using Ambev.DeveloperEvaluation.Application.Users.Common;
+﻿using Ambev.DeveloperEvaluation.Application.Common.Users;
 using Ambev.DeveloperEvaluation.Common.Pagination;
 using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Integration.Shared.Constants;

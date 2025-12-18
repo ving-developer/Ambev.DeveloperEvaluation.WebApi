@@ -1,4 +1,4 @@
-using Ambev.DeveloperEvaluation.Application.Auth.AuthenticateUser;
+using Ambev.DeveloperEvaluation.Application.Commands.Auth.AuthenticateUser;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using AutoMapper;
 

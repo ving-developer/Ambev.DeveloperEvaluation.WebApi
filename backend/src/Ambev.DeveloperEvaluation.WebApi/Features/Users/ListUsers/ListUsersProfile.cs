@@ -13,7 +13,7 @@ public class ListUsersProfile : Profile
     /// </summary>
     public ListUsersProfile()
     {
-        CreateMap<ListUsersRequest, SearchUsersCommand>()
+        CreateMap<ListUsersRequest, SearchUsersQuery>()
             .ForCtorParam("page", opt => opt.MapFrom(src => src.Page))
             .ForCtorParam("pageSize", opt => opt.MapFrom(src => src.Size))
             .ForCtorParam("orderBy", opt => opt.MapFrom(src => src.Order));

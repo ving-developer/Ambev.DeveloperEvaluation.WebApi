@@ -1,4 +1,6 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Commands.Branches.CreateBranch;
+using Ambev.DeveloperEvaluation.Application.Commands.Branches.DeleteBranch;
+using Ambev.DeveloperEvaluation.Application.Queries.Branches.GetBranchById;
 using Ambev.DeveloperEvaluation.Application.Queries.Branches.SearchBranches;
 using Ambev.DeveloperEvaluation.Common.Pagination;
 using Ambev.DeveloperEvaluation.WebApi.Common;
@@ -68,7 +70,7 @@ public class BranchesController : BaseController
         [FromRoute] Guid id,
         CancellationToken cancellationToken)
     {
-        var command = new GetBranchCommand(id);
+        var command = new GetBranchByIdQuery(id);
         var response = await _mediator.Send(command, cancellationToken);
 
         return Ok(_mapper.Map<BranchResponse>(response), "Branch retrieved successfully");

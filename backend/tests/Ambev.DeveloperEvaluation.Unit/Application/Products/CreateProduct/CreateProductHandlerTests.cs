@@ -11,6 +11,9 @@ using Xunit;
 
 namespace Ambev.DeveloperEvaluation.Unit.Application.Products.CreateProduct;
 
+/// <summary>
+/// Unit tests for <see cref="CreateProductHandler"/>
+/// </summary>
 public class CreateProductHandlerTests
 {
     private readonly IProductRepository _productRepository;

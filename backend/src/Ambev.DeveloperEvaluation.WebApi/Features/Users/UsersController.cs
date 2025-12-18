@@ -69,7 +69,7 @@ public class UsersController : BaseController
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetUser([FromRoute] Guid id, CancellationToken cancellationToken)
     {
-        var command = _mapper.Map<GetUserCommand>(id);
+        var command = _mapper.Map<GetUserByIdQuery>(id);
         var response = await _mediator.Send(command, cancellationToken);
 
         return Ok(_mapper.Map<UserResponse>(response), "User retrieved successfully");
@@ -86,7 +86,7 @@ public class UsersController : BaseController
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> ListUsers(ListUsersRequest request, CancellationToken cancellationToken)
     {
-        var command = _mapper.Map<SearchUsersCommand>(request);
+        var command = _mapper.Map<SearchUsersQuery>(request);
         var response = await _mediator.Send(command, cancellationToken);
 
         return OkPaginated(response);

@@ -13,6 +13,10 @@ using Xunit;
 
 namespace Ambev.DeveloperEvaluation.Unit.Application.Carts.AddItemToCart;
 
+
+/// <summary>
+/// Unit tests for <see cref="AddItemToCartHandler"/>
+/// </summary>
 public class AddItemToCartHandlerTests
 {
     private readonly ICartRepository _cartRepository;

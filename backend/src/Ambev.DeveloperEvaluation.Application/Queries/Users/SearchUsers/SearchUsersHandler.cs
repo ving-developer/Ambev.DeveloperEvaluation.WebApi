@@ -9,9 +9,9 @@ using System.Linq.Expressions;
 namespace Ambev.DeveloperEvaluation.Application.Queries.Users.SearchUsers;
 
 /// <summary>
-/// Handler for processing SearchUsersCommand requests
+/// Handler for processing SearchUsersQuery requests
 /// </summary>
-public class SearchUsersHandler : IRequestHandler<SearchUsersCommand, PaginatedResponse<UserResult>>
+public class SearchUsersHandler : IRequestHandler<SearchUsersQuery, PaginatedResponse<UserResult>>
 {
     private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
@@ -27,7 +27,7 @@ public class SearchUsersHandler : IRequestHandler<SearchUsersCommand, PaginatedR
         _logger = logger;
     }
 
-    public async Task<PaginatedResponse<UserResult>> Handle(SearchUsersCommand request, CancellationToken cancellationToken)
+    public async Task<PaginatedResponse<UserResult>> Handle(SearchUsersQuery request, CancellationToken cancellationToken)
     {
         _logger.LogInformation("[INF] Starting ListUserHandler. Page={Page}, PageSize={PageSize}", request.Page, request.PageSize);
 

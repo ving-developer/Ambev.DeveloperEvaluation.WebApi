@@ -12,6 +12,9 @@ using Xunit;
 
 namespace Ambev.DeveloperEvaluation.Unit.Application.Carts.CompleteCart;
 
+/// <summary>
+/// Unit tests for <see cref="CompleteCartHandler"/>
+/// </summary>
 public class CompleteCartHandlerTests
 {
     private readonly ICartRepository _cartRepository;
