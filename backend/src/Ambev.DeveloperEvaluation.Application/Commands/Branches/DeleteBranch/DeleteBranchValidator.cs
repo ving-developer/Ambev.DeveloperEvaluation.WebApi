@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Ambev.DeveloperEvaluation.Application.Branches.DeleteBranch;
+namespace Ambev.DeveloperEvaluation.Application.Commands.Branches.DeleteBranch;
 
 /// <summary>
 /// Validator for DeleteBranchCommand

@@ -1,8 +1,8 @@
-﻿using Ambev.DeveloperEvaluation.Application.Branches.Common;
+﻿using Ambev.DeveloperEvaluation.Application.Common.Branches;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using AutoMapper;
 
-namespace Ambev.DeveloperEvaluation.Application.Branches.CreateBranch;
+namespace Ambev.DeveloperEvaluation.Application.Commands.Branches.CreateBranch;
 
 /// <summary>
 /// Profile for mapping between Branch entity and CreateBranchResponse

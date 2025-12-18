@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace Ambev.DeveloperEvaluation.Application.Branches.DeleteBranch;
+namespace Ambev.DeveloperEvaluation.Application.Commands.Branches.DeleteBranch;
 
 /// <summary>
 /// Command for deleting a Branch

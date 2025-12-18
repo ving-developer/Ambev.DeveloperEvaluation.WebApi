@@ -1,4 +1,4 @@
-using Ambev.DeveloperEvaluation.Application.Branches.Common;
+using Ambev.DeveloperEvaluation.Application.Common.Branches;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
@@ -6,7 +6,7 @@ using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Ambev.DeveloperEvaluation.Application.Branches.GetBranch;
+namespace Ambev.DeveloperEvaluation.Application.Queries.Branches.GetBranchById;
 
 /// <summary>
 /// Handler for processing GetBranchCommand requests

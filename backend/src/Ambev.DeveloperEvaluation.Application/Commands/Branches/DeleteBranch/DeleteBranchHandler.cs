@@ -4,7 +4,7 @@ using Ambev.DeveloperEvaluation.Domain.Repositories;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Ambev.DeveloperEvaluation.Application.Branches.DeleteBranch;
+namespace Ambev.DeveloperEvaluation.Application.Commands.Branches.DeleteBranch;
 
 /// <summary>
 /// Handler for processing DeleteBranchCommand requests

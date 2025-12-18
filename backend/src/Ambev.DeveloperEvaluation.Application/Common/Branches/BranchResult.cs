@@ -1,4 +1,4 @@
-﻿namespace Ambev.DeveloperEvaluation.Application.Branches.Common;
+﻿namespace Ambev.DeveloperEvaluation.Application.Common.Branches;
 
 /// <summary>
 /// Response model for GetBranch operation

@@ -1,7 +1,5 @@
-﻿using Ambev.DeveloperEvaluation.Application.Branches.CreateBranch;
-using Ambev.DeveloperEvaluation.Application.Branches.DeleteBranch;
-using Ambev.DeveloperEvaluation.Application.Branches.GetBranch;
-using Ambev.DeveloperEvaluation.Application.Branches.ListBranches;
+﻿using Ambev.DeveloperEvaluation.Application.Commands.Branches.CreateBranch;
+using Ambev.DeveloperEvaluation.Application.Queries.Branches.SearchBranches;
 using Ambev.DeveloperEvaluation.Common.Pagination;
 using Ambev.DeveloperEvaluation.WebApi.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Branches.Common;
@@ -89,7 +87,7 @@ public class BranchesController : BaseController
         ListBranchesRequest request,
         CancellationToken cancellationToken)
     {
-        var command = _mapper.Map<ListBranchesCommand>(request);
+        var command = _mapper.Map<SearchBranchesQuery>(request);
         var response = await _mediator.Send(command, cancellationToken);
 
         return OkPaginated(response);

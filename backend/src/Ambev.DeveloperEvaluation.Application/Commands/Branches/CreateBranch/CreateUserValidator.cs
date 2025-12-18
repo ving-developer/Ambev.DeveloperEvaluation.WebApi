@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Ambev.DeveloperEvaluation.Application.Branches.CreateBranch;
+namespace Ambev.DeveloperEvaluation.Application.Commands.Branches.CreateBranch;
 
 /// <summary>
 /// Validator for CreateBranchCommand that defines validation rules for branch creation command.

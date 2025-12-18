@@ -1,4 +1,4 @@
-using Ambev.DeveloperEvaluation.Application.Branches.Common;
+using Ambev.DeveloperEvaluation.Application.Common.Branches;
 using Ambev.DeveloperEvaluation.Common.Pagination;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using AutoMapper;
@@ -6,28 +6,28 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Linq.Expressions;
 
-namespace Ambev.DeveloperEvaluation.Application.Branches.ListBranches;
+namespace Ambev.DeveloperEvaluation.Application.Queries.Branches.SearchBranches;
 
 /// <summary>
-/// Handler for processing ListBranchesCommand requests
+/// Handler for processing SearchBranchesQuery requests
 /// </summary>
-public class ListBranchesHandler : IRequestHandler<ListBranchesCommand, PaginatedResponse<BranchResult>>
+public class SearchBranchesHandler : IRequestHandler<SearchBranchesQuery, PaginatedResponse<BranchResult>>
 {
     private readonly IBranchRepository _branchRepository;
     private readonly IMapper _mapper;
-    private readonly ILogger<ListBranchesHandler> _logger;
+    private readonly ILogger<SearchBranchesHandler> _logger;
 
-    public ListBranchesHandler(
+    public SearchBranchesHandler(
         IBranchRepository branchRepository,
         IMapper mapper,
-        ILogger<ListBranchesHandler> logger)
+        ILogger<SearchBranchesHandler> logger)
     {
         _branchRepository = branchRepository;
         _mapper = mapper;
         _logger = logger;
     }
 
-    public async Task<PaginatedResponse<BranchResult>> Handle(ListBranchesCommand request, CancellationToken cancellationToken)
+    public async Task<PaginatedResponse<BranchResult>> Handle(SearchBranchesQuery request, CancellationToken cancellationToken)
     {
         _logger.LogInformation("[INF] Starting ListBranchesHandler. Page={Page}, PageSize={PageSize}", request.Page, request.PageSize);
 
