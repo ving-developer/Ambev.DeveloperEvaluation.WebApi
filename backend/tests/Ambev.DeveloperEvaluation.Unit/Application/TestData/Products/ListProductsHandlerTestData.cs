@@ -1,4 +1,4 @@
-﻿using Ambev.DeveloperEvaluation.Application.Products.ListProducts;
+﻿using Ambev.DeveloperEvaluation.Application.Queries.Products.SearchProducts;
 using Bogus;
 
 namespace Ambev.DeveloperEvaluation.Unit.Application.TestData.Products
@@ -15,9 +15,9 @@ namespace Ambev.DeveloperEvaluation.Unit.Application.TestData.Products
         /// Generates a valid ListProductsCommand with randomized pagination and ordering.
         /// </summary>
         /// <returns>A valid ListProductsCommand instance.</returns>
-        public static ListProductsCommand GenerateValidCommand()
+        public static SearchProductsQuery GenerateValidCommand()
         {
-            return new ListProductsCommand
+            return new SearchProductsQuery
             {
                 Page = Faker.Random.Int(1, 5),
                 PageSize = Faker.Random.Int(1, 50),
@@ -30,9 +30,9 @@ namespace Ambev.DeveloperEvaluation.Unit.Application.TestData.Products
         /// Useful for testing defaults and empty input scenarios.
         /// </summary>
         /// <returns>A ListProductsCommand instance with default values.</returns>
-        public static ListProductsCommand GenerateDefaultCommand()
+        public static SearchProductsQuery GenerateDefaultCommand()
         {
-            return new ListProductsCommand
+            return new SearchProductsQuery
             {
                 Page = 1,
                 PageSize = 10,

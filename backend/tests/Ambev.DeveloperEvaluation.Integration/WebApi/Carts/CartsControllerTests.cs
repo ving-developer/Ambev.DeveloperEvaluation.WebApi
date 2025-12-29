@@ -1,7 +1,6 @@
 ﻿using Ambev.DeveloperEvaluation.Domain.Enums;
 using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Integration.Shared.Constants;
-using Ambev.DeveloperEvaluation.Integration.Shared.Fixtures;
 using Ambev.DeveloperEvaluation.Integration.Shared.Helpers;
 using Ambev.DeveloperEvaluation.Integration.Shared.TestData.Carts;
 using Ambev.DeveloperEvaluation.WebApi.Common;
@@ -187,11 +186,6 @@ namespace Ambev.DeveloperEvaluation.Integration.WebApi.Carts
                 return responseWrapper.Data!;
             }
 
-            if (createdObject.Value is CartResponse directResponse)
-            {
-                return directResponse;
-            }
-
             throw new DomainException($"Could not extract CartResponse. Value type: {createdObject.Value?.GetType().Name}");
         }
 
@@ -202,8 +196,8 @@ namespace Ambev.DeveloperEvaluation.Integration.WebApi.Carts
             var product = await ProductTestHelper.CreateTestProduct(productsController);
 
             var request = CreateCartRequestTestData.GetCreateCartRequestWithItems(
-                new List<Guid> { product.Id },
-                new List<int> { 1 });
+                [product.Id],
+                [1]);
 
             var result = await controller.CreateCart(request, default);
             return ExtractCreatedCartResponse(result);

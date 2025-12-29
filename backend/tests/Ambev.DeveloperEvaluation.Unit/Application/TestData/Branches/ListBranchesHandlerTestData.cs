@@ -1,4 +1,4 @@
-﻿using Ambev.DeveloperEvaluation.Application.Branches.ListBranches;
+﻿using Ambev.DeveloperEvaluation.Application.Queries.Branches.SearchBranches;
 
 namespace Ambev.DeveloperEvaluation.Unit.Application.TestData.Branches;
 
@@ -7,9 +7,9 @@ namespace Ambev.DeveloperEvaluation.Unit.Application.TestData.Branches;
 /// </summary>
 public static class ListBranchesHandlerTestData
 {
-    public static ListBranchesCommand GenerateValidCommand()
+    public static SearchBranchesQuery GenerateValidCommand()
     {
-        return new ListBranchesCommand(
+        return new SearchBranchesQuery(
             page: 1,
             pageSize: 10,
             orderBy: "Name"

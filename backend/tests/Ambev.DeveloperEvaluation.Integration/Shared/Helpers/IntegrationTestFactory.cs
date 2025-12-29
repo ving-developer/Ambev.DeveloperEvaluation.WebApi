@@ -1,10 +1,9 @@
 ﻿using Ambev.DeveloperEvaluation.Common.Security;
-using Ambev.DeveloperEvaluation.Domain.Entities;
-using Ambev.DeveloperEvaluation.Integration.Shared.Constants;
 using Ambev.DeveloperEvaluation.Integration.Shared.TestData.Branches;
 using Ambev.DeveloperEvaluation.Integration.Shared.TestData.Products;
 using Ambev.DeveloperEvaluation.Integration.Shared.TestData.Users;
 using Ambev.DeveloperEvaluation.ORM;
+using Ambev.DeveloperEvaluation.ORM.Factories;
 using Ambev.DeveloperEvaluation.WebApi;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -13,7 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Testcontainers.PostgreSql;
 using Xunit;
 
-namespace Ambev.DeveloperEvaluation.Integration.Shared.Fixtures;
+namespace Ambev.DeveloperEvaluation.Integration.Shared.Helpers;
 
 /// <summary>
 /// Provides the infrastructure required to run integration tests for the Web API.
@@ -70,16 +69,15 @@ public class IntegrationTestFactory : WebApplicationFactory<Program>, IAsyncLife
     {
         builder.ConfigureServices(services =>
         {
-            var descriptor = services.SingleOrDefault(
-                d => d.ServiceType == typeof(DbContextOptions<DefaultContext>));
-
-            if (descriptor != null)
-                services.Remove(descriptor);
+            RemoveServiceIfExists<DbContextOptions<DefaultContext>>(services);
 
             services.AddDbContext<DefaultContext>(options =>
             {
                 options.UseNpgsql(_dbContainer.GetConnectionString());
             });
+
+            RemoveServiceIfExists<IDbConnectionFactory>(services);
+            services.AddSingleton<IDbConnectionFactory>(new TestNpgsqlConnectionFactory(_dbContainer.GetConnectionString()));
 
             var provider = services.BuildServiceProvider();
 
@@ -89,6 +87,19 @@ public class IntegrationTestFactory : WebApplicationFactory<Program>, IAsyncLife
             db.Database.Migrate();
             SeedData(db);
         });
+    }
+
+    /// <summary>
+    /// Removes a registered service descriptor from the collection if it exists.
+    /// Centralizes the repeated logic previously duplicated in ConfigureWebHost.
+    /// </summary>
+    private static void RemoveServiceIfExists<TService>(IServiceCollection services)
+    {
+        var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(TService));
+        if (descriptor != null)
+        {
+            services.Remove(descriptor);
+        }
     }
 
     /// <summary>

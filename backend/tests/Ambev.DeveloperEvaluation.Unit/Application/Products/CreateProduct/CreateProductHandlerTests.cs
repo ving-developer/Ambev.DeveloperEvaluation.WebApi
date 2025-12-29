@@ -1,5 +1,5 @@
-﻿using Ambev.DeveloperEvaluation.Application.Products.Common;
-using Ambev.DeveloperEvaluation.Application.Products.CreateProduct;
+﻿using Ambev.DeveloperEvaluation.Application.Commands.Products.CreateProduct;
+using Ambev.DeveloperEvaluation.Application.Common.Products;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Ambev.DeveloperEvaluation.Unit.Application.TestData.Products;
@@ -11,6 +11,9 @@ using Xunit;
 
 namespace Ambev.DeveloperEvaluation.Unit.Application.Products.CreateProduct;
 
+/// <summary>
+/// Unit tests for <see cref="CreateProductHandler"/>
+/// </summary>
 public class CreateProductHandlerTests
 {
     private readonly IProductRepository _productRepository;

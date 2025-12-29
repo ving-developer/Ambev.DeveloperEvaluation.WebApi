@@ -1,4 +1,4 @@
-using Ambev.DeveloperEvaluation.Application.Branches.ListBranches;
+using Ambev.DeveloperEvaluation.Application.Queries.Branches.SearchBranches;
 using AutoMapper;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Branches.ListBranches;
@@ -13,7 +13,7 @@ public class ListBranchesProfile : Profile
     /// </summary>
     public ListBranchesProfile()
     {
-        CreateMap<ListBranchesRequest, ListBranchesCommand>()
+        CreateMap<ListBranchesRequest, SearchBranchesQuery>()
             .ForCtorParam("page", opt => opt.MapFrom(src => src.Page))
             .ForCtorParam("pageSize", opt => opt.MapFrom(src => src.Size))
             .ForCtorParam("orderBy", opt => opt.MapFrom(src => src.Order));

@@ -1,5 +1,5 @@
-﻿using Ambev.DeveloperEvaluation.Application.Carts.AddItemToCart;
-using Ambev.DeveloperEvaluation.Application.Carts.Common;
+﻿using Ambev.DeveloperEvaluation.Application.Commands.Carts.AddItemToCart;
+using Ambev.DeveloperEvaluation.Application.Common.Carts;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
@@ -13,6 +13,10 @@ using Xunit;
 
 namespace Ambev.DeveloperEvaluation.Unit.Application.Carts.AddItemToCart;
 
+
+/// <summary>
+/// Unit tests for <see cref="AddItemToCartHandler"/>
+/// </summary>
 public class AddItemToCartHandlerTests
 {
     private readonly ICartRepository _cartRepository;

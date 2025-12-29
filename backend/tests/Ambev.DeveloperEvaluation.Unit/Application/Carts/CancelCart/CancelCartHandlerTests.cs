@@ -1,4 +1,4 @@
-﻿using Ambev.DeveloperEvaluation.Application.Carts.CancelCart;
+﻿using Ambev.DeveloperEvaluation.Application.Commands.Carts.CancelCart;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Enums;
 using Ambev.DeveloperEvaluation.Domain.Exceptions;
@@ -12,6 +12,9 @@ using Xunit;
 
 namespace Ambev.DeveloperEvaluation.Unit.Application.Carts.CancelCart;
 
+/// <summary>
+/// Unit tests for <see cref="CancelCartHandler"/>
+/// </summary>
 public class CancelCartHandlerTests
 {
     private readonly ICartRepository _cartRepository;

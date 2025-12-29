@@ -1,7 +1,6 @@
-﻿using Ambev.DeveloperEvaluation.Application.Products.Common;
+﻿using Ambev.DeveloperEvaluation.Application.Common.Products;
 using Ambev.DeveloperEvaluation.Common.Pagination;
 using Ambev.DeveloperEvaluation.Domain.Exceptions;
-using Ambev.DeveloperEvaluation.Integration.Shared.Fixtures;
 using Ambev.DeveloperEvaluation.Integration.Shared.Helpers;
 using Ambev.DeveloperEvaluation.Integration.Shared.TestData.Products;
 using Ambev.DeveloperEvaluation.WebApi.Common;

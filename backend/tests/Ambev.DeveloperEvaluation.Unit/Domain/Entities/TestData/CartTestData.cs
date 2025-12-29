@@ -1,4 +1,5 @@
 ﻿using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.ReadModels.Carts;
 using Bogus;
 
 namespace Ambev.DeveloperEvaluation.Unit.Domain.Entities.TestData
@@ -33,7 +34,7 @@ namespace Ambev.DeveloperEvaluation.Unit.Domain.Entities.TestData
         }
 
         /// <summary>
-        /// Gera um carrinho com status Pending e sem itens.
+        /// Generate a pending cart with at least one item.
         /// </summary>
         public static Cart GeneratePendingCart()
         {

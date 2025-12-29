@@ -1,4 +1,4 @@
-﻿using Ambev.DeveloperEvaluation.Application.Users.UpdateUser;
+﻿using Ambev.DeveloperEvaluation.Application.Commands.Users.UpdateUser;
 using AutoMapper;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Users.UpdateUser;

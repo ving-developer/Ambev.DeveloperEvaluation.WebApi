@@ -1,18 +1,18 @@
-﻿using Ambev.DeveloperEvaluation.Application.Carts.AddItemToCart;
-using Ambev.DeveloperEvaluation.Application.Carts.CancelCart;
-using Ambev.DeveloperEvaluation.Application.Carts.CompleteCart;
-using Ambev.DeveloperEvaluation.Application.Carts.CreateCart;
-using Ambev.DeveloperEvaluation.Application.Carts.GetCart;
-using Ambev.DeveloperEvaluation.Application.Carts.ListCarts;
-using Ambev.DeveloperEvaluation.Application.Carts.RemoveItemFromCart;
-using Ambev.DeveloperEvaluation.Application.Carts.UpdateItemQuantity;
+﻿using Ambev.DeveloperEvaluation.Application.Commands.Carts.AddItemToCart;
+using Ambev.DeveloperEvaluation.Application.Commands.Carts.CancelCart;
+using Ambev.DeveloperEvaluation.Application.Commands.Carts.CompleteCart;
+using Ambev.DeveloperEvaluation.Application.Commands.Carts.CreateCart;
+using Ambev.DeveloperEvaluation.Application.Commands.Carts.RemoveItemFromCart;
+using Ambev.DeveloperEvaluation.Application.Commands.Carts.UpdateItemQuantity;
+using Ambev.DeveloperEvaluation.Application.Queries.Carts.GetCartById;
+using Ambev.DeveloperEvaluation.Application.Queries.Carts.SearchCarts;
 using Ambev.DeveloperEvaluation.Common.Pagination;
 using Ambev.DeveloperEvaluation.WebApi.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Carts.AddItemToCart;
 using Ambev.DeveloperEvaluation.WebApi.Features.Carts.CancelCart;
 using Ambev.DeveloperEvaluation.WebApi.Features.Carts.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Carts.CreateCart;
-using Ambev.DeveloperEvaluation.WebApi.Features.Carts.ListCarts;
+using Ambev.DeveloperEvaluation.WebApi.Features.Carts.SearchCarts;
 using Ambev.DeveloperEvaluation.WebApi.Features.Carts.UpdateItemQuantity;
 using AutoMapper;
 using MediatR;
@@ -53,10 +53,10 @@ public class CartsController : BaseController
     [ProducesResponseType(typeof(PaginatedResponse<CartResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> ListCarts(
-        [FromQuery] ListCartsRequest request,
+        [FromQuery] SearchCartsRequest request,
         CancellationToken cancellationToken)
     {
-        var command = _mapper.Map<ListCartsCommand>(request);
+        var command = _mapper.Map<SearchCartsQuery>(request);
         var response = await _mediator.Send(command, cancellationToken);
 
         return OkPaginated(response);
@@ -96,7 +96,7 @@ public class CartsController : BaseController
         [FromRoute] Guid id,
         CancellationToken cancellationToken)
     {
-        var command = new GetCartCommand(id);
+        var command = new GetCartByIdQuery(id);
         var response = await _mediator.Send(command, cancellationToken);
 
         return Ok(_mapper.Map<CartResponse>(response), "Cart retrieved successfully");

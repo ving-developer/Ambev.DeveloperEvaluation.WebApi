@@ -1,5 +1,7 @@
-﻿using Ambev.DeveloperEvaluation.Domain.Repositories;
+﻿using Ambev.DeveloperEvaluation.Domain.Queries.Carts;
+using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Ambev.DeveloperEvaluation.ORM;
+using Ambev.DeveloperEvaluation.ORM.Queries.Carts;
 using Ambev.DeveloperEvaluation.ORM.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -18,5 +20,8 @@ public class InfrastructureModuleInitializer : IModuleInitializer
             .AddScoped<IBranchRepository, BranchRepository>()
             .AddScoped<ICartRepository, CartRepository>()
             .AddScoped<ISaleCounterRepository, SaleCounterRepository>();
+
+        builder.Services
+            .AddScoped<ICartQuery, CartQuery>();
     }
 }

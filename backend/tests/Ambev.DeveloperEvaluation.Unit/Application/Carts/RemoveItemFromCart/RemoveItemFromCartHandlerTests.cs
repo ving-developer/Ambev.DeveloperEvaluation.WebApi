@@ -1,5 +1,5 @@
-﻿using Ambev.DeveloperEvaluation.Application.Carts.Common;
-using Ambev.DeveloperEvaluation.Application.Carts.RemoveItemFromCart;
+﻿using Ambev.DeveloperEvaluation.Application.Commands.Carts.RemoveItemFromCart;
+using Ambev.DeveloperEvaluation.Application.Common.Carts;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
@@ -13,6 +13,9 @@ using Xunit;
 
 namespace Ambev.DeveloperEvaluation.Unit.Application.Carts.RemoveItemFromCart;
 
+/// <summary>
+/// Unit tests for <see cref="RemoveItemFromCartHandler"/>
+/// </summary>
 public class RemoveItemFromCartHandlerTests
 {
     private readonly ICartRepository _cartRepository;

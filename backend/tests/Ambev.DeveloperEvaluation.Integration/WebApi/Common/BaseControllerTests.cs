@@ -1,5 +1,4 @@
 ﻿using Ambev.DeveloperEvaluation.Common.Pagination;
-using Ambev.DeveloperEvaluation.Integration.Shared.Fixtures;
 using Ambev.DeveloperEvaluation.Integration.Shared.Helpers;
 using Ambev.DeveloperEvaluation.WebApi.Common;
 using FluentAssertions;

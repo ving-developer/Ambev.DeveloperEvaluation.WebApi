@@ -1,4 +1,4 @@
-using Ambev.DeveloperEvaluation.Application.Products.ListProducts;
+using Ambev.DeveloperEvaluation.Application.Queries.Products.SearchProducts;
 using AutoMapper;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Products.ListProducts;
@@ -13,7 +13,7 @@ public class ListProductsProfile : Profile
     /// </summary>
     public ListProductsProfile()
     {
-        CreateMap<ListProductsRequest, ListProductsCommand>()
+        CreateMap<ListProductsRequest, SearchProductsQuery>()
             .ForCtorParam("page", opt => opt.MapFrom(src => src.Page))
             .ForCtorParam("pageSize", opt => opt.MapFrom(src => src.Size))
             .ForCtorParam("orderBy", opt => opt.MapFrom(src => src.Order));

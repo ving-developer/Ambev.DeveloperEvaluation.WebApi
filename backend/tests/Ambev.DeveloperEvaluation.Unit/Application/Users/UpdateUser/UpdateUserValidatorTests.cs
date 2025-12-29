@@ -1,4 +1,4 @@
-﻿using Ambev.DeveloperEvaluation.Application.Users.UpdateUser;
+﻿using Ambev.DeveloperEvaluation.Application.Commands.Users.UpdateUser;
 using Ambev.DeveloperEvaluation.Domain.Enums;
 using Ambev.DeveloperEvaluation.Unit.Application.TestData.Users;
 using FluentValidation.TestHelper;

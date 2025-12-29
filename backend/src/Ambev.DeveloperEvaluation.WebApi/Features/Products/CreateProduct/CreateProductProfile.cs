@@ -1,5 +1,5 @@
-using Ambev.DeveloperEvaluation.Application.Products.Common;
-using Ambev.DeveloperEvaluation.Application.Products.CreateProduct;
+using Ambev.DeveloperEvaluation.Application.Commands.Products.CreateProduct;
+using Ambev.DeveloperEvaluation.Application.Common.Products;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.Common;
 using AutoMapper;
 

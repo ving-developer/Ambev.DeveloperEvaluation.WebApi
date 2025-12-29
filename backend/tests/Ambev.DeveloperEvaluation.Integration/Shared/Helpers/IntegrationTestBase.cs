@@ -1,5 +1,4 @@
-﻿using Ambev.DeveloperEvaluation.Integration.Shared.Fixtures;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
 namespace Ambev.DeveloperEvaluation.Integration.Shared.Helpers;

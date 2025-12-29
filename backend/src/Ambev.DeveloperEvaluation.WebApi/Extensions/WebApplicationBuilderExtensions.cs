@@ -5,10 +5,13 @@ using Ambev.DeveloperEvaluation.Common.Security;
 using Ambev.DeveloperEvaluation.Common.Validation;
 using Ambev.DeveloperEvaluation.IoC;
 using Ambev.DeveloperEvaluation.ORM;
+using Ambev.DeveloperEvaluation.ORM.Factories;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Npgsql;
+using System.Data;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Extensions;
 
@@ -80,13 +83,16 @@ public static class WebApplicationBuilderExtensions
     private static void ConfigureDatabaseAndAuthentication(WebApplicationBuilder builder)
     {
         var configuration = builder.Configuration;
+        var connectionString = configuration.GetConnectionString("DefaultConnection");
 
         builder.Services.AddDbContext<DefaultContext>(options =>
             options.UseNpgsql(
-                configuration.GetConnectionString("DefaultConnection"),
+                connectionString,
                 b => b.MigrationsAssembly("Ambev.DeveloperEvaluation.ORM")
             )
         );
+
+        builder.Services.AddSingleton<IDbConnectionFactory, NpgsqlConnectionFactory>();
 
         builder.Services.AddJwtAuthentication(configuration);
     }

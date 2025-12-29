@@ -1,4 +1,4 @@
-﻿using Ambev.DeveloperEvaluation.Application.Carts.Common;
+﻿using Ambev.DeveloperEvaluation.Application.Common.Carts;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Carts.Common
 {

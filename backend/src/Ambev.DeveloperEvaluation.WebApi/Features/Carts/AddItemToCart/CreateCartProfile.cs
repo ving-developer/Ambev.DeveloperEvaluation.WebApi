@@ -1,4 +1,4 @@
-﻿using Ambev.DeveloperEvaluation.Application.Carts.AddItemToCart;
+﻿using Ambev.DeveloperEvaluation.Application.Commands.Carts.AddItemToCart;
 using AutoMapper;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Carts.AddItemToCart;
