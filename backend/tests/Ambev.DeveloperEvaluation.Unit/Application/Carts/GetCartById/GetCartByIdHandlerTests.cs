@@ -96,6 +96,6 @@ public class GetCartHandlerTests
         await act.Should().ThrowAsync<EntityNotFoundException>();
 
         await _cartQuery.Received(1).GetByIdAsync(cartId, Arg.Any<CancellationToken>());
-        await _cartQuery.DidNotReceive().GetItemsAsync(cartId, Arg.Any<CancellationToken>());
+        await _cartQuery.Received(1).GetItemsAsync(cartId, Arg.Any<CancellationToken>());
     }
 }

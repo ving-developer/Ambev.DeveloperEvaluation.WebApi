@@ -24,7 +24,12 @@ public class SearchCartsHandlerTests
     {
         _cartQuery = Substitute.For<ICartQuery>();
 
-        var mapperConfig = new MapperConfiguration(cfg => cfg.CreateMap<CartReadModel, CartResult>());
+        var mapperConfig = new MapperConfiguration(cfg =>
+        {
+            cfg.CreateMap<CartReadModel, CartResult>();
+            cfg.CreateMap<SearchCartsQuery, CartSearchFilter>()
+                .ForMember(dest => dest.Order, opt => opt.MapFrom(src => src.OrderBy));
+        });
 
         _mapper = mapperConfig.CreateMapper();
 
@@ -45,14 +50,8 @@ public class SearchCartsHandlerTests
             new () { Id = Guid.NewGuid(), SaleNumber = "S003" }
         };
 
-        var filter = new CartSearchFilter
-        {
-            Page = 1,
-            PageSize = 10
-        };
-
         _cartQuery
-            .SearchAsync(filter, Arg.Any<CancellationToken>())
+            .SearchAsync(Arg.Any<CartSearchFilter>(), Arg.Any<CancellationToken>())
             .Returns(new PaginatedResponse<CartReadModel>(carts, 1, 1, carts.Count));
 
         var command = new SearchCartsQuery

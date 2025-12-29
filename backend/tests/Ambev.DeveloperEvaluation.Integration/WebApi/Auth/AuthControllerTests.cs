@@ -1,5 +1,4 @@
-﻿using Ambev.DeveloperEvaluation.Integration.Shared.Fixtures;
-using Ambev.DeveloperEvaluation.Integration.Shared.Helpers;
+﻿using Ambev.DeveloperEvaluation.Integration.Shared.Helpers;
 using Ambev.DeveloperEvaluation.Integration.Shared.TestData.Auth;
 using Ambev.DeveloperEvaluation.WebApi.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Auth;
